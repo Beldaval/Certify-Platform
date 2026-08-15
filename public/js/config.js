@@ -10,5 +10,5 @@
 window.APP_CONFIG = {
   SUPABASE_URL: 'https://ykabvpsmticdbvoxabio.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_K6XdXu-EcnVkbk0IEpq5cg_znKRa-38',
-  PAYSTACK_PUBLIC_KEY: 'pk_test_aa3124100d6c797d70b3c5dbbb8d696a3fdd90ef 
+  PAYSTACK_PUBLIC_KEY: 'pk_test_aa3124100d6c797d70b3c5dbbb8d696a3fdd90ef
 };
