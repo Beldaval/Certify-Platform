@@ -8,7 +8,7 @@
 // server-side environment variables and are read by netlify/functions/*.
 // ============================================================================
 window.APP_CONFIG = {
-  SUPABASE_URL: 'https://YOUR-PROJECT-REF.supabase.co',
-  SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_PUBLIC_KEY',
-  PAYSTACK_PUBLIC_KEY: 'YOUR_PAYSTACK_PUBLIC_KEY', // pk_test_... or pk_live_...
+  SUPABASE_URL: 'https://ykabvpsmticdbvoxabio.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_K6XdXu-EcnVkbk0IEpq5cg_znKRa-38',
+  PAYSTACK_PUBLIC_KEY: 'sk_test_09bb9fd5819f405ff46c16d34884f68abd5ce25e 
 };
