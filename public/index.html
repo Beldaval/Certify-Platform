@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certify — Certificate Generation &amp; Delivery</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div class="nav">
+  <a class="brand" href="/">
+    <div class="mark">C</div>
+    <div class="name">Certify</div>
+  </a>
+  <div class="nav-links">
+    <a class="btn btn-ghost" href="/login.html">Log in</a>
+    <a class="btn btn-primary" href="/login.html?mode=signup">Get started</a>
+  </div>
+</div>
+
+<div class="hero">
+  <div>
+    <div class="eyebrow">Built for churches, seminars &amp; training programs</div>
+    <h1 class="display" style="font-size:44px;line-height:1.1;">Professional certificates, issued in minutes — not hours.</h1>
+    <p style="font-size:16px;margin-top:14px;">Pick a template, fill in your recipients, and Certify generates, emails, and records every certificate for you — with a public verification page so no one has to wonder if it's real.</p>
+    <div style="display:flex;gap:12px;margin-top:22px;">
+      <a class="btn btn-gold" href="/login.html?mode=signup">Start free — 10 certificates</a>
+      <a class="btn btn-ghost" href="#verify">Verify a certificate</a>
+    </div>
+    <p class="muted" style="margin-top:16px;">New accounts get 500 trial tokens (10 free certificates). Top up anytime from ₦800 — ₦50 per certificate.</p>
+  </div>
+  <div class="card">
+    <h3>How it works</h3>
+    <ol style="color:var(--ink-soft);padding-left:18px;">
+      <li>Choose one of 8 pre-built templates</li>
+      <li>Add recipients — one at a time, or repeat-and-edit for a batch of up to 50</li>
+      <li>Certify generates each PDF, emails it, and keeps a downloadable backup</li>
+      <li>Anyone can verify authenticity on this site, no login needed</li>
+    </ol>
+  </div>
+</div>
+
+<div class="container" id="verify">
+  <div class="card" style="max-width:640px;margin:0 auto;">
+    <h2>Verify a certificate</h2>
+    <p>Enter the certificate number exactly as it appears on the document.</p>
+    <div style="display:flex;gap:10px;margin-top:10px;">
+      <input type="text" id="verify-input" placeholder="e.g. CERT-A1B2C3D4E5">
+      <button class="btn btn-primary" id="verify-btn">Verify</button>
+    </div>
+    <div id="verify-result" style="margin-top:18px;"></div>
+  </div>
+</div>
+
+<script>
+document.getElementById('verify-btn').addEventListener('click', verify);
+document.getElementById('verify-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') verify(); });
+
+async function verify() {
+  const number = document.getElementById('verify-input').value.trim();
+  const resultEl = document.getElementById('verify-result');
+  if (!number) return;
+  resultEl.innerHTML = '<p class="muted">Checking…</p>';
+  try {
+    const resp = await fetch(`/api/verify-certificate?number=${encodeURIComponent(number)}`);
+    const data = await resp.json();
+    if (data.found) {
+      const c = data.certificate;
+      resultEl.innerHTML = `
+        <div class="badge badge-verified" style="margin-bottom:12px;">✓ Verified</div>
+        <table>
+          <tr><th>Recipient</th><td>${escapeHtml(c.recipient_name)}</td></tr>
+          <tr><th>Program</th><td>${escapeHtml(c.program_title)}</td></tr>
+          <tr><th>Issued by</th><td>${escapeHtml(c.issuing_organization)}</td></tr>
+          <tr><th>Date</th><td>${escapeHtml(c.issue_date)}</td></tr>
+          <tr><th>Certificate No.</th><td>${escapeHtml(c.certificate_number)}</td></tr>
+        </table>`;
+    } else {
+      resultEl.innerHTML = '<div class="badge badge-failed">✕ Not found</div><p style="margin-top:10px;">No certificate matches that number.</p>';
+    }
+  } catch (err) {
+    resultEl.innerHTML = `<p class="error-text">Something went wrong: ${escapeHtml(err.message)}</p>`;
+  }
+}
+function escapeHtml(s){ const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }
+</script>
+
+</body>
+</html>

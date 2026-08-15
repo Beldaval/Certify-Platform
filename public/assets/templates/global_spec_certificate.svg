@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="3508" height="2481" viewBox="0 0 3508 2481"
+     font-family="Georgia, 'Times New Roman', Times, serif">
+
+  <!-- ============================= DEFS ============================= -->
+  <defs>
+    <radialGradient id="paperGrad" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#FBF6E4"/>
+      <stop offset="70%" stop-color="#F5EFD8"/>
+      <stop offset="100%" stop-color="#ECE3C4"/>
+    </radialGradient>
+
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8CE7B"/>
+      <stop offset="50%" stop-color="#C6A24D"/>
+      <stop offset="100%" stop-color="#9C7A2E"/>
+    </linearGradient>
+
+    <clipPath id="shieldClip">
+      <path d="M 1604,96 L 1904,96 L 1904,266 C 1904,376 1754,436 1754,436 C 1754,436 1604,376 1604,266 Z"/>
+    </clipPath>
+    <clipPath id="sealClip"><circle cx="3082" cy="2128" r="252"/></clipPath>
+
+    <path id="sealArcTop" d="M 2856,2128 A 226,226 0 0 1 3308,2128" fill="none"/>
+    <path id="sealArcBottom" d="M 2860,2128 A 222,222 0 0 0 3304,2128" fill="none"/>
+
+    <g id="cornerFlourish">
+      <path d="M14,300 C14,150 14,14 164,14 C260,14 300,14 300,14" fill="none" stroke="url(#goldGrad)" stroke-width="6"/>
+      <path d="M14,220 C60,220 70,180 40,150 C15,125 14,90 14,60" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+      <path d="M220,14 C220,60 180,70 150,40 C125,15 90,14 60,14" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+      <path d="M14,130 C46,116 46,80 20,58 C6,46 14,20 14,20 C14,20 46,10 58,24 C82,50 118,50 132,18"
+            fill="none" stroke="url(#goldGrad)" stroke-width="3"/>
+      <path d="M40,110 C58,92 58,66 40,48 C22,66 22,92 40,110 Z" fill="url(#goldGrad)" opacity="0.9"/>
+      <path d="M110,40 C92,58 66,58 48,40 C66,22 92,22 110,40 Z" fill="url(#goldGrad)" opacity="0.9"/>
+      <circle cx="20" cy="20" r="8" fill="url(#goldGrad)"/>
+      <circle cx="52" cy="52" r="5" fill="url(#goldGrad)" opacity="0.8"/>
+      <circle cx="80" cy="80" r="3.5" fill="url(#goldGrad)" opacity="0.6"/>
+    </g>
+
+    <g id="smallFlourish">
+      <line x1="-90" y1="0" x2="-16" y2="0" stroke="#C6A24D" stroke-width="2"/>
+      <path d="M0,-16 L10,0 L0,16 L-10,0 Z" fill="#C6A24D"/>
+      <line x1="16" y1="0" x2="90" y2="0" stroke="#C6A24D" stroke-width="2"/>
+    </g>
+  </defs>
+
+  <!-- ============================= BACKGROUND ============================= -->
+  <rect x="0" y="0" width="3508" height="2481" fill="url(#paperGrad)"/>
+
+  <!-- faint background watermark -->
+  <g opacity="0.05" stroke="#9C7A2E" fill="none">
+    <circle cx="1754" cy="1240" r="620" stroke-width="3"/>
+    <circle cx="1754" cy="1240" r="560" stroke-width="1.5"/>
+    <path d="M1420,1240 C1420,1080 1570,960 1754,960 C1938,960 2088,1080 2088,1240"/>
+  </g>
+
+  <!-- ============================= BORDER ============================= -->
+  <rect x="60" y="60" width="3388" height="2361" fill="none" stroke="#152442" stroke-width="14"/>
+  <rect x="92" y="92" width="3324" height="2297" fill="none" stroke="url(#goldGrad)" stroke-width="7"/>
+  <rect x="108" y="108" width="3292" height="2265" fill="none" stroke="#C6A24D" stroke-width="1.5" opacity="0.85"/>
+
+  <!-- corner flourishes -->
+  <use href="#cornerFlourish" xlink:href="#cornerFlourish" x="70" y="70"/>
+  <use href="#cornerFlourish" xlink:href="#cornerFlourish" x="3438" y="70" transform="scale(-1,1) translate(-6876,0)"/>
+  <use href="#cornerFlourish" xlink:href="#cornerFlourish" x="70" y="2411" transform="scale(1,-1) translate(0,-4822)"/>
+  <use href="#cornerFlourish" xlink:href="#cornerFlourish" x="3438" y="2411" transform="scale(-1,-1) translate(-6876,-4822)"/>
+
+  <!-- ============================= LOGO SHIELD ============================= -->
+  <path d="M 1604,96 L 1904,96 L 1904,266 C 1904,376 1754,436 1754,436 C 1754,436 1604,376 1604,266 Z"
+        fill="#152442" stroke="url(#goldGrad)" stroke-width="7"/>
+  <path d="M 1614,106 L 1894,106 L 1894,264 C 1894,364 1754,420 1754,420 C 1754,420 1614,364 1614,264 Z"
+        fill="none" stroke="#C6A24D" stroke-width="2" opacity="0.8"/>
+
+  <!-- default shield artwork (sits under logo-slot; covered once a real logo is supplied) -->
+  <g fill="#D8BB63">
+    <path d="M1690,175 L1754,155 L1818,175 L1818,215 L1754,235 L1690,215 Z" opacity="0.9"/>
+    <line x1="1754" y1="160" x2="1754" y2="230" stroke="#152442" stroke-width="2"/>
+    <text x="1754" y="270" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="3" fill="#D8BB63">LOGO</text>
+    <text x="1754" y="300" text-anchor="middle" font-size="17" letter-spacing="2" fill="#D8BB63" opacity="0.85">PLACEHOLDER</text>
+    <g stroke="#D8BB63" stroke-width="3" fill="none">
+      <line x1="1720" y1="335" x2="1720" y2="385"/>
+      <line x1="1754" y1="335" x2="1754" y2="385"/>
+      <line x1="1788" y1="335" x2="1788" y2="385"/>
+      <rect x="1700" y="325" width="108" height="10" fill="#D8BB63" stroke="none"/>
+      <rect x="1695" y="385" width="118" height="10" fill="#D8BB63" stroke="none"/>
+    </g>
+  </g>
+  <image id="logo-slot" x="1604" y="96" width="300" height="340" href="" xlink:href="" clip-path="url(#shieldClip)" preserveAspectRatio="xMidYMid slice"/>
+
+  <!-- ============================= HEADER TEXT ============================= -->
+  <text id="institution-name" x="1754" y="530" text-anchor="middle" font-size="56" font-weight="700" letter-spacing="4" fill="#152442">NAME OF ISSUING INSTITUTION / BODY</text>
+  <text id="opt-subtitle" x="1754" y="582" text-anchor="middle" font-size="34" font-style="italic" fill="#6B6250">Department, Ministry, or Subsidiary</text>
+
+  <!-- Title -->
+  <text id="certificate-title" x="1754" y="710" text-anchor="middle" font-size="108" font-weight="700" letter-spacing="3" fill="#152442">Certificate of Completion</text>
+  <g transform="translate(1754,790)"><use href="#smallFlourish" xlink:href="#smallFlourish"/></g>
+
+  <!-- Awarded to -->
+  <text id="awarded-to-label" x="1754" y="880" text-anchor="middle" font-size="46" font-style="italic" fill="#333029">This is officially awarded to:</text>
+
+  <text id="recipient-name" x="1754" y="998" text-anchor="middle" font-size="98" font-weight="700" letter-spacing="1" fill="#152442">FIRST NAME &amp; SURNAME OF RECIPIENT</text>
+  <line x1="954" y1="1048" x2="2554" y2="1048" stroke="#C6A24D" stroke-width="2.5"/>
+
+  <g transform="translate(1754,1110)"><use href="#smallFlourish" xlink:href="#smallFlourish"/></g>
+
+  <!-- Recognition paragraph -->
+  <text x="1754" y="1210" text-anchor="middle" font-size="42" fill="#333029">
+    <tspan x="1754" dy="0">in recognition of their dedicated participation and successful fulfillment</tspan>
+    <tspan x="1754" dy="54">of all requirements established for the training program titled:</tspan>
+  </text>
+
+  <!-- Course title (left-anchored for the same tspan/anchor reason; visually centered by chosen x) -->
+  <text x="1050" y="1440" font-size="78" font-weight="700" font-style="italic" fill="#152442">&#8220;<tspan id="course-title">TITLE OF COURSE / PROGRAM / THEME / STUDY</tspan>&#8221;</text>
+
+  <!-- Program dates paragraph (left-anchored: text-anchor="middle" mis-measures inline tspans in some SVG renderers) -->
+  <text x="1000" y="1548" font-size="42" fill="#333029">
+    <tspan x="1000" dy="0">This program was conducted from <tspan id="start-date" fill="#152442" font-weight="700" font-style="italic" style="text-decoration:underline;">Start Date</tspan> to <tspan id="end-date" fill="#152442" font-weight="700" font-style="italic" style="text-decoration:underline;">End Date</tspan>, covering</tspan>
+    <tspan x="1000" dy="54">core modules, practical applications, and foundational principles outlined by the organizing body.</tspan>
+  </text>
+
+  <!-- Granted line (left-anchored for the same reason) -->
+  <text x="1000" y="1706" font-size="46" fill="#333029">Granted this <tspan id="award-day" fill="#152442" font-weight="700" style="text-decoration:underline;">Day</tspan> day of <tspan id="award-month" fill="#152442" font-weight="700" style="text-decoration:underline;">Month</tspan>, 20<tspan id="award-year" fill="#152442" font-weight="700" style="text-decoration:underline;">YY</tspan>.</text>
+
+  <!-- ============================= CERTIFICATE NO. (bottom left, no rule above) ============================= -->
+  <text id="certificate-number-label" x="230" y="2250" font-size="32" font-weight="700" letter-spacing="3" fill="#6B6250">CERTIFICATE NO.</text>
+  <!-- system-generated: populate programmatically, do not expose to end-user editing UI -->
+  <text id="certificate-number" x="230" y="2300" font-size="44" font-weight="700" fill="#152442">HB-2025-00001</text>
+
+  <!-- ============================= SIGNATURES ============================= -->
+  <!-- Delete the whole <g id="signatures-section"> to remove signatures entirely.
+       Delete just <g id="signature-1-block"> or "signature-2-block" to remove one signer.
+       Every text line inside each block has its own id, so captions/titles can be
+       edited or cleared independently without touching the rest of the section. -->
+  <g id="signatures-section">
+
+    <g id="signature-1-block">
+      <rect x="1290" y="1958" width="320" height="128" fill="none" stroke="#C6A24D" stroke-width="2" stroke-dasharray="8 6"/>
+      <text x="1450" y="2028" text-anchor="middle" font-size="24" fill="#B7A468">Signature (PNG)</text>
+      <image id="signature-1" x="1290" y="1958" width="320" height="128" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+      <line x1="1210" y1="2110" x2="1690" y2="2110" stroke="#152442" stroke-width="2"/>
+      <text id="signature-1-caption" x="1450" y="2160" text-anchor="middle" font-size="38" font-weight="700" fill="#152442">Full Name of Signer</text>
+      <text id="signature-1-title" x="1450" y="2202" text-anchor="middle" font-size="32" font-style="italic" fill="#6B6250">Director / Pastor</text>
+    </g>
+
+    <g transform="translate(1754,2110)"><use href="#smallFlourish" xlink:href="#smallFlourish" transform="rotate(90)"/></g>
+
+    <g id="signature-2-block">
+      <rect x="1898" y="1958" width="320" height="128" fill="none" stroke="#C6A24D" stroke-width="2" stroke-dasharray="8 6"/>
+      <text x="2058" y="2028" text-anchor="middle" font-size="24" fill="#B7A468">Signature (PNG)</text>
+      <image id="signature-2" x="1898" y="1958" width="320" height="128" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+      <line x1="1818" y1="2110" x2="2298" y2="2110" stroke="#152442" stroke-width="2"/>
+      <text id="opt-signature-2-caption" x="2058" y="2160" text-anchor="middle" font-size="38" font-weight="700" fill="#152442">Full Name of Signer</text>
+      <text id="opt-signature-2-title" x="2058" y="2202" text-anchor="middle" font-size="32" font-style="italic" fill="#6B6250">Registrar / HOD</text>
+    </g>
+
+  </g>
+
+  <!-- ============================= SEAL ============================= -->
+  <circle cx="3082" cy="2128" r="252" fill="#152442" stroke="url(#goldGrad)" stroke-width="8"/>
+  <circle cx="3082" cy="2128" r="216" fill="none" stroke="#C6A24D" stroke-width="2"/>
+  <circle cx="3082" cy="2128" r="180" fill="none" stroke="#C6A24D" stroke-width="1.5"/>
+
+  <text font-size="27" font-weight="700" letter-spacing="3" fill="#D8BB63">
+    <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL</textPath>
+  </text>
+  <text font-size="24" font-weight="700" letter-spacing="2.5" fill="#D8BB63">
+    <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">OF AUTHENTICATION</textPath>
+  </text>
+
+  <g stroke="#D8BB63" stroke-width="4" fill="none">
+    <rect x="3022" y="2078" width="120" height="14" fill="#D8BB63" stroke="none"/>
+    <line x1="3037" y1="2092" x2="3037" y2="2168"/>
+    <line x1="3082" y1="2092" x2="3082" y2="2168"/>
+    <line x1="3127" y1="2092" x2="3127" y2="2168"/>
+    <rect x="3017" y="2168" width="130" height="14" fill="#D8BB63" stroke="none"/>
+  </g>
+  <path d="M2950,2160 C2916,2120 2916,2060 2955,2020" stroke="#D8BB63" stroke-width="3" fill="none"/>
+  <path d="M3214,2160 C3248,2120 3248,2060 3209,2020" stroke="#D8BB63" stroke-width="3" fill="none"/>
+  <path d="M3082,2200 L3096,2228 L3127,2231 L3104,2252 L3110,2283 L3082,2267 L3054,2283 L3060,2252 L3037,2231 L3068,2228 Z" fill="#D8BB63"/>
+
+  <image id="opt-seal-slot" x="2830" y="1876" width="504" height="504" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
+
+</svg>

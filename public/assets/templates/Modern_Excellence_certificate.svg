@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="3508" height="2481" viewBox="0 0 3508 2481"
+     font-family="Georgia, 'Times New Roman', Times, serif">
+
+  <!-- ============================= DEFS ============================= -->
+  <defs>
+    <radialGradient id="paperGrad" cx="50%" cy="42%" r="78%">
+      <stop offset="0%" stop-color="#FDFBF4"/>
+      <stop offset="65%" stop-color="#FAF6EA"/>
+      <stop offset="100%" stop-color="#F3EDDC"/>
+    </radialGradient>
+
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F1DB96"/>
+      <stop offset="45%" stop-color="#C9A227"/>
+      <stop offset="100%" stop-color="#8E6E22"/>
+    </linearGradient>
+
+    <pattern id="linen" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="18" stroke="#EDE6D2" stroke-width="1"/>
+    </pattern>
+
+    <clipPath id="logoClip"><circle cx="1754" cy="248" r="150"/></clipPath>
+    <clipPath id="sealClip"><circle cx="3072" cy="1980" r="196"/></clipPath>
+
+    <path id="sealArcTop" d="M 2924,1980 A 148,148 0 0 1 3220,1980" fill="none"/>
+    <path id="sealArcBottom" d="M 2930,1996 A 142,142 0 0 0 3214,1996" fill="none"/>
+
+    <g id="smallDiamond">
+      <line x1="-90" y1="0" x2="-14" y2="0" stroke="#C9A227" stroke-width="1.5"/>
+      <path d="M0,-13 L9,0 L0,13 L-9,0 Z" fill="#C9A227"/>
+      <line x1="14" y1="0" x2="90" y2="0" stroke="#C9A227" stroke-width="1.5"/>
+    </g>
+
+    <g id="trophyLaurel">
+      <path d="M-26,-46 C-26,-20 -14,-2 0,-2 C14,-2 26,-20 26,-46 Z" fill="none" stroke="url(#goldGrad)" stroke-width="4.5"/>
+      <path d="M-26,-42 C-40,-42 -40,-24 -26,-20" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+      <path d="M26,-42 C40,-42 40,-24 26,-20" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+      <rect x="-11" y="-48" width="22" height="8" fill="url(#goldGrad)"/>
+      <line x1="0" y1="-2" x2="0" y2="24" stroke="url(#goldGrad)" stroke-width="4.5"/>
+      <rect x="-20" y="24" width="40" height="9" fill="url(#goldGrad)"/>
+      <rect x="-26" y="33" width="52" height="8" fill="url(#goldGrad)"/>
+      <path d="M-34,20 C-52,10 -58,-14 -48,-34 C-40,-24 -38,-6 -34,20 Z" fill="url(#goldGrad)" opacity="0.9"/>
+      <path d="M34,20 C52,10 58,-14 48,-34 C40,-24 38,-6 34,20 Z" fill="url(#goldGrad)" opacity="0.9"/>
+    </g>
+  </defs>
+
+  <!-- ============================= BACKGROUND ============================= -->
+  <rect x="0" y="0" width="3508" height="2481" fill="url(#paperGrad)"/>
+  <rect x="0" y="0" width="3508" height="2481" fill="url(#linen)" opacity="0.5"/>
+
+  <!-- faint watermark: laurel wreath (abstract leadership emblem) -->
+  <g opacity="0.05" stroke="#152442" fill="none">
+    <circle cx="1754" cy="1180" r="520" stroke-width="3"/>
+    <path d="M1360,1180 C1360,960 1540,800 1754,800" stroke-width="2"/>
+    <path d="M2148,1180 C2148,960 1968,800 1754,800" stroke-width="2"/>
+    <path d="M1400,1000 C1460,970 1500,980 1520,1020" stroke-width="1.5"/>
+    <path d="M2108,1000 C2048,970 2008,980 1988,1020" stroke-width="1.5"/>
+    <path d="M1400,1360 C1460,1390 1500,1380 1520,1340" stroke-width="1.5"/>
+    <path d="M2108,1360 C2048,1390 2008,1380 1988,1340" stroke-width="1.5"/>
+  </g>
+
+  <!-- ============================= BORDER ============================= -->
+  <rect x="60" y="60" width="3388" height="2361" fill="none" stroke="#152442" stroke-width="8"/>
+  <rect x="88" y="88" width="3332" height="2305" fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+
+  <!-- geometric navy corner panels with gold diagonal trim -->
+  <g>
+    <path d="M60,60 L620,60 L60,460 Z" fill="#152442"/>
+    <polygon points="60,460 620,60 552.8,60 60,412" fill="#274468" opacity="0.55"/>
+    <line x1="60" y1="460" x2="620" y2="60" stroke="url(#goldGrad)" stroke-width="5"/>
+    <line x1="60" y1="412" x2="552.8" y2="60" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  </g>
+  <g>
+    <path d="M3448,60 L2888,60 L3448,460 Z" fill="#152442"/>
+    <polygon points="3448,460 2888,60 2955.2,60 3448,412" fill="#274468" opacity="0.55"/>
+    <line x1="3448" y1="460" x2="2888" y2="60" stroke="url(#goldGrad)" stroke-width="5"/>
+    <line x1="3448" y1="412" x2="2955.2" y2="60" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  </g>
+  <g>
+    <path d="M60,2421 L620,2421 L60,2021 Z" fill="#152442"/>
+    <polygon points="60,2021 620,2421 552.8,2421 60,2069" fill="#274468" opacity="0.55"/>
+    <line x1="60" y1="2021" x2="620" y2="2421" stroke="url(#goldGrad)" stroke-width="5"/>
+    <line x1="60" y1="2069" x2="552.8" y2="2421" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  </g>
+  <g>
+    <path d="M3448,2421 L2888,2421 L3448,2021 Z" fill="#152442"/>
+    <polygon points="3448,2021 2888,2421 2955.2,2421 3448,2069" fill="#274468" opacity="0.55"/>
+    <line x1="3448" y1="2021" x2="2888" y2="2421" stroke="url(#goldGrad)" stroke-width="5"/>
+    <line x1="3448" y1="2069" x2="2955.2" y2="2421" stroke="url(#goldGrad)" stroke-width="2.5"/>
+  </g>
+
+  <!-- ============================= LOGO ============================= -->
+  <circle cx="1754" cy="248" r="150" fill="#FFFFFF" stroke="url(#goldGrad)" stroke-width="5"/>
+  <text x="1754" y="238" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="3" fill="#152442">LOGO</text>
+  <text x="1754" y="270" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="2" fill="#8A8272">PLACEHOLDER</text>
+  <image id="logo-slot" x="1604" y="98" width="300" height="300" href="" xlink:href="" clip-path="url(#logoClip)" preserveAspectRatio="xMidYMid slice"/>
+
+  <!-- ============================= HEADER TEXT ============================= -->
+  <text id="institution-name" x="1754" y="450" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="48" letter-spacing="8" fill="#152442">NAME OF ISSUING INSTITUTION / BODY</text>
+  <line x1="1204" y1="500" x2="2304" y2="500" stroke="#C9A227" stroke-width="2"/>
+
+  <g transform="translate(1754,520)"><use href="#smallDiamond" xlink:href="#smallDiamond"/></g>
+
+  <!-- Title with flanking trophy/laurel icons -->
+  <use href="#trophyLaurel" xlink:href="#trophyLaurel" transform="translate(680,610)"/>
+  <use href="#trophyLaurel" xlink:href="#trophyLaurel" transform="translate(2828,610)"/>
+  <text id="certificate-title" x="1754" y="632" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="96" font-weight="800" letter-spacing="3" fill="#152442">CERTIFICATE OF EXCELLENCE</text>
+  <text id="opt-subtitle" x="1754" y="700" text-anchor="middle" font-size="44" font-style="italic" fill="#9C7A2E">Certificate of Recognition</text>
+
+  <!-- Awarded to -->
+  <text id="awarded-to-label" x="1754" y="796" text-anchor="middle" font-size="44" fill="#333029">This award is proudly presented to:</text>
+
+  <text id="recipient-name" x="1754" y="910" text-anchor="middle" font-size="92" font-weight="700" letter-spacing="1" fill="#152442">RECIPIENT&#8217;S FULL NAME</text>
+  <line x1="954" y1="958" x2="2554" y2="958" stroke="#C9A227" stroke-width="2.5"/>
+
+  <g transform="translate(1754,1010)"><use href="#smallDiamond" xlink:href="#smallDiamond"/></g>
+
+  <!-- Recognition paragraph (single-style lines — safe with text-anchor=middle) -->
+  <text x="1754" y="1108" text-anchor="middle" font-size="40" fill="#333029">
+    <tspan x="1754" dy="0">In grateful recognition of your outstanding performance, unwavering dedication,</tspan>
+    <tspan x="1754" dy="58">and exemplary service to the vision and goals of this institution.</tspan>
+    <tspan x="1754" dy="90">Your exceptional contributions, leadership, and commitment to excellence</tspan>
+    <tspan x="1754" dy="58">have set a distinguished standard of inspiration for colleagues, peers, and leadership alike.</tspan>
+  </text>
+
+  <!-- Presented this / date line (left-anchored: avoids a text-anchor="middle" + tspan measurement bug present in several SVG renderers) -->
+  <text x="1120" y="1470" font-size="46" fill="#333029">Presented this <tspan id="award-day" fill="#152442" font-weight="700" style="text-decoration:underline;">Day</tspan> day of <tspan id="award-month" fill="#152442" font-weight="700" style="text-decoration:underline;">Month</tspan>, 20<tspan id="award-year" fill="#152442" font-weight="700" style="text-decoration:underline;">YY</tspan></text>
+
+  <!-- ============================= SERIAL NUMBER (bottom left, no rule above) ============================= -->
+  <!-- positioned above y=2021 so it never overlaps the bottom-left corner panel -->
+  <text id="certificate-number-label" x="230" y="2070" font-size="34" fill="#6B6250">Serial Number:</text>
+  <!-- system-generated: populate programmatically, do not expose to end-user editing UI -->
+  <text id="certificate-number" x="230" y="2116" font-size="38" font-weight="700" fill="#152442">#XXXXXX</text>
+
+  <!-- ============================= SIGNATURES ============================= -->
+  <!-- Delete the whole <g id="signatures-section"> to remove signatures entirely.
+       Delete just <g id="signature-1-block"> or "signature-2-block" to remove one signer.
+       Every text line inside each block has its own id, so captions/titles can be
+       edited or cleared independently without touching the rest of the section. -->
+  <g id="signatures-section">
+
+    <g id="signature-1-block">
+      <rect x="1290" y="1920" width="320" height="118" fill="none" stroke="#AEB7C6" stroke-width="2" stroke-dasharray="8 6"/>
+      <text x="1450" y="1984" text-anchor="middle" font-size="24" fill="#B0A88E">Signature (PNG)</text>
+      <image id="signature-1" x="1290" y="1920" width="320" height="118" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+      <line x1="1210" y1="2070" x2="1690" y2="2070" stroke="#C9A227" stroke-width="1.5"/>
+      <text id="signature-1-caption" x="1450" y="2118" text-anchor="middle" font-size="34" font-weight="700" fill="#152442">Full Name of Signer</text>
+      <text id="signature-1-title" x="1450" y="2158" text-anchor="middle" font-size="30" font-style="italic" fill="#6B6250">Title: Executive Director</text>
+    </g>
+
+    <g transform="translate(1754,2070)"><use href="#smallDiamond" xlink:href="#smallDiamond" transform="rotate(90)"/></g>
+
+    <g id="signature-2-block">
+      <rect x="1898" y="1920" width="320" height="118" fill="none" stroke="#AEB7C6" stroke-width="2" stroke-dasharray="8 6"/>
+      <text x="2058" y="1984" text-anchor="middle" font-size="24" fill="#B0A88E">Signature (PNG)</text>
+      <image id="signature-2" x="1898" y="1920" width="320" height="118" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+      <line x1="1818" y1="2070" x2="2298" y2="2070" stroke="#C9A227" stroke-width="1.5"/>
+      <text id="opt-signature-2-caption" x="2058" y="2118" text-anchor="middle" font-size="34" font-weight="700" fill="#152442">Full Name of Signer</text>
+      <text id="opt-signature-2-title" x="2058" y="2158" text-anchor="middle" font-size="30" font-style="italic" fill="#6B6250">Title: Program Chair</text>
+    </g>
+
+  </g>
+
+  <!-- ============================= SEAL ============================= -->
+  <circle cx="3072" cy="1980" r="198" fill="url(#goldGrad)" stroke="#8E6E22" stroke-width="2"/>
+  <circle cx="3072" cy="1980" r="168" fill="none" stroke="#7A5E1E" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="3072" cy="1980" r="120" fill="none" stroke="#7A5E1E" stroke-width="1" opacity="0.55"/>
+
+  <text font-size="21" font-weight="700" letter-spacing="2.5" fill="#152442">
+    <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL</textPath>
+  </text>
+  <text font-size="15" letter-spacing="1.5" fill="#152442">
+    <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">EXCELLENCE &#183; SERVICE &#183; LEADERSHIP</textPath>
+  </text>
+
+  <g stroke="#152442" stroke-width="3" fill="none">
+    <line x1="3046" y1="1962" x2="3046" y2="1998"/>
+    <line x1="3072" y1="1962" x2="3072" y2="1998"/>
+    <line x1="3098" y1="1962" x2="3098" y2="1998"/>
+    <rect x="3038" y="1954" width="68" height="7" fill="#152442" stroke="none"/>
+    <rect x="3034" y="1998" width="76" height="7" fill="#152442" stroke="none"/>
+  </g>
+  <path d="M2958,2032 C2938,2000 2938,1960 2964,1934" stroke="#152442" stroke-width="2.2" fill="none"/>
+  <path d="M3186,2032 C3206,2000 3206,1960 3180,1934" stroke="#152442" stroke-width="2.2" fill="none"/>
+
+  <image id="opt-seal-slot" x="2874" y="1782" width="396" height="396" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
+
+  <!-- ============================= FOOTER BAND ============================= -->
+  <rect x="88" y="2293" width="3332" height="98" fill="#152442"/>
+  <line x1="88" y1="2293" x2="3420" y2="2293" stroke="url(#goldGrad)" stroke-width="3.5"/>
+  <text id="footer-tagline" x="1754" y="2354" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" letter-spacing="4" fill="#EDE3CF">LEAD WITH PURPOSE &#8226; SERVE WITH EXCELLENCE &#8226; INSPIRE GENERATIONS</text>
+
+</svg>

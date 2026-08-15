@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3508" height="2480" viewBox="0 0 3508 2480">
+<defs>
+
+  <linearGradient id="goldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#E8CE95"/>
+    <stop offset="45%" stop-color="#C9A15C"/>
+    <stop offset="100%" stop-color="#9C7A3C"/>
+  </linearGradient>
+  <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#C9A15C" stop-opacity="0"/>
+    <stop offset="15%" stop-color="#C9A15C" stop-opacity="1"/>
+    <stop offset="85%" stop-color="#C9A15C" stop-opacity="1"/>
+    <stop offset="100%" stop-color="#C9A15C" stop-opacity="0"/>
+  </linearGradient>
+  <pattern id="guilloche" width="64" height="64" patternUnits="userSpaceOnUse">
+    <circle cx="32" cy="32" r="30" fill="none" stroke="#152142" stroke-width="0.7"/>
+    <circle cx="0" cy="0" r="30" fill="none" stroke="#152142" stroke-width="0.7"/>
+    <circle cx="64" cy="0" r="30" fill="none" stroke="#152142" stroke-width="0.7"/>
+    <circle cx="0" cy="64" r="30" fill="none" stroke="#152142" stroke-width="0.7"/>
+    <circle cx="64" cy="64" r="30" fill="none" stroke="#152142" stroke-width="0.7"/>
+  </pattern>
+  <symbol id="leafSprig" viewBox="0 0 200 400">
+    <path d="M100,400 C90,300 60,260 20,220 C60,230 90,255 100,300 C110,255 140,230 180,220 C140,260 110,300 100,400 Z" fill="#C9A15C" opacity="0.85"/>
+    <path d="M100,300 C92,230 68,200 30,175 C68,182 92,205 100,240 C108,205 132,182 170,175 C132,200 108,230 100,300 Z" fill="#C9A15C" opacity="0.7"/>
+    <path d="M100,220 C95,175 78,155 45,138 C78,142 95,160 100,185 C105,160 122,142 155,138 C122,155 105,175 100,220 Z" fill="#C9A15C" opacity="0.55"/>
+  </symbol>
+  <symbol id="cornerFlourish" viewBox="0 0 220 220">
+    <path d="M4,4 C60,4 90,10 90,60 C90,100 130,110 200,100" fill="none" stroke="#C9A15C" stroke-width="3"/>
+    <path d="M4,4 C4,60 10,90 60,90 C100,90 110,130 100,200" fill="none" stroke="#C9A15C" stroke-width="3"/>
+    <circle cx="90" cy="60" r="7" fill="#C9A15C"/>
+    <circle cx="60" cy="90" r="7" fill="#C9A15C"/>
+    <path d="M4,4 L46,4 M4,4 L4,46" stroke="#152142" stroke-width="10"/>
+  </symbol>
+
+</defs>
+<rect x="0" y="0" width="3508" height="2480" fill="#F8F2E4"/>
+<rect x="0" y="0" width="3508" height="2480" fill="url(#guilloche)" opacity="0.12"/>
+<g id="opt-watermark" opacity="0.05">
+  <circle cx="1754.0" cy="1240.0" r="430" fill="none" stroke="#152142" stroke-width="6"/>
+  <path d="M 1374.0,1280.0 C 1374.0,1500.0 1574.0,1670.0 1754.0,1670.0" fill="none" stroke="#9C7A3C" stroke-width="12"/>
+  <path d="M 2134.0,1280.0 C 2134.0,1500.0 1934.0,1670.0 1754.0,1670.0" fill="none" stroke="#9C7A3C" stroke-width="12"/>
+</g>
+<rect x="70" y="70" width="3368" height="2340" fill="none" stroke="#1B2A4A" stroke-width="26"/>
+<rect x="112" y="112" width="3284" height="2256" fill="none" stroke="#C9A15C" stroke-width="6"/>
+<rect x="132" y="132" width="3244" height="2216" fill="none" stroke="#C9A15C" stroke-width="2" opacity="0.7"/>
+<g id="opt-corner-ornaments">
+<use href="#cornerFlourish" width="220" height="220" transform="translate(70,70)"/>
+<use href="#cornerFlourish" width="220" height="220" transform="translate(3438,70) scale(-1,1)"/>
+<use href="#cornerFlourish" width="220" height="220" transform="translate(70,2410) scale(1,-1)"/>
+<use href="#cornerFlourish" width="220" height="220" transform="translate(3438,2410) scale(-1,-1)"/>
+</g>
+<g id="opt-logo-slot">
+  <use href="#leafSprig" x="1324.0" y="90" width="140" height="280" transform="rotate(-70 1394.0 230)"/>
+  <use href="#leafSprig" x="2044.0" y="90" width="140" height="280" transform="rotate(70 2114.0 230) scale(-1,1) translate(-4228.0,0)"/>
+  <path d="M 1614.0,70 L 1894.0,70 L 1894.0,230 C 1894.0,320 1824.0,380 1754.0,420 C 1684.0,380 1614.0,320 1614.0,230 Z" fill="#1B2A4A" stroke="url(#goldFoil)" stroke-width="7"/>
+  <polygon points="1699.0,188 1748.0,201 1748.0,229 1699.0,217" fill="#F8F2E4" stroke="#C9A15C" stroke-width="2" stroke-linejoin="round"/>
+  <polygon points="1809.0,188 1760.0,201 1760.0,229 1809.0,217" fill="#F8F2E4" stroke="#C9A15C" stroke-width="2" stroke-linejoin="round"/>
+  <line x1="1754.0" y1="201" x2="1754.0" y2="229" stroke="#C9A15C" stroke-width="2"/>
+  <rect x="1709.0" y="277" width="90" height="14" fill="#C9A15C"/>
+  <rect x="1724.0" y="291" width="60" height="70" fill="#F8F2E4" stroke="#C9A15C" stroke-width="2"/>
+  <line x1="1732.0" y1="295" x2="1732.0" y2="357" stroke="#C9A15C" stroke-width="1.5" opacity="0.8"/>
+  <line x1="1743.0" y1="295" x2="1743.0" y2="357" stroke="#C9A15C" stroke-width="1.5" opacity="0.8"/>
+  <line x1="1754.0" y1="295" x2="1754.0" y2="357" stroke="#C9A15C" stroke-width="1.5" opacity="0.8"/>
+  <line x1="1765.0" y1="295" x2="1765.0" y2="357" stroke="#C9A15C" stroke-width="1.5" opacity="0.8"/>
+  <line x1="1776.0" y1="295" x2="1776.0" y2="357" stroke="#C9A15C" stroke-width="1.5" opacity="0.8"/>
+  <rect x="1706.0" y="361" width="96" height="14" fill="#C9A15C"/>
+  <image id="logo-image" x="1614.0" y="70" width="280" height="350" xlink:href="" preserveAspectRatio="xMidYMid meet" clip-path="none"/>
+</g>
+<text id="institution-name" x="1754.0" y="600" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-weight="700" font-size="66" letter-spacing="3" fill="#152142" style="text-transform:uppercase">NAME OF ISSUING INSTITUTION</text>
+<text id="opt-subtitle" x="1754.0" y="662" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-style="italic" font-size="38" fill="#2E2E2E">Department, Ministry, or Subsidiary</text>
+<line x1="1074.0" y1="712" x2="2434.0" y2="712" stroke="url(#goldLine)" stroke-width="3"/>
+<text id="certificate-title" x="1754.0" y="835" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-weight="700" font-size="100" letter-spacing="4" fill="#152142">CERTIFICATE OF COMPLETION</text>
+<line x1="1074.0" y1="885" x2="2434.0" y2="885" stroke="url(#goldLine)" stroke-width="3"/>
+<text id="awarded-label" x="1754.0" y="985" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-size="44" fill="#2E2E2E">This is officially awarded to:</text>
+<text id="recipient-name" x="1754.0" y="1120" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-weight="700" font-size="118" letter-spacing="2" fill="#152142" style="text-transform:uppercase">FIRST NAME &amp; SURNAME OF RECIPIENT</text>
+<line x1="1034.0" y1="1162" x2="2474.0" y2="1162" stroke="#C9A15C" stroke-width="3"/>
+<text id="recognition-line1" x="1754.0" y="1255" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-size="42" fill="#2E2E2E">in recognition of their dedicated participation and successful fulfillment</text>
+<text id="recognition-line2" x="1754.0" y="1315" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-size="42" fill="#2E2E2E">of all requirements established for the training program titled:</text>
+<text x="1754" y="1430" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-size="60" fill="#152142" font-style="italic"><tspan font-weight="700">“</tspan><tspan id="course-title" font-weight="700">Title of Course / Program / Theme / Study</tspan><tspan font-weight="700">”</tspan></text>
+<text y="1530" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-size="42" fill="#2E2E2E" x="768.84">This program was conducted from <tspan id="start-date" font-weight="700" fill="#152142" style="text-decoration:underline;">Start Date</tspan> to <tspan id="end-date" font-weight="700" fill="#152142" style="text-decoration:underline;">End Date</tspan>, covering core modules,</text>
+<text id="conducted-line2" x="1754.0" y="1588" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-size="42" fill="#2E2E2E">practical applications, and foundational principles outlined by the organizing body.</text>
+<text y="1685" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-size="44" fill="#2E2E2E" x="1290.4">Granted this <tspan id="award-day" font-weight="700" fill="#152142" style="text-decoration:underline;">Day</tspan> day of <tspan id="award-month" font-weight="700" fill="#152142" style="text-decoration:underline;">Month</tspan>, <tspan id="award-year" font-weight="700" fill="#152142" style="text-decoration:underline;">Year</tspan>.</text>
+<text id="certificate-label" x="320" y="2140" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="32" letter-spacing="3" fill="#152142" font-weight="700">CERTIFICATE NO.</text>
+<text id="certificate-number" x="320" y="2196" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="38" letter-spacing="1" fill="#2E2E2E">AUTO-GENERATED</text>
+<g id="signature-section">
+<g id="signature-1">
+  <rect id="signature-1-slot" x="934.0" y="1990" width="540" height="180" fill="#F8F2E4" stroke="#8C8C8C" stroke-width="2" stroke-dasharray="10,8" rx="6"/>
+  <image id="signature-1-image" x="934.0" y="1990" width="540" height="180" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+  <text id="signature-1-placeholder-label" x="1204.0" y="2088" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="26" fill="#9AA0A6">Signature Image</text>
+  <line x1="934.0" y1="2195" x2="1474.0" y2="2195" stroke="#2E2E2E" stroke-width="2"/>
+  <text id="signature-1-caption" x="1204.0" y="2242" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-weight="700" font-size="34" fill="#152142">Full Name of Signer</text>
+  <text id="signature-1-title" x="1204.0" y="2284" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-style="italic" font-size="30" fill="#2E2E2E">Title: Director / Pastor</text>
+</g>
+<g id="opt-signature-2">
+  <rect id="opt-signature-2-slot" x="2034.0" y="1990" width="540" height="180" fill="#F8F2E4" stroke="#8C8C8C" stroke-width="2" stroke-dasharray="10,8" rx="6"/>
+  <image id="opt-signature-2-image" x="2034.0" y="1990" width="540" height="180" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+  <text id="opt-signature-2-placeholder-label" x="2304.0" y="2088" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="26" fill="#9AA0A6">Signature Image</text>
+  <line x1="2034.0" y1="2195" x2="2574.0" y2="2195" stroke="#2E2E2E" stroke-width="2"/>
+  <text id="opt-signature-2-caption" x="2304.0" y="2242" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-weight="700" font-size="34" fill="#152142">Full Name of Signer</text>
+  <text id="opt-signature-2-title" x="2304.0" y="2284" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-style="italic" font-size="30" fill="#2E2E2E">Title: Registrar / HOD</text>
+</g>
+</g>
+<g id="opt-seal-slot">
+  <circle cx="3038" cy="1990" r="205" fill="#1B2A4A" stroke="url(#goldFoil)" stroke-width="8"/>
+  <circle cx="3038" cy="1990" r="189" fill="none" stroke="#C9A15C" stroke-width="2"/>
+  <circle cx="3038" cy="1990" r="177" fill="none" stroke="#C9A15C" stroke-width="1.5" opacity="0.8"/>
+  <circle cx="3249.0" cy="1990.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3243.7" cy="2037.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3228.1" cy="2081.5" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3203.0" cy="2121.6" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3169.6" cy="2155.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3129.5" cy="2180.1" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3085.0" cy="2195.7" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3038.0" cy="2201.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2991.0" cy="2195.7" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2946.5" cy="2180.1" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2906.4" cy="2155.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2873.0" cy="2121.6" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2847.9" cy="2081.5" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2832.3" cy="2037.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2827.0" cy="1990.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2832.3" cy="1943.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2847.9" cy="1898.5" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2873.0" cy="1858.4" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2906.4" cy="1825.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2946.5" cy="1799.9" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="2991.0" cy="1784.3" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3038.0" cy="1779.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3085.0" cy="1784.3" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3129.5" cy="1799.9" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3169.6" cy="1825.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3203.0" cy="1858.4" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3228.1" cy="1898.5" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/><circle cx="3243.7" cy="1943.0" r="9" fill="#1B2A4A" stroke="#C9A15C" stroke-width="1.5"/>
+  <use href="#leafSprig" x="2898" y="1920" width="90" height="180" transform="rotate(-100 2943 2050)"/>
+  <use href="#leafSprig" x="3088" y="1920" width="90" height="180" transform="rotate(100 3133 2050) scale(-1,1) translate(-6266,0)"/>
+  <polygon points="3038.0,1926.0 3046.8,1947.9 3070.3,1949.5 3052.3,1964.6 3058.0,1987.5 3038.0,1975.0 3018.0,1987.5 3023.7,1964.6 3005.7,1949.5 3029.2,1947.9" fill="#C9A15C"/>
+  <path id="sealArcTop" d="M 2888,1970 A 155 155 0 0 1 3188,1970" fill="none"/>
+  <path id="sealArcBottom" d="M 2898,2030 A 145 145 0 0 0 3178,2030" fill="none"/>
+  <text font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="26" letter-spacing="4" fill="#E8CE95" font-weight="700">
+    <textPath href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL OF</textPath>
+  </text>
+  <text font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" letter-spacing="4" fill="#E8CE95" font-weight="700">
+    <textPath href="#sealArcBottom" startOffset="50%" text-anchor="middle">AUTHENTICATION</textPath>
+  </text>
+  <image id="seal-image" x="2833" y="1785" width="410" height="410" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+</g>
+</svg>

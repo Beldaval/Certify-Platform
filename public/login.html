@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in — Certify</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div class="nav">
+  <a class="brand" href="/"><div class="mark">C</div><div class="name">Certify</div></a>
+</div>
+
+<div class="container" style="max-width:440px;padding-top:20px;">
+  <div class="card">
+    <div style="display:flex;gap:8px;margin-bottom:18px;">
+      <button class="btn btn-ghost" id="tab-login" style="flex:1;">Log in</button>
+      <button class="btn btn-ghost" id="tab-signup" style="flex:1;">Sign up</button>
+    </div>
+
+    <form id="login-form">
+      <label>Email</label>
+      <input type="email" id="login-email" required>
+      <label>Password</label>
+      <input type="password" id="login-password" required>
+      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:18px;">Log in</button>
+      <button type="button" id="forgot-btn" class="btn btn-ghost" style="width:100%;margin-top:8px;">Forgot password?</button>
+      <div class="error-text hidden" id="login-error"></div>
+      <div class="success-text hidden" id="forgot-success"></div>
+    </form>
+
+    <form id="signup-form" class="hidden">
+      <label>Organization name</label>
+      <input type="text" id="signup-org" placeholder="e.g. Grace Chapel" required>
+      <label>Email</label>
+      <input type="email" id="signup-email" required>
+      <label>Password</label>
+      <input type="password" id="signup-password" minlength="8" required>
+      <button class="btn btn-gold" type="submit" style="width:100%;margin-top:18px;">Create account — 10 free certificates</button>
+      <div class="error-text hidden" id="signup-error"></div>
+      <div class="success-text hidden" id="signup-success"></div>
+    </form>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabaseClient.js"></script>
+<script>
+const loginForm = document.getElementById('login-form');
+const signupForm = document.getElementById('signup-form');
+const tabLogin = document.getElementById('tab-login');
+const tabSignup = document.getElementById('tab-signup');
+
+function showSignup() { loginForm.classList.add('hidden'); signupForm.classList.remove('hidden'); }
+function showLogin() { signupForm.classList.add('hidden'); loginForm.classList.remove('hidden'); }
+tabLogin.addEventListener('click', showLogin);
+tabSignup.addEventListener('click', showSignup);
+if (new URLSearchParams(location.search).get('mode') === 'signup') showSignup();
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.classList.add('hidden');
+  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  if (error) { errEl.textContent = error.message; errEl.classList.remove('hidden'); return; }
+  window.location.href = '/dashboard.html';
+});
+
+document.getElementById('forgot-btn').addEventListener('click', async () => {
+  const email = document.getElementById('login-email').value;
+  const okEl = document.getElementById('forgot-success');
+  if (!email) { alert('Enter your email above first.'); return; }
+  await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/login.html` });
+  okEl.textContent = 'Password reset email sent — check your inbox.';
+  okEl.classList.remove('hidden');
+});
+
+signupForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+  const org = document.getElementById('signup-org').value;
+  const errEl = document.getElementById('signup-error');
+  const okEl = document.getElementById('signup-success');
+  errEl.classList.add('hidden'); okEl.classList.add('hidden');
+  const { data, error } = await supabaseClient.auth.signUp({
+    email, password,
+    options: { data: { full_name: org } },
+  });
+  if (error) { errEl.textContent = error.message; errEl.classList.remove('hidden'); return; }
+  if (data.session) {
+    window.location.href = '/dashboard.html';
+  } else {
+    okEl.textContent = 'Account created — check your email to confirm, then log in.';
+    okEl.classList.remove('hidden');
+  }
+});
+</script>
+</body>
+</html>

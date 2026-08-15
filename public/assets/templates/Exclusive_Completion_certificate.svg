@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="3508" height="2481" viewBox="0 0 3508 2481"
+     font-family="Georgia, 'Times New Roman', Times, serif">
+
+  <!-- ============================= DEFS ============================= -->
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#181B20"/>
+      <stop offset="60%" stop-color="#101216"/>
+      <stop offset="100%" stop-color="#0B0C0F"/>
+    </radialGradient>
+
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F1DB96"/>
+      <stop offset="45%" stop-color="#C9A227"/>
+      <stop offset="100%" stop-color="#8E6E22"/>
+    </linearGradient>
+    <linearGradient id="goldGradSoft" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9C7A2E"/>
+      <stop offset="50%" stop-color="#E8CE7B"/>
+      <stop offset="100%" stop-color="#9C7A2E"/>
+    </linearGradient>
+
+    <pattern id="microline" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="26" stroke="#C9A227" stroke-width="0.6"/>
+    </pattern>
+
+    <clipPath id="logoClip"><circle cx="1754" cy="256" r="176"/></clipPath>
+    <clipPath id="sealClip"><circle cx="3082" cy="2128" r="230"/></clipPath>
+    <path id="sealArcTop" d="M 2870,2128 A 212,212 0 0 1 3294,2128" fill="none"/>
+    <path id="sealArcBottom" d="M 2878,2148 A 204,204 0 0 0 3286,2148" fill="none"/>
+
+    <g id="cornerMark">
+      <rect x="0" y="0" width="14" height="14" fill="url(#goldGrad)"/>
+      <path d="M0,0 H150 M0,0 V150" stroke="url(#goldGrad)" stroke-width="4" fill="none"/>
+      <path d="M26,26 H96 M26,26 V96" stroke="url(#goldGrad)" stroke-width="2" fill="none"/>
+      <rect x="26" y="26" width="18" height="18" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+    </g>
+
+    <g id="smallDiamond">
+      <line x1="-90" y1="0" x2="-14" y2="0" stroke="#C9A227" stroke-width="1.5"/>
+      <path d="M0,-13 L9,0 L0,13 L-9,0 Z" fill="#C9A227"/>
+      <line x1="14" y1="0" x2="90" y2="0" stroke="#C9A227" stroke-width="1.5"/>
+    </g>
+  </defs>
+
+  <!-- ============================= BACKGROUND ============================= -->
+  <rect x="0" y="0" width="3508" height="2481" fill="url(#bgGrad)"/>
+  <rect x="0" y="0" width="3508" height="2481" fill="url(#microline)" opacity="0.05"/>
+
+  <!-- faint watermark: interwoven laurel + abstract academic shield -->
+  <g opacity="0.045" stroke="#C9A227" fill="none">
+    <path d="M1754,760 L1650,900 C1650,1050 1700,1180 1754,1230 C1808,1180 1858,1050 1858,900 Z" stroke-width="3"/>
+    <path d="M1500,1000 C1560,960 1610,960 1650,1000" stroke-width="2"/>
+    <path d="M2008,1000 C1948,960 1898,960 1858,1000" stroke-width="2"/>
+    <path d="M1460,1080 C1540,1040 1600,1060 1640,1110" stroke-width="2"/>
+    <path d="M2048,1080 C1968,1040 1908,1060 1868,1110" stroke-width="2"/>
+  </g>
+
+  <!-- ============================= BORDER ============================= -->
+  <rect x="60" y="60" width="3388" height="2361" fill="none" stroke="url(#goldGrad)" stroke-width="4"/>
+  <rect x="100" y="100" width="3308" height="2281" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+
+  <!-- geometric executive corner marks -->
+  <use href="#cornerMark" xlink:href="#cornerMark" x="66" y="66"/>
+  <use href="#cornerMark" xlink:href="#cornerMark" x="3442" y="66" transform="scale(-1,1) translate(-6884,0)"/>
+  <use href="#cornerMark" xlink:href="#cornerMark" x="66" y="2415" transform="scale(1,-1) translate(0,-4830)"/>
+  <use href="#cornerMark" xlink:href="#cornerMark" x="3442" y="2415" transform="scale(-1,-1) translate(-6884,-4830)"/>
+
+  <!-- ============================= LOGO ============================= -->
+  <circle cx="1754" cy="256" r="176" fill="none" stroke="url(#goldGrad)" stroke-width="4"/>
+  <circle cx="1754" cy="256" r="160" fill="none" stroke="#C9A227" stroke-width="1.2" opacity="0.7"/>
+  <text x="1754" y="248" text-anchor="middle" font-size="34" letter-spacing="3" fill="#E8CE7B">LOGO</text>
+  <text x="1754" y="284" text-anchor="middle" font-size="17" letter-spacing="2" fill="#B9A876" opacity="0.9">PLACEHOLDER</text>
+  <image id="logo-slot" x="1578" y="80" width="352" height="352" href="" xlink:href="" clip-path="url(#logoClip)" preserveAspectRatio="xMidYMid slice"/>
+
+  <!-- ============================= HEADER TEXT ============================= -->
+  <text id="institution-name" x="1754" y="500" text-anchor="middle" font-size="52" letter-spacing="10" fill="#EDE3CF">NAME OF ISSUING INSTITUTION / BODY</text>
+  <text id="opt-subtitle" x="1754" y="550" text-anchor="middle" font-size="32" fill="#9C978A">Department, Ministry, or Subsidiary</text>
+
+  <line x1="1204" y1="600" x2="2304" y2="600" stroke="#C9A227" stroke-width="1.5"/>
+  <text id="certificate-title" x="1754" y="716" text-anchor="middle" font-size="106" font-weight="700" letter-spacing="6" fill="url(#goldGrad)">CERTIFICATE OF COMPLETION</text>
+  <line x1="1204" y1="762" x2="2304" y2="762" stroke="#C9A227" stroke-width="1.5"/>
+
+  <!-- Awarded to -->
+  <text id="awarded-to-label" x="1754" y="856" text-anchor="middle" font-size="44" fill="#D9CFB8">This is officially awarded to:</text>
+
+  <text id="recipient-name" x="1754" y="972" text-anchor="middle" font-size="94" font-weight="700" letter-spacing="3" fill="#F1E9D4">FIRST NAME &amp; SURNAME OF RECIPIENT</text>
+  <line x1="954" y1="1022" x2="2554" y2="1022" stroke="url(#goldGrad)" stroke-width="2.5"/>
+
+  <!-- Recognition paragraph (single-style lines — safe with text-anchor=middle) -->
+  <text x="1754" y="1130" text-anchor="middle" font-size="40" fill="#B9B2A2">
+    <tspan x="1754" dy="0">in recognition of their dedicated participation and successful fulfillment</tspan>
+    <tspan x="1754" dy="56">of all requirements established for the training program titled:</tspan>
+  </text>
+
+  <!-- Course title (left-anchored: avoids a text-anchor="middle" + tspan measurement bug present in several SVG renderers) -->
+  <text x="1050" y="1360" font-size="72" font-weight="700" font-style="italic" fill="url(#goldGrad)">&#8220;<tspan id="course-title">TITLE OF COURSE / PROGRAM / THEME / STUDY</tspan>&#8221;</text>
+
+  <!-- Program dates paragraph (left-anchored, same reason) -->
+  <text x="1000" y="1490" font-size="40" fill="#B9B2A2">
+    <tspan x="1000" dy="0">This program was conducted from <tspan id="start-date" fill="#EDE3CF" font-weight="700" style="text-decoration:underline;">Start Date</tspan> to <tspan id="end-date" fill="#EDE3CF" font-weight="700" style="text-decoration:underline;">End Date</tspan>, covering</tspan>
+    <tspan x="1000" dy="50">core modules, practical applications, and foundational principles outlined by the organizing body.</tspan>
+  </text>
+
+  <!-- Granted line (left-anchored, same reason) -->
+  <text x="1000" y="1780" font-size="44" fill="#B9B2A2">Granted this <tspan id="award-day" fill="#EDE3CF" font-weight="700" style="text-decoration:underline;">Day</tspan> day of <tspan id="award-month" fill="#EDE3CF" font-weight="700" style="text-decoration:underline;">Month</tspan>, 20<tspan id="award-year" fill="#EDE3CF" font-weight="700" style="text-decoration:underline;">YY</tspan>.</text>
+
+  <!-- ============================= CERTIFICATE NO. (bottom left, no rule above) ============================= -->
+  <text id="certificate-number-label" x="230" y="2250" font-size="30" letter-spacing="3" fill="#B9A876">CERTIFICATE NO.</text>
+  <!-- system-generated: populate programmatically, do not expose to end-user editing UI -->
+  <text id="certificate-number" x="230" y="2300" font-size="42" font-weight="700" fill="#EDE3CF">HB-2025-00001</text>
+
+  <!-- ============================= SIGNATURES ============================= -->
+  <!-- Delete the whole <g id="signatures-section"> to remove signatures entirely.
+       Delete just <g id="signature-1-block"> or "signature-2-block" to remove one signer.
+       Every text line inside each block has its own id, so captions/titles can be
+       edited or cleared independently without touching the rest of the section. -->
+  <g id="signatures-section">
+
+    <g id="signature-1-block">
+      <rect x="1290" y="1958" width="320" height="126" fill="none" stroke="#8E6E22" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <text x="1450" y="2026" text-anchor="middle" font-size="22" fill="#7C7161">Signature (PNG)</text>
+      <image id="signature-1" x="1290" y="1958" width="320" height="126" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+      <line x1="1210" y1="2110" x2="1690" y2="2110" stroke="#8E6E22" stroke-width="1.5"/>
+      <text id="signature-1-caption" x="1450" y="2158" text-anchor="middle" font-size="36" font-weight="700" letter-spacing="1" fill="#E8CE7B">Full Name of Signer</text>
+      <text id="signature-1-title" x="1450" y="2198" text-anchor="middle" font-size="30" font-style="italic" fill="#B9B2A2">Director / Pastor</text>
+    </g>
+
+    <g transform="translate(1754,2110)"><use href="#smallDiamond" xlink:href="#smallDiamond" transform="rotate(90)"/></g>
+
+    <g id="signature-2-block">
+      <rect x="1898" y="1958" width="320" height="126" fill="none" stroke="#8E6E22" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <text x="2058" y="2026" text-anchor="middle" font-size="22" fill="#7C7161">Signature (PNG)</text>
+      <image id="signature-2" x="1898" y="1958" width="320" height="126" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+      <line x1="1818" y1="2110" x2="2298" y2="2110" stroke="#8E6E22" stroke-width="1.5"/>
+      <text id="opt-signature-2-caption" x="2058" y="2158" text-anchor="middle" font-size="36" font-weight="700" letter-spacing="1" fill="#E8CE7B">Full Name of Signer</text>
+      <text id="opt-signature-2-title" x="2058" y="2198" text-anchor="middle" font-size="30" font-style="italic" fill="#B9B2A2">Registrar / HOD</text>
+    </g>
+
+  </g>
+
+  <!-- ============================= SEAL ============================= -->
+  <path d="M 3082.0,1870.0 L 3098.1,1882.5 L 3115.7,1872.2 L 3130.0,1886.7 L 3148.8,1878.8 L 3161.1,1895.1 L 3180.7,1889.6 L 3190.8,1907.4 L 3211.0,1904.6 L 3218.7,1923.5 L 3239.1,1923.3 L 3244.2,1943.0 L 3264.4,1945.6 L 3267.0,1965.8 L 3286.7,1970.9 L 3286.5,1991.3 L 3305.4,1999.0 L 3302.6,2019.2 L 3320.4,2029.3 L 3314.9,2048.9 L 3331.2,2061.2 L 3323.3,2080.0 L 3337.8,2094.3 L 3327.5,2111.9 L 3340.0,2128.0 L 3327.5,2144.1 L 3337.8,2161.7 L 3323.3,2176.0 L 3331.2,2194.8 L 3314.9,2207.1 L 3320.4,2226.7 L 3302.6,2236.8 L 3305.4,2257.0 L 3286.5,2264.7 L 3286.7,2285.1 L 3267.0,2290.2 L 3264.4,2310.4 L 3244.2,2313.0 L 3239.1,2332.7 L 3218.7,2332.5 L 3211.0,2351.4 L 3190.8,2348.6 L 3180.7,2366.4 L 3161.1,2360.9 L 3148.8,2377.2 L 3130.0,2369.3 L 3115.7,2383.8 L 3098.1,2373.5 L 3082.0,2386.0 L 3065.9,2373.5 L 3048.3,2383.8 L 3034.0,2369.3 L 3015.2,2377.2 L 3002.9,2360.9 L 2983.3,2366.4 L 2973.2,2348.6 L 2953.0,2351.4 L 2945.3,2332.5 L 2924.9,2332.7 L 2919.8,2313.0 L 2899.6,2310.4 L 2897.0,2290.2 L 2877.3,2285.1 L 2877.5,2264.7 L 2858.6,2257.0 L 2861.4,2236.8 L 2843.6,2226.7 L 2849.1,2207.1 L 2832.8,2194.8 L 2840.7,2176.0 L 2826.2,2161.7 L 2836.5,2144.1 L 2824.0,2128.0 L 2836.5,2111.9 L 2826.2,2094.3 L 2840.7,2080.0 L 2832.8,2061.2 L 2849.1,2048.9 L 2843.6,2029.3 L 2861.4,2019.2 L 2858.6,1999.0 L 2877.5,1991.3 L 2877.3,1970.9 L 2897.0,1965.8 L 2899.6,1945.6 L 2919.8,1943.0 L 2924.9,1923.3 L 2945.3,1923.5 L 2953.0,1904.6 L 2973.2,1907.4 L 2983.3,1889.6 L 3002.9,1895.1 L 3015.2,1878.8 L 3034.0,1886.7 L 3048.3,1872.2 L 3065.9,1882.5 Z"
+        fill="url(#goldGrad)"/>
+  <circle cx="3082" cy="2128" r="234" fill="#14161B" stroke="url(#goldGrad)" stroke-width="3"/>
+  <circle cx="3082" cy="2128" r="196" fill="none" stroke="#C9A227" stroke-width="1.5"/>
+  <circle cx="3082" cy="2128" r="160" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.7"/>
+
+  <text font-size="23" font-weight="700" letter-spacing="2.5" fill="url(#goldGrad)">
+    <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL OF AUTHENTICATION</textPath>
+  </text>
+  <text font-size="17" letter-spacing="2" fill="#C9A227">
+    <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">EXCELLENCE &#183; INTEGRITY &#183; LEADERSHIP</textPath>
+  </text>
+
+  <!-- shield + column + star emblem -->
+  <path d="M3082,2010 L3132,2028 L3132,2068 C3132,2108 3082,2136 3082,2136 C3082,2136 3032,2108 3032,2068 L3032,2028 Z"
+        fill="none" stroke="#C9A227" stroke-width="2.5"/>
+  <g stroke="#C9A227" stroke-width="2.5" fill="none">
+    <line x1="3054" y1="2050" x2="3054" y2="2090"/>
+    <line x1="3082" y1="2050" x2="3082" y2="2090"/>
+    <line x1="3110" y1="2050" x2="3110" y2="2090"/>
+    <rect x="3044" y="2042" width="76" height="8" fill="#C9A227" stroke="none"/>
+    <rect x="3040" y="2090" width="84" height="8" fill="#C9A227" stroke="none"/>
+  </g>
+  <path d="M3082,1996 L3088,2010 L3102,2010 L3091,2019 L3095,2033 L3082,2025 L3069,2033 L3073,2019 L3062,2010 L3076,2010 Z" fill="#C9A227"/>
+  <path d="M2996,2140 C2976,2110 2976,2070 3000,2044" stroke="#C9A227" stroke-width="2" fill="none"/>
+  <path d="M3168,2140 C3188,2110 3188,2070 3164,2044" stroke="#C9A227" stroke-width="2" fill="none"/>
+
+  <image id="opt-seal-slot" x="2852" y="1898" width="460" height="460" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
+
+</svg>

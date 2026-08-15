@@ -1,0 +1,811 @@
+{
+  "_readme": "One entry per template. 'fields' lists every id the generation engine should treat as a data-binding target \u2014 i.e. text to replace or an image to inject. Purely decorative/structural ids (gradients, clip-paths, corner ornaments, wrapper groups, static design labels) are intentionally excluded; the SVGs contain many more ids than are listed here, and that's expected. type 'text' = replace element's text content. type 'image' = set the element's image href to the uploaded file, scaled to fit its bounding box. required=false fields may be left blank/skipped per FR-2.7 (optional fields render blank, template layout never shifts).",
+  "templates": [
+    {
+      "id": "exclusive-completion",
+      "name": "Exclusive Completion",
+      "file": "Exclusive_Completion_certificate.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2481
+      },
+      "fields": [
+        {
+          "id": "institution-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-subtitle",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "recipient-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "course-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "start-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "end-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-day",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-month",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-year",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "certificate-number",
+          "type": "text",
+          "required": true,
+          "auto": true
+        },
+        {
+          "id": "logo-slot",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1-caption",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-1-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-2",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-seal-slot",
+          "type": "image",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "modern-excellence",
+      "name": "Modern Excellence",
+      "file": "Modern_Excellence_certificate.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2481
+      },
+      "notes": "No course-title or start-date/end-date fields by design \u2014 treated as a general achievement award, not tied to a specific course or date range.",
+      "fields": [
+        {
+          "id": "institution-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-subtitle",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "recipient-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-day",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-month",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-year",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "certificate-number",
+          "type": "text",
+          "required": true,
+          "auto": true
+        },
+        {
+          "id": "logo-slot",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1-caption",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-1-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-2",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-seal-slot",
+          "type": "image",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "premium-training",
+      "name": "Premium Training",
+      "file": "Premium_Traning_certificate.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2481
+      },
+      "notes": "award-date-line is a single text field (e.g. 'Granted this 14th day of June, 2026') rather than separate day/month/year fields \u2014 different design choice from the other templates, intentionally left as-is.",
+      "fields": [
+        {
+          "id": "institution-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-subtitle",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "recipient-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "course-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "start-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "end-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-date-line",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "certificate-number",
+          "type": "text",
+          "required": true,
+          "auto": true
+        },
+        {
+          "id": "logo-slot",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1-caption",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-1-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-2",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-seal-slot",
+          "type": "image",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "baby-dedication",
+      "name": "Baby Dedication",
+      "file": "baby-dedication-certificate.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2480
+      },
+      "notes": "church-name and dedication-church-name both hold the same value (name appears twice in the design) \u2014 bind both to one input. Same for sponsor-names/opt-sponsor-names if both present. scripture-text/scripture-reference and covenant-text are static design paragraphs, toggle the whole opt-scripture-section/opt-covenant-text block on or off rather than editing their wording.",
+      "fields": [
+        {
+          "id": "church-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-church-address",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "child-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "dob-day",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "dob-month",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "dob-year",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "dedication-church-name",
+          "type": "text",
+          "required": true,
+          "linked_to": "church-name"
+        },
+        {
+          "id": "dedication-day",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "dedication-month",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "dedication-year",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "father-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "mother-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-sponsor-names",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "certificate-number",
+          "type": "text",
+          "required": true,
+          "auto": true
+        },
+        {
+          "id": "opt-logo-slot",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "signature-1",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-1-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-signature-2",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-name",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-scripture-section",
+          "type": "block-toggle",
+          "required": false
+        },
+        {
+          "id": "opt-covenant-text",
+          "type": "block-toggle",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "certificate-of-excellence",
+      "name": "Certificate of Excellence",
+      "file": "certificate_of_excellence.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2481
+      },
+      "notes": "Same as Modern Excellence \u2014 no course-title or date-range fields by design.",
+      "fields": [
+        {
+          "id": "institution-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-subtitle",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "recipient-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-day",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-month",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-year",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "certificate-number",
+          "type": "text",
+          "required": true,
+          "auto": true
+        },
+        {
+          "id": "logo-slot",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1-caption",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-1-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-2",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-seal-slot",
+          "type": "image",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "classic-completion",
+      "name": "Classic Completion",
+      "file": "classic__completion_certificate.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2480
+      },
+      "fields": [
+        {
+          "id": "institution-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-subtitle",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "recipient-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "course-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "start-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "end-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-day",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-month",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-year",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "certificate-number",
+          "type": "text",
+          "required": true,
+          "auto": true
+        },
+        {
+          "id": "opt-logo-slot",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "signature-1",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1-caption",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-1-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-signature-2",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-seal-slot",
+          "type": "image",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "dulux-completion",
+      "name": "Dulux Completion",
+      "file": "dulux_complition_certificate.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2481
+      },
+      "fields": [
+        {
+          "id": "institution-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-subtitle",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "recipient-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "course-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "program-start-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "program-end-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-day",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-month",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-year",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "certificate-number",
+          "type": "text",
+          "required": true,
+          "auto": true
+        },
+        {
+          "id": "logo-slot",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1-caption",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-1-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-2",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-seal-slot",
+          "type": "image",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "global-spec",
+      "name": "Global Spec",
+      "file": "global_spec_certificate.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2481
+      },
+      "fields": [
+        {
+          "id": "institution-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "opt-subtitle",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "recipient-name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "course-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "start-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "end-date",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-day",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-month",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "award-year",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "certificate-number",
+          "type": "text",
+          "required": true,
+          "auto": true
+        },
+        {
+          "id": "logo-slot",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1",
+          "type": "image",
+          "required": true
+        },
+        {
+          "id": "signature-1-caption",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-1-title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "signature-2",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-signature-2-title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "opt-seal-slot",
+          "type": "image",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

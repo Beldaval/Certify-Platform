@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3508" height="2480" viewBox="0 0 3508 2480">
+<defs>
+
+  <linearGradient id="goldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#E8CE95"/>
+    <stop offset="45%" stop-color="#C9A15C"/>
+    <stop offset="100%" stop-color="#A6813E"/>
+  </linearGradient>
+  <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#C9A15C" stop-opacity="0"/>
+    <stop offset="15%" stop-color="#C9A15C" stop-opacity="1"/>
+    <stop offset="85%" stop-color="#C9A15C" stop-opacity="1"/>
+    <stop offset="100%" stop-color="#C9A15C" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="paperTexture" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+    <feColorMatrix in="noise" type="matrix"
+      values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.02 0"/>
+  </filter>
+  <symbol id="leafSprig" viewBox="0 0 200 400">
+    <path d="M100,400 C90,300 60,260 20,220 C60,230 90,255 100,300 C110,255 140,230 180,220 C140,260 110,300 100,400 Z" fill="#8FA37E" opacity="0.55"/>
+    <path d="M100,300 C92,230 68,200 30,175 C68,182 92,205 100,240 C108,205 132,182 170,175 C132,200 108,230 100,300 Z" fill="#8FA37E" opacity="0.45"/>
+    <path d="M100,220 C95,175 78,155 45,138 C78,142 95,160 100,185 C105,160 122,142 155,138 C122,155 105,175 100,220 Z" fill="#C9A15C" opacity="0.4"/>
+  </symbol>
+
+</defs>
+<rect x="0" y="0" width="3508" height="2480" fill="#FBF6EC"/>
+<rect x="0" y="0" width="3508" height="2480" fill="#FBF6EC" filter="url(#paperTexture)" opacity="0.5"/>
+<g id="opt-watermark" opacity="0.05">
+  <circle cx="1754.0" cy="1240.0" r="430" fill="none" stroke="#152142" stroke-width="6"/>
+  <path d="M 1374.0,1280.0 C 1374.0,1500.0 1574.0,1670.0 1754.0,1670.0" fill="none" stroke="#8FA37E" stroke-width="10"/>
+  <path d="M 2134.0,1280.0 C 2134.0,1500.0 1934.0,1670.0 1754.0,1670.0" fill="none" stroke="#8FA37E" stroke-width="10"/>
+  <path d="M 1724.0,1100.0 L 1784.0,1100.0 M 1754.0,1070.0 L 1754.0,1180.0 M 1714.0,1150.0 L 1794.0,1150.0" stroke="#152142" stroke-width="8" fill="none"/>
+</g>
+<g id="frame-corners">
+
+  <g transform="translate(0,0)">
+    <polygon points="0,0 460,0 0,460" fill="#1B2A4A"/>
+    <polygon points="0,0 620,0 0,620" fill="none" stroke="url(#goldLine)" stroke-width="4" opacity="0.9"/>
+    <polygon points="0,0 560,0 0,560" fill="none" stroke="#C9A15C" stroke-width="2.5" opacity="0.8"/>
+    <line x1="0" y1="0" x2="620" y2="0" stroke="#C9A15C" stroke-width="3"/>
+    <line x1="0" y1="0" x2="0" y2="620" stroke="#C9A15C" stroke-width="3"/>
+  </g>
+
+  <g transform="translate(3508,0) scale(-1,1)">
+    <polygon points="0,0 460,0 0,460" fill="#1B2A4A"/>
+    <polygon points="0,0 620,0 0,620" fill="none" stroke="url(#goldLine)" stroke-width="4" opacity="0.9"/>
+    <polygon points="0,0 560,0 0,560" fill="none" stroke="#C9A15C" stroke-width="2.5" opacity="0.8"/>
+    <line x1="0" y1="0" x2="620" y2="0" stroke="#C9A15C" stroke-width="3"/>
+    <line x1="0" y1="0" x2="0" y2="620" stroke="#C9A15C" stroke-width="3"/>
+  </g>
+
+  <g transform="translate(0,2480) scale(1,-1)">
+    <polygon points="0,0 460,0 0,460" fill="#1B2A4A"/>
+    <polygon points="0,0 620,0 0,620" fill="none" stroke="url(#goldLine)" stroke-width="4" opacity="0.9"/>
+    <polygon points="0,0 560,0 0,560" fill="none" stroke="#C9A15C" stroke-width="2.5" opacity="0.8"/>
+    <line x1="0" y1="0" x2="620" y2="0" stroke="#C9A15C" stroke-width="3"/>
+    <line x1="0" y1="0" x2="0" y2="620" stroke="#C9A15C" stroke-width="3"/>
+  </g>
+
+  <g transform="translate(3508,2480) scale(-1,-1)">
+    <polygon points="0,0 460,0 0,460" fill="#1B2A4A"/>
+    <polygon points="0,0 620,0 0,620" fill="none" stroke="url(#goldLine)" stroke-width="4" opacity="0.9"/>
+    <polygon points="0,0 560,0 0,560" fill="none" stroke="#C9A15C" stroke-width="2.5" opacity="0.8"/>
+    <line x1="0" y1="0" x2="620" y2="0" stroke="#C9A15C" stroke-width="3"/>
+    <line x1="0" y1="0" x2="0" y2="620" stroke="#C9A15C" stroke-width="3"/>
+  </g>
+</g>
+<rect x="90" y="90" width="3328" height="2300" fill="none" stroke="#C9A15C" stroke-width="2" opacity="0.55"/>
+<rect x="105" y="105" width="3298" height="2270" fill="none" stroke="#C9A15C" stroke-width="1" opacity="0.4"/>
+<g id="opt-corner-foliage">
+<use href="#leafSprig" x="205" y="30" width="90" height="180" transform="rotate(40 250 120)"/>
+<use href="#leafSprig" x="105" y="170" width="90" height="180" transform="rotate(-20 150 260)"/>
+<use href="#leafSprig" x="3213" y="30" width="90" height="180" transform="rotate(-40 3258 120)"/>
+<use href="#leafSprig" x="3313" y="170" width="90" height="180" transform="rotate(20 3358 260)"/>
+<use href="#leafSprig" x="205" y="2270" width="90" height="180" transform="rotate(40 250 2360)"/>
+<use href="#leafSprig" x="105" y="2130" width="90" height="180" transform="rotate(-20 150 2220)"/>
+<use href="#leafSprig" x="3213" y="2270" width="90" height="180" transform="rotate(-40 3258 2360)"/>
+<use href="#leafSprig" x="3313" y="2130" width="90" height="180" transform="rotate(20 3358 2220)"/>
+</g>
+<g id="opt-logo-slot">
+  <circle cx="1754.0" cy="300" r="190" fill="#FBF6EC" stroke="#C9A15C" stroke-width="4"/>
+  <circle cx="1754.0" cy="300" r="172" fill="none" stroke="#C9A15C" stroke-width="1.5" opacity="0.7"/>
+  <image id="logo-image" x="1594.0" y="140" width="320" height="320" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+  <g id="logo-placeholder-graphic">
+    <path d="M 1724.0,210 l 0,140 M 1694.0,250 l 60,0" stroke="#C9A15C" stroke-width="8" fill="none" stroke-linecap="round" transform="translate(30,0)"/>
+    <text x="1754.0" y="355" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="26" letter-spacing="6" fill="#A6813E">LOGO</text>
+    <text x="1754.0" y="382" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" letter-spacing="2" fill="#8C8C8C">PLACEHOLDER</text>
+  </g>
+</g>
+<text id="church-name" x="1754.0" y="605" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-weight="700" font-size="64" letter-spacing="3" fill="#152142">Church Name Goes Here</text>
+<text id="opt-church-address" x="1754.0" y="662" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="36" fill="#333333">Church Street Address, City, State, Zip Code</text>
+<line x1="1374.0" y1="705" x2="2134.0" y2="705" stroke="#C9A15C" stroke-width="2"/>
+<circle cx="1754.0" cy="705" r="6" fill="#C9A15C"/>
+<line x1="1134.0" y1="775" x2="2374.0" y2="775" stroke="url(#goldLine)" stroke-width="3"/>
+<text id="certificate-title" x="1754.0" y="885" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-weight="700" font-size="108" letter-spacing="4" fill="#152142">CERTIFICATE OF BABY DEDICATION</text>
+<line x1="1134.0" y1="935" x2="2374.0" y2="935" stroke="url(#goldLine)" stroke-width="3"/>
+<g id="opt-scripture-section">
+<text id="scripture-text" x="1754.0" y="1040" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-style="italic" font-size="50" fill="#333333">"Train up a child in the way he should go, and when he is old he will not depart from it."</text>
+<text id="scripture-reference" x="1754.0" y="1100" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-style="italic" font-size="42" fill="#A6813E">— Proverbs 22:6</text>
+</g>
+<text id="certifies-label" x="1754.0" y="1200" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-size="46" fill="#333333">This certifies that</text>
+<text id="child-name" x="1754.0" y="1335" text-anchor="middle" font-family="Georgia, 'Times New Roman', 'Palatino Linotype', serif" font-weight="700" font-size="132" letter-spacing="2" fill="#152142">Child's Full Legal Name</text>
+<line x1="994.0" y1="1378" x2="2514.0" y2="1378" stroke="#C9A15C" stroke-width="3"/>
+<text y="1470" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="44" fill="#333333" x="628.42">born on the <tspan id="dob-day" font-weight="700" fill="#152142" style="text-decoration:underline;">Day</tspan> of <tspan id="dob-month" font-weight="700" fill="#152142" style="text-decoration:underline;">Month</tspan>, <tspan id="dob-year" font-weight="700" fill="#152142" style="text-decoration:underline;">Year</tspan>, was publicly and solemnly dedicated to the Almighty God</text>
+<text y="1530" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="44" fill="#333333" x="784.98">at <tspan id="dedication-church-name" font-weight="700" fill="#152142" style="text-decoration:underline;">Church Name</tspan> on this <tspan id="dedication-day" font-weight="700" fill="#152142" style="text-decoration:underline;">Day</tspan> day of <tspan id="dedication-month" font-weight="700" fill="#152142" style="text-decoration:underline;">Month</tspan>, <tspan id="dedication-year" font-weight="700" fill="#152142" style="text-decoration:underline;">Year</tspan>.</text>
+<g id="opt-covenant-text">
+<text x="1754.0" y="1625" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="44" fill="#333333">By doing so, the parents covenant with God and this congregation</text>
+<text id="covenant-text" x="1754.0" y="1678" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="44" fill="#333333">to raise this child in the nurture, admonition, and fellowship of the Lord.</text>
+</g>
+<text y="1785" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="42" fill="#333333"><tspan x="1143.3" font-weight="700" fill="#152142">Father's Full Name: </tspan><tspan id="father-name" x="1756.1">Father's First &amp; Last Name</tspan></text>
+<text y="1843" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="42" fill="#333333"><tspan x="1143.3" font-weight="700" fill="#152142">Mother's Full Name: </tspan><tspan id="mother-name" x="1756.1">Mother's First &amp; Last Name</tspan></text>
+<g id="opt-sponsor-names">
+<text y="1901" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="42" fill="#333333"><tspan x="900.54" font-weight="700" fill="#152142">Spiritual Sponsors / Godparents: </tspan><tspan id="sponsor-names" x="1906.46">Sponsor Name 1, Sponsor Name 2</tspan></text>
+</g>
+<g id="signature-section">
+<g id="signature-1">
+  <rect id="signature-1-slot" x="934.0" y="1990" width="560" height="190" fill="#FBF6EC" stroke="#8C8C8C" stroke-width="2" stroke-dasharray="10,8" rx="6"/>
+  <image id="signature-1-image" x="934.0" y="1990" width="560" height="190" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+  <text id="signature-1-placeholder-label" x="1214.0" y="2095" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" fill="#9AA0A6">Signature Image</text>
+  <line x1="934.0" y1="2215" x2="1494.0" y2="2215" stroke="#333333" stroke-width="2"/>
+  <text id="signature-1-name" x="1214.0" y="2256" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700" font-size="32" fill="#152142">Full Name of Signer</text>
+  <text id="signature-1-title" x="1214.0" y="2296" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-style="italic" font-size="30" fill="#333333">Officiating Pastor / Minister</text>
+</g>
+<g id="opt-signature-2">
+  <rect id="opt-signature-2-slot" x="2014.0" y="1990" width="560" height="190" fill="#FBF6EC" stroke="#8C8C8C" stroke-width="2" stroke-dasharray="10,8" rx="6"/>
+  <image id="opt-signature-2-image" x="2014.0" y="1990" width="560" height="190" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
+  <text id="opt-signature-2-placeholder-label" x="2294.0" y="2095" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" fill="#9AA0A6">Signature Image</text>
+  <line x1="2014.0" y1="2215" x2="2574.0" y2="2215" stroke="#333333" stroke-width="2"/>
+  <text id="opt-signature-2-name" x="2294.0" y="2256" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700" font-size="32" fill="#152142">Full Name of Signer</text>
+  <text id="opt-signature-2-title" x="2294.0" y="2296" text-anchor="middle" font-family="'Palatino Linotype', Georgia, 'Times New Roman', serif" font-style="italic" font-size="30" fill="#333333">Witness / Church Clerk</text>
+</g>
+</g>
+<text id="certificate-number" x="640" y="2320" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" letter-spacing="1" fill="#8C8C8C">Certificate No: AUTO-GENERATED</text>
+<rect x="0" y="2370" width="3508" height="110" fill="#1B2A4A"/>
+<rect x="0" y="2370" width="3508" height="4" fill="url(#goldLine)"/>
+<text id="footer-tagline" x="1754.0" y="2439.0" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="40" letter-spacing="4" fill="#C9A15C">DEDICATED TO GOD  •  BLESSED FOR LIFE  •  WALKING IN FAITH</text>
+</svg>

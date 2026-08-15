@@ -1,0 +1,26 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+  command = "echo 'no build step — static frontend'"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["public/assets/templates/*.svg", "public/assets/templates.json"]
+
+# Background function — long-running batch generation/sending (FR-6.7).
+# Netlify recognizes the "-background" filename suffix automatically and
+# gives it up to 15 minutes instead of the normal ~10s function timeout.
+# Background Functions require a Netlify plan that includes them (Pro+/add-on) —
+# see README "Netlify plan requirement" if yours doesn't.
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

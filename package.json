@@ -1,0 +1,16 @@
+{
+  "name": "certificate-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Certificate Generation & Delivery Platform (Phase 1) — Netlify + Supabase + Paystack + Gmail",
+  "scripts": {
+    "seed-templates": "node scripts/seed-templates.js"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@supabase/supabase-js": "^2.45.4",
+    "nodemailer": "^6.9.14",
+    "pdf-lib": "^1.17.1",
+    "archiver": "^7.0.1"
+  }
+}

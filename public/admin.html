@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Certify</title>
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div class="nav">
+  <a class="brand" href="/dashboard.html"><div class="mark">C</div><div class="name">Certify</div></a>
+  <div class="nav-links"><a class="btn btn-ghost" href="/dashboard.html">Back to dashboard</a></div>
+</div>
+
+<div class="container" id="admin-denied" class="hidden">
+  <p class="error-text">Admin access required.</p>
+</div>
+
+<div class="container" id="admin-content" class="hidden">
+  <h2>Manual token credit</h2>
+  <p class="muted">Every credit here is logged as an auditable transaction (admin, amount, reason, timestamp) — never a silent balance edit.</p>
+  <div class="card" style="max-width:520px;">
+    <label>User ID (uuid)</label>
+    <input type="text" id="credit-user-id" placeholder="from the profiles table">
+    <label>Tokens to credit</label>
+    <input type="number" id="credit-amount" value="10">
+    <label>Reason</label>
+    <input type="text" id="credit-reason" placeholder="e.g. Missed webhook for ref xyz">
+    <button class="btn btn-primary" id="credit-btn" style="margin-top:16px;">Credit tokens</button>
+    <div class="error-text hidden" id="credit-error"></div>
+    <div class="success-text hidden" id="credit-success"></div>
+  </div>
+
+  <h2 style="margin-top:40px;">Export user emails</h2>
+  <button class="btn btn-ghost" id="export-btn">Export as CSV</button>
+  <div id="export-result" style="margin-top:16px;"></div>
+</div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/js/config.js"></script>
+<script src="/js/supabaseClient.js"></script>
+<script>
+init();
+async function init() {
+  const session = await requireSession();
+  if (!session) return;
+
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  const { data: profile } = await supabaseClient.from('profiles').select('is_admin').eq('id', user.id).single();
+  if (!profile?.is_admin) {
+    document.getElementById('admin-denied').classList.remove('hidden');
+    return;
+  }
+  document.getElementById('admin-content').classList.remove('hidden');
+
+  document.getElementById('credit-btn').addEventListener('click', creditTokens);
+  document.getElementById('export-btn').addEventListener('click', exportEmails);
+}
+
+async function creditTokens() {
+  const errEl = document.getElementById('credit-error');
+  const okEl = document.getElementById('credit-success');
+  errEl.classList.add('hidden'); okEl.classList.add('hidden');
+  const headers = { 'Content-Type': 'application/json', ...(await getAuthHeader()) };
+  const resp = await fetch('/api/admin-manual-credit', {
+    method: 'POST', headers,
+    body: JSON.stringify({
+      targetUserId: document.getElementById('credit-user-id').value.trim(),
+      amount: Number(document.getElementById('credit-amount').value),
+      reason: document.getElementById('credit-reason').value.trim(),
+    }),
+  });
+  const data = await resp.json();
+  if (!resp.ok) { errEl.textContent = data.error; errEl.classList.remove('hidden'); return; }
+  okEl.textContent = `Done — new balance: ${data.newBalance} tokens.`;
+  okEl.classList.remove('hidden');
+}
+
+async function exportEmails() {
+  const headers = await getAuthHeader();
+  const resp = await fetch('/api/admin-export-emails', { headers });
+  const data = await resp.json();
+  if (!resp.ok) { document.getElementById('export-result').innerHTML = `<p class="error-text">${data.error}</p>`; return; }
+  const rows = data.users.map((u) => `${u.email},${(u.organization_name || '').replace(/,/g,' ')},${(u.full_name||'').replace(/,/g,' ')},${u.created_at}`);
+  const csv = 'email,organization,full_name,created_at\n' + rows.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  document.getElementById('export-result').innerHTML = `<a class="btn btn-primary" href="${url}" download="users.csv">Download users.csv (${data.users.length} users)</a>`;
+}
+</script>
+</body>
+</html>
