@@ -4,6 +4,7 @@
 // writes the batch + certificate rows, then kicks off the background
 // generation function and returns immediately so the UI isn't blocked.
 const { getSupabaseAdmin, getUserFromRequest } = require('./lib/supabaseAdmin');
+const { TOKENS_PER_CERTIFICATE } = require('./lib/pricing');
 
 const MAX_BATCH_SIZE = 50;
 
@@ -38,7 +39,7 @@ exports.handler = async (event) => {
       return { statusCode: 404, body: JSON.stringify({ error: 'Unknown template' }) };
     }
 
-    const tokenCost = certificates.length;
+   const tokenCost = certificates.length * TOKENS_PER_CERTIFICATE;
 
     // 1) Create the batch row first (status pending) so we have an id to
     //    attach the deduction/refund transactions to.
