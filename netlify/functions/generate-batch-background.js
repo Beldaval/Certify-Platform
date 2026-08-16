@@ -11,6 +11,7 @@
 const { getSupabaseAdmin } = require('./lib/supabaseAdmin');
 const { renderCertificate } = require('./lib/render');
 const { sendCertificateEmail, sleep } = require('./lib/mailer');
+const { TOKENS_PER_CERTIFICATE } = require('./lib/pricing');
 
 const EMAIL_PACING_MS = 3000; // FR-7.2 — space sends out to reduce spam-flagging
 const SIGNED_URL_EXPIRY_SECONDS = 60 * 60 * 24 * 30; // 30 days, matches the 1-month retention window (FR-8.3)
@@ -93,8 +94,9 @@ exports.handler = async (event) => {
       anyFailures = true;
       await supabase.from('certificates').update({ generation_status: 'failed' }).eq('id', cert.id);
       // FR-6.9 — refund the token for this specific certificate
-      await supabase.rpc('refund_token', {
+     await supabase.rpc('refund_token', {
         p_user_id: batch.user_id,
+        p_amount: TOKENS_PER_CERTIFICATE,
         p_batch_id: batchId,
         p_reason: `Generation failed for certificate ${cert.id}: ${err.message}`,
       });
