@@ -70,7 +70,7 @@
 <div id="topup-modal" class="hidden" style="position:fixed;inset:0;background:rgba(22,35,63,.5);display:flex;align-items:center;justify-content:center;z-index:200;">
   <div class="card" style="max-width:380px;width:90%;">
     <h3>Top up tokens</h3>
-    <p class="muted">₦50 per token = 1 certificate. Minimum ₦800.</p>
+    <p class="muted">Every ₦1 tops up 1 token. Certificates cost 50 tokens (₦50) each. Minimum ₦800.</p>
     <label>Amount (₦)</label>
     <input type="number" id="topup-amount" min="800" step="50" value="800">
     <p class="muted" id="topup-tokens-preview" style="margin-top:6px;"></p>
@@ -206,7 +206,7 @@ function labelFor(id) {
 
 function updateBatchCost() {
   const count = document.querySelectorAll('#cert-rows > div').length;
-  document.getElementById('batch-cost-note').textContent = count ? `${count} certificate(s) = ${count} token(s)` : '';
+  document.getElementById('batch-cost-note').textContent = count ? `${count} certificate(s) = ${count * 50} token(s)` : '';
 }
 
 function fileToDataUri(file) {
@@ -339,8 +339,11 @@ async function downloadAll() {
 // ---------- Top-up / Paystack ----------
 function updateTopupPreview() {
   const amount = Number(document.getElementById('topup-amount').value || 0);
-  const tokens = Math.floor(amount / 50);
-  document.getElementById('topup-tokens-preview').textContent = amount >= 800 ? `= ${tokens} tokens (${tokens} certificates)` : 'Minimum top-up is ₦800';
+  const tokens = Math.floor(amount);
+  const certs = Math.floor(tokens / 50);
+  document.getElementById('topup-tokens-preview').textContent = amount >= 800
+    ? `₦${amount} = ${tokens} tokens (worth ${certs} certificates) — adds to your existing balance`
+    : 'Minimum top-up is ₦800';
 }
 
 async function startTopup() {
