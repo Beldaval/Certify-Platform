@@ -1,9 +1,7 @@
 // Starts a Paystack transaction for a wallet top-up.
 // The PAYSTACK_SECRET_KEY never leaves this server-side function (SEC-3).
 const { getSupabaseAdmin, getUserFromRequest } = require('./lib/supabaseAdmin');
-
-const NAIRA_PER_TOKEN = 50;
-const MIN_TOPUP_NAIRA = 800;
+const { MIN_TOPUP_NAIRA, nairaToTokens } = require('./lib/pricing');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
@@ -24,8 +22,7 @@ exports.handler = async (event) => {
     const secretKey = process.env.PAYSTACK_SECRET_KEY;
     if (!secretKey) throw new Error('Missing PAYSTACK_SECRET_KEY env var');
 
-    const tokens = Math.floor(amount / NAIRA_PER_TOKEN);
-
+   const tokens = nairaToTokens(amount);
     const resp = await fetch('https://api.paystack.co/transaction/initialize', {
       method: 'POST',
       headers: {
