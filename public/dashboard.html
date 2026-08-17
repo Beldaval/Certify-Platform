@@ -54,11 +54,17 @@
   <section id="step-status" class="hidden" style="margin-top:36px;">
     <h2>Batch status</h2>
     <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <span id="batch-status-badge" class="badge badge-pending">Processing…</span>
         <div>
           <button class="btn btn-ghost" id="download-all-btn">Download all (.zip)</button>
         </div>
+      </div>
+      <div id="batch-progress-wrap" style="margin-bottom:16px;">
+        <div style="background:#e5e7eb;border-radius:8px;height:10px;overflow:hidden;">
+          <div id="batch-progress-bar" style="background:#4f46e5;height:100%;width:0%;transition:width 0.3s ease;"></div>
+        </div>
+        <p class="muted" id="batch-progress-text" style="margin-top:6px;font-size:13px;"></p>
       </div>
       <table>
         <thead><tr><th>Recipient</th><th>Program</th><th>Cert #</th><th>Generation</th><th>Delivery</th><th></th></tr></thead>
@@ -353,9 +359,19 @@ async function fetchStatus() {
   } else if (data.batch.status === 'failed') {
     badge.textContent = 'Failed'; badge.className = 'badge badge-failed';
     clearInterval(statusPoll);
-  } else {
+ } else {
     badge.textContent = 'Processing…'; badge.className = 'badge badge-pending';
   }
+
+  const total = data.certificates.length;
+  const done = data.certificates.filter(c => c.generation_status !== 'pending').length;
+  const failed = data.certificates.filter(c => c.generation_status === 'failed').length;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('batch-progress-bar').style.width = `${pct}%`;
+  document.getElementById('batch-progress-text').textContent =
+    data.batch.status === 'completed'
+      ? `Done — ${done - failed} generated, ${failed} failed`
+      : `${done} / ${total} processed`;
 
   const tbody = document.getElementById('status-rows');
   tbody.innerHTML = '';
