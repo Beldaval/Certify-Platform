@@ -5,7 +5,6 @@
 // generation function and returns immediately so the UI isn't blocked.
 const { getSupabaseAdmin, getUserFromRequest } = require('./lib/supabaseAdmin');
 const { TOKENS_PER_CERTIFICATE } = require('./lib/pricing');
-const { processBatch } = require('./lib/batchProcessor');
 
 const MAX_BATCH_SIZE = 50;
 
@@ -40,7 +39,7 @@ exports.handler = async (event) => {
       return { statusCode: 404, body: JSON.stringify({ error: 'Unknown template' }) };
     }
 
-   const tokenCost = certificates.length * TOKENS_PER_CERTIFICATE;
+    const tokenCost = certificates.length * TOKENS_PER_CERTIFICATE;
 
     // 1) Create the batch row first (status pending) so we have an id to
     //    attach the deduction/refund transactions to.
@@ -84,16 +83,26 @@ exports.handler = async (event) => {
     const { error: certErr } = await supabase.from('certificates').insert(rows);
     if (certErr) throw certErr;
 
-await supabase.from('batches').update({ status: 'generating' }).eq('id', batch.id);
+    await supabase.from('batches').update({ status: 'generating' }).eq('id', batch.id);
 
-    // 4) Process the batch now, in-process, and wait for it to finish
-    //    before responding. See lib/batchProcessor.js for why.
-    try {
-      await processBatch(batch.id);
-    } catch (processErr) {
-      await supabase.from('batches').update({ status: 'failed' }).eq('id', batch.id);
-      throw processErr;
-    }
+    // 4) Hand off the actual rendering/upload/email work to a Background
+    //    Function (up to 15 min on the paid plan) instead of awaiting it
+    //    here. Awaiting processBatch() in-line was the whole cause of the
+    //    504s — regular Netlify functions have a hard ~10-26s ceiling
+    //    regardless of plan; only "-background" functions get 15 minutes.
+    //    This call is intentionally NOT awaited — it's fire-and-forget so
+    //    create-batch can respond to the UI immediately.
+    const siteUrl = process.env.URL || `https://${event.headers.host}`;
+    fetch(`${siteUrl}/.netlify/functions/process-batch-background`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ batchId: batch.id }),
+    }).catch((err) => {
+      // Log only — if the trigger call itself fails, the batch is left in
+      // 'generating' with certificates 'pending'. Worth wiring an alert on
+      // this later, but it shouldn't block the response to the user.
+      console.error('Failed to trigger process-batch-background:', err);
+    });
 
     return { statusCode: 200, body: JSON.stringify({ batchId: batch.id, tokenCost }) };
   } catch (err) {
