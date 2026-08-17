@@ -85,23 +85,23 @@ exports.handler = async (event) => {
 
     await supabase.from('batches').update({ status: 'generating' }).eq('id', batch.id);
 
-    // 4) Hand off the actual rendering/upload/email work to a Background
-    //    Function (up to 15 min on the paid plan) instead of awaiting it
-    //    here. Awaiting processBatch() in-line was the whole cause of the
-    //    504s — regular Netlify functions have a hard ~10-26s ceiling
-    //    regardless of plan; only "-background" functions get 15 minutes.
-    //    This call is intentionally NOT awaited — it's fire-and-forget so
-    //    create-batch can respond to the UI immediately.
+    // 4) Hand off rendering/upload/email to the Background Function (up to
+    //    15 min — now usable since the site is on a paid Netlify plan)
+    //    instead of awaiting processBatch() here. Awaiting it inline was
+    //    the entire cause of the 504s: regular functions have a hard
+    //    ~10-26s ceiling no matter what plan you're on. This call is
+    //    intentionally NOT awaited — fire-and-forget, so create-batch can
+    //    respond to the UI immediately.
     const siteUrl = process.env.URL || `https://${event.headers.host}`;
-    fetch(`${siteUrl}/.netlify/functions/process-batch-background`, {
+    fetch(`${siteUrl}/.netlify/functions/generate-batch-background`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ batchId: batch.id }),
     }).catch((err) => {
-      // Log only — if the trigger call itself fails, the batch is left in
-      // 'generating' with certificates 'pending'. Worth wiring an alert on
-      // this later, but it shouldn't block the response to the user.
-      console.error('Failed to trigger process-batch-background:', err);
+      // Log only — if this trigger call itself fails, the batch is left in
+      // 'generating' with certificates 'pending'. Worth alerting on later,
+      // but shouldn't block the response to the user.
+      console.error('Failed to trigger generate-batch-background:', err);
     });
 
     return { statusCode: 200, body: JSON.stringify({ batchId: batch.id, tokenCost }) };
