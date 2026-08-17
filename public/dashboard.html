@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard — Certify</title>
+<title>Dashboard — Certsift</title>
 <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
 <div class="nav">
-  <a class="brand" href="/"><div class="mark">C</div><div class="name">Certify</div></a>
+  <a class="brand" href="/"><div class="mark">C</div><div class="name">Certsift</div></a>
   <div class="nav-links">
-    <div class="token-pill">🪙 <span id="token-balance">–</span> tokens</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;">
+      <div class="token-pill" id="token-pill" title="">🪙 <span id="token-balance">–</span> tokens</div>
+      <div class="muted" id="token-breakdown" style="font-size:11px;margin-top:2px;"></div>
+    </div>
     <button class="btn btn-gold" id="topup-btn">Top up</button>
     <button class="btn btn-ghost" id="logout-btn">Log out</button>
   </div>
@@ -112,7 +115,11 @@ async function init() {
   document.getElementById('topup-cancel-btn').addEventListener('click', () => document.getElementById('topup-modal').classList.add('hidden'));
   document.getElementById('topup-amount').addEventListener('input', updateTopupPreview);
   document.getElementById('topup-confirm-btn').addEventListener('click', startTopup);
-  document.getElementById('add-row-btn').addEventListener('click', () => addCertRow());
+  document.getElementById('add-row-btn').addEventListener('click', () => {
+    const rows = document.querySelectorAll('#cert-rows > div');
+    const lastRow = rows[rows.length - 1]; // may be undefined if none exist yet — addCertRow handles that
+    addCertRow(lastRow);
+  });
   document.getElementById('submit-batch-btn').addEventListener('click', submitBatch);
   document.getElementById('download-all-btn').addEventListener('click', downloadAll);
   updateTopupPreview();
@@ -122,7 +129,15 @@ async function refreshWallet() {
   const { data: { user } } = await supabaseClient.auth.getUser();
   const { data, error } = await supabaseClient.from('wallets').select('trial_tokens_remaining, purchased_tokens').eq('user_id', user.id).single();
   if (!error && data) {
-    document.getElementById('token-balance').textContent = data.trial_tokens_remaining + data.purchased_tokens;
+    const total = data.trial_tokens_remaining + data.purchased_tokens;
+    document.getElementById('token-balance').textContent = total;
+    // Breakdown shown separately so "516 tokens" is never read as "516
+    // certificates just purchased" — trial tokens and purchased (₦-paid)
+    // tokens are always shown apart, with the ₦ amount that bought them.
+    document.getElementById('token-pill').title =
+      `${data.trial_tokens_remaining} free trial + ${data.purchased_tokens} purchased (₦${data.purchased_tokens * 50} paid) = ${total} tokens`;
+    document.getElementById('token-breakdown').textContent =
+      `${data.trial_tokens_remaining} trial + ${data.purchased_tokens} purchased`;
   }
 }
 
@@ -155,11 +170,24 @@ async function selectTemplate(t, cardEl) {
   document.getElementById('step-builder').classList.remove('hidden');
   document.getElementById('cert-rows').innerHTML = '';
   rowCount = 0;
-  addCertRow();
-  updateBatchCost();
+  try {
+    addCertRow();
+    updateBatchCost();
+  } catch (err) {
+    // Surface build errors in the UI instead of failing silently — a
+    // template with an unexpected field shape would otherwise leave the
+    // page looking like the click did nothing.
+    const errEl = document.getElementById('batch-error');
+    errEl.textContent = `Couldn't build the recipient form for this template: ${err.message}`;
+    errEl.classList.remove('hidden');
+    console.error(err);
+  }
+  // The builder renders below the template grid — scroll to it so selecting
+  // a template visibly does something instead of appearing to do nothing.
+  document.getElementById('step-builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function addCertRow() {
+function addCertRow(sourceRowEl) {
   rowCount++;
   const id = `row-${rowCount}`;
   const wrapper = document.createElement('div');
@@ -197,6 +225,39 @@ function addCertRow() {
   `;
   wrapper.querySelector('.remove-row-btn').addEventListener('click', () => { wrapper.remove(); updateBatchCost(); });
   document.getElementById('cert-rows').appendChild(wrapper);
+
+  // "Reusing shared details and editing only what changes" (FR-3.2): carry
+  // forward everything from the previous recipient row EXCEPT name and
+  // email, which are unique per person and must be entered fresh each time
+  // — carrying those forward would risk sending the wrong certificate to
+  // the wrong recipient.
+  if (sourceRowEl) {
+    for (const newInput of wrapper.querySelectorAll('[data-field]')) {
+      const field = newInput.dataset.field;
+      const kind = newInput.dataset.kind;
+      if (kind === 'core' && (field === 'recipient_name' || field === 'recipient_email')) continue; // stays blank
+
+      const oldInput = sourceRowEl.querySelector(`[data-field="${field}"]`);
+      if (!oldInput) continue;
+
+      if (kind === 'toggle') {
+        newInput.checked = oldInput.checked;
+      } else if (kind === 'image') {
+        // File inputs can't be set from a string value, but the File object
+        // itself can be carried over via DataTransfer so an uploaded logo
+        // or signature doesn't have to be re-picked for every recipient.
+        if (oldInput.files && oldInput.files[0]) {
+          const dt = new DataTransfer();
+          dt.items.add(oldInput.files[0]);
+          newInput.files = dt.files;
+        }
+      } else {
+        // text and core fields other than name/email (e.g. program_title)
+        newInput.value = oldInput.value;
+      }
+    }
+  }
+
   updateBatchCost();
 }
 
@@ -339,8 +400,8 @@ async function downloadAll() {
 // ---------- Top-up / Paystack ----------
 function updateTopupPreview() {
   const amount = Number(document.getElementById('topup-amount').value || 0);
-  const tokens = Math.floor(amount);
-  const certs = Math.floor(tokens / 50);
+  const tokens = Math.floor(amount); // ₦1 = 1 token
+  const certs = Math.floor(tokens / 50); // 50 tokens = 1 certificate
   document.getElementById('topup-tokens-preview').textContent = amount >= 800
     ? `₦${amount} = ${tokens} tokens (worth ${certs} certificates) — adds to your existing balance`
     : 'Minimum top-up is ₦800';
