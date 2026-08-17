@@ -93,16 +93,20 @@ async function processBatch(batchId) {
           await sleep(EMAIL_PACING_MS);
         }
       }
-    } catch (err) {
-      anyFailures = true;
-      await supabase.from('certificates').update({ generation_status: 'failed' }).eq('id', cert.id);
-      await supabase.rpc('refund_token', {
-        p_user_id: batch.user_id,
-        p_amount: TOKENS_PER_CERTIFICATE,
-        p_batch_id: batchId,
-        p_reason: `Generation failed for certificate ${cert.id}: ${err.message}`,
-      });
-    }
+} catch (err) {
+  // Log the real error — without this, a failed certificate shows up
+  // in the UI as just "failed" with no way to tell why. This shows up
+  // in Netlify's generate-batch-background function logs.
+  console.error(`Certificate ${cert.id} (${cert.recipient_name}) failed:`, err);
+  anyFailures = true;
+  await supabase.from('certificates').update({ generation_status: 'failed' }).eq('id', cert.id);
+  await supabase.rpc('refund_token', {
+    p_user_id: batch.user_id,
+    p_amount: TOKENS_PER_CERTIFICATE,
+    p_batch_id: batchId,
+    p_reason: `Generation failed for certificate ${cert.id}: ${err.message}`,
+  });
+}
   }
 
   if (batch.same_email && sameEmailAttachments.length > 0) {
