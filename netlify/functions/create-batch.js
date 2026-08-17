@@ -5,6 +5,7 @@
 // generation function and returns immediately so the UI isn't blocked.
 const { getSupabaseAdmin, getUserFromRequest } = require('./lib/supabaseAdmin');
 const { TOKENS_PER_CERTIFICATE } = require('./lib/pricing');
+const { processBatch } = require('./lib/batchProcessor');
 
 const MAX_BATCH_SIZE = 50;
 
@@ -83,19 +84,15 @@ exports.handler = async (event) => {
     const { error: certErr } = await supabase.from('certificates').insert(rows);
     if (certErr) throw certErr;
 
-    await supabase.from('batches').update({ status: 'generating' }).eq('id', batch.id);
+await supabase.from('batches').update({ status: 'generating' }).eq('id', batch.id);
 
-    // 4) Kick off the background function (fire-and-forget). Netlify runs
-    //    "-background" functions with up to a 15-minute execution budget,
-    //    which is what lets a 50-certificate batch render/email without
-    //    hitting the ~10s limit of a normal function (FR-6.7).
-    const siteUrl = process.env.URL || process.env.DEPLOY_URL || process.env.PUBLIC_SITE_URL;
-    if (siteUrl) {
-      fetch(`${siteUrl}/.netlify/functions/generate-batch-background`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ batchId: batch.id }),
-      }).catch(() => {}); // don't block the response on this
+    // 4) Process the batch now, in-process, and wait for it to finish
+    //    before responding. See lib/batchProcessor.js for why.
+    try {
+      await processBatch(batch.id);
+    } catch (processErr) {
+      await supabase.from('batches').update({ status: 'failed' }).eq('id', batch.id);
+      throw processErr;
     }
 
     return { statusCode: 200, body: JSON.stringify({ batchId: batch.id, tokenCost }) };
