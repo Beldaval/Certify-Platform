@@ -87,22 +87,34 @@ exports.handler = async (event) => {
 
     // 4) Hand off rendering/upload/email to the Background Function (up to
     //    15 min — now usable since the site is on a paid Netlify plan)
-    //    instead of awaiting processBatch() here. Awaiting it inline was
-    //    the entire cause of the 504s: regular functions have a hard
-    //    ~10-26s ceiling no matter what plan you're on. This call is
-    //    intentionally NOT awaited — fire-and-forget, so create-batch can
-    //    respond to the UI immediately.
+    //    instead of awaiting processBatch() here. Awaiting processBatch()
+    //    inline was the entire cause of the earlier 504s: regular
+    //    functions have a hard ~10-26s ceiling no matter what plan you're
+    //    on.
+    //
+    //    IMPORTANT: this trigger call itself MUST be awaited (even though
+    //    the processing it kicks off is not). Netlify Functions run on
+    //    Lambda — once this handler returns, its execution environment can
+    //    freeze immediately, killing any in-flight request that wasn't
+    //    awaited. A fire-and-forget fetch() here was silently never
+    //    reaching generate-batch-background at all: the request got
+    //    frozen mid-flight before it could error, so nothing ever showed
+    //    up in that function's logs. Awaiting only costs the time it
+    //    takes Netlify to ACCEPT the background invocation and hand back
+    //    its 202 (milliseconds) — the actual 15 minutes of processing
+    //    still happens async on the other side.
     const siteUrl = process.env.URL || `https://${event.headers.host}`;
-    fetch(`${siteUrl}/.netlify/functions/generate-batch-background`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ batchId: batch.id }),
-    }).catch((err) => {
-      // Log only — if this trigger call itself fails, the batch is left in
-      // 'generating' with certificates 'pending'. Worth alerting on later,
-      // but shouldn't block the response to the user.
+    try {
+      await fetch(`${siteUrl}/.netlify/functions/generate-batch-background`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ batchId: batch.id }),
+      });
+    } catch (err) {
       console.error('Failed to trigger generate-batch-background:', err);
-    });
+      await supabase.from('batches').update({ status: 'failed' }).eq('id', batch.id);
+      return { statusCode: 500, body: JSON.stringify({ error: 'Failed to start certificate generation. Please try again.' }) };
+    }
 
     return { statusCode: 200, body: JSON.stringify({ batchId: batch.id, tokenCost }) };
   } catch (err) {
