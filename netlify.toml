@@ -5,7 +5,7 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["public/assets/templates/*.svg", "public/assets/templates.json"]
+    included_files = ["public/assets/templates/*.svg", "public/assets/templates.json", "netlify/functions/lib/*.ttf"]
 
 # Background function — long-running batch generation/sending (FR-6.7).
 # Netlify recognizes the "-background" filename suffix automatically and
