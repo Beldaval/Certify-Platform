@@ -12,8 +12,8 @@ const fs = require('fs');
 const path = require('path');
 const { Resvg } = require('@resvg/resvg-js');
 const { PDFDocument } = require('pdf-lib');
-
 const TEMPLATES_DIR = path.join(__dirname, '..', '..', '..', 'public', 'assets', 'templates');
+const FONTS_DIR = __dirname; // font .ttf files sit alongside render.js in lib/
 
 function escapeXml(str) {
   return String(str)
@@ -63,10 +63,24 @@ async function renderCertificate({ templateDef, fieldValues }) {
   const pxW = templateDef.canvas_width || templateDef.canvas.width;
   const pxH = templateDef.canvas_height || templateDef.canvas.height;
 
-  const resvg = new Resvg(svg, {
-    fitTo: { mode: 'width', value: pxW },
-    background: 'white',
-  });
+ const resvg = new Resvg(svg, {
+  fitTo: { mode: 'width', value: pxW },
+  background: 'white',
+  font: {
+    fontFiles: [
+      path.join(FONTS_DIR, 'Gelasio-Regular.ttf'),
+      path.join(FONTS_DIR, 'Gelasio-Bold.ttf'),
+      path.join(FONTS_DIR, 'Gelasio-Italic.ttf'),
+      path.join(FONTS_DIR, 'Gelasio-BoldItalic.ttf'),
+      path.join(FONTS_DIR, 'Arimo-Regular.ttf'),
+      path.join(FONTS_DIR, 'Arimo-Bold.ttf'),
+    ],
+    loadSystemFonts: false, // none exist in this container — skip the scan
+    defaultFontFamily: 'Gelasio',
+    serifFamily: 'Gelasio',
+    sansSerifFamily: 'Arimo',
+  },
+});
   const pngBuffer = resvg.render().asPng();
 
   // Wrap into a single-page PDF, scaled down from the high-res px canvas to a
