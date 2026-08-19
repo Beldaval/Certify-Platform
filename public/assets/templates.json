@@ -173,7 +173,8 @@
         {
           "id": "signature-2",
           "type": "image",
-          "required": false
+          "required": false,
+          "hide_container": "signature-2-block"
         },
         {
           "id": "opt-signature-2-caption",
@@ -266,7 +267,8 @@
         {
           "id": "signature-2",
           "type": "image",
-          "required": false
+          "required": false,
+          "hide_container": "signature-2-block"
         },
         {
           "id": "opt-signature-2-caption",
@@ -483,7 +485,8 @@
         {
           "id": "signature-2",
           "type": "image",
-          "required": false
+          "required": false,
+          "hide_container": "signature-2-block"
         },
         {
           "id": "opt-signature-2-caption",
@@ -687,7 +690,8 @@
         {
           "id": "signature-2",
           "type": "image",
-          "required": false
+          "required": false,
+          "hide_container": "signature-2-block"
         },
         {
           "id": "opt-signature-2-caption",
@@ -789,7 +793,8 @@
         {
           "id": "signature-2",
           "type": "image",
-          "required": false
+          "required": false,
+          "hide_container": "signature-2-block"
         },
         {
           "id": "opt-signature-2-caption",
