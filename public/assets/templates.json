@@ -359,7 +359,7 @@
           "required": true
         },
         {
-          "id": "opt-sponsor-names",
+          "id": "sponsor-names",
           "type": "text",
           "required": false
         },
