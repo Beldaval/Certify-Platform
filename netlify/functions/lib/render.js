@@ -13,6 +13,28 @@
 // leaving an empty frame behind. Used for optional signature/seal slots
 // whose surrounding UI shouldn't render at all if unused.
 //
+// An image field can also declare "image_target_id": "<some-element-id>" in
+// templates.json. Some templates put the field's own id on a wrapping <g>
+// (for layout/placeholder purposes) rather than on the actual <image>
+// element that needs the href written to it. When present, image_target_id
+// names the real element to write to; render.js falls back to field.id
+// when it's absent, which is correct for templates where the field id and
+// the <image> id are the same. Getting this wrong doesn't throw — it
+// silently writes href onto the wrong (non-image) element, and the
+// uploaded logo/signature just never appears. See baby-dedication in
+// templates.json for a template that needs this.
+//
+// FIX (see incident: baby-dedication batch failures, Aug 2026): every
+// uploaded image is now normalized through sharp -> PNG before it's
+// base64-embedded into the SVG. resvg-js's native image decoder only
+// reliably handles PNG/baseline JPEG; a phone-uploaded HEIC, a
+// progressive/CMYK JPEG, or a WebP can make it panic with an opaque
+// 'GenericFailure' and no further detail. Running everything through
+// sharp first means anything we accept is guaranteed to be something
+// resvg can parse, and anything sharp itself can't decode fails with a
+// real, actionable error at upload-normalization time instead of a bare
+// crash deep inside the renderer.
+//
 // Uses @resvg/resvg-js (a small native SVG rasterizer — no headless browser
 // needed, keeping the function bundle light) and pdf-lib to wrap the raster
 // into a print-ready single-page PDF sized to the template's canvas.
@@ -28,6 +50,7 @@ const fs = require('fs');
 const path = require('path');
 const { Resvg } = require('@resvg/resvg-js');
 const { PDFDocument } = require('pdf-lib');
+const sharp = require('sharp');
 
 const TEMPLATES_DIR = path.join(__dirname, '..', '..', '..', 'public', 'assets', 'templates');
 const FONTS_DIR = __dirname; // font .ttf files sit alongside render.js in lib/
@@ -39,6 +62,43 @@ function escapeXml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
+}
+
+// Parses a "data:<mime>;base64,<payload>" string into its raw Buffer + mime.
+// Returns null if str isn't a data URI (e.g. empty string on a blank
+// optional slot) so callers can tell "no image" apart from "bad image".
+function parseDataUri(str) {
+  if (!str) return null;
+  const m = /^data:([^;]+);base64,(.*)$/s.exec(str);
+  if (!m) return null;
+  return { mime: m[1], buffer: Buffer.from(m[2], 'base64') };
+}
+
+// Re-encodes an uploaded image to PNG via sharp so resvg's native decoder
+// never has to deal with a format/variant it can't handle. Throws a
+// descriptive error (instead of letting a bad image reach resvg and crash
+// with an opaque GenericFailure) if sharp itself can't decode the input.
+async function normalizeImageDataUri(dataUri, fieldId) {
+  const parsed = parseDataUri(dataUri);
+  if (!parsed) return dataUri; // blank / not a data URI — leave as-is
+  try {
+    const pngBuffer = await sharp(parsed.buffer).rotate().png().toBuffer();
+    return `data:image/png;base64,${pngBuffer.toString('base64')}`;
+  } catch (err) {
+    throw new Error(
+      `Image for field "${fieldId}" could not be decoded (${parsed.mime}, ${parsed.buffer.length} bytes): ${err.message}`
+    );
+  }
+}
+
+async function normalizeFieldValues(templateDef, fieldValues) {
+  const values = { ...(fieldValues || {}) };
+  for (const field of templateDef.fields) {
+    if (field.type === 'image' && values[field.id]) {
+      values[field.id] = await normalizeImageDataUri(values[field.id], field.id);
+    }
+  }
+  return values;
 }
 
 function buildSvg(templateDef, fieldValues) {
@@ -55,12 +115,17 @@ function buildSvg(templateDef, fieldValues) {
       svg = svg.replace(re, (m, open, _old, close) => `${open}${safe}${close}`);
 
     } else if (field.type === 'image') {
-      const reHref = new RegExp(`(<[^>]+id="${field.id}"[^>]*?)(?:xlink:href|href)="[^"]*"`);
+      // FIX: write to field.image_target_id when the template declares one
+      // (field id is on a wrapping <g>, not the <image> itself); otherwise
+      // fall back to field.id, which is correct for templates where the
+      // <image> element carries the field id directly.
+      const targetId = field.image_target_id || field.id;
+      const reHref = new RegExp(`(<[^>]+id="${targetId}"[^>]*?)(?:xlink:href|href)="[^"]*"`);
       const dataUri = raw || '';
       if (reHref.test(svg)) {
         svg = svg.replace(reHref, `$1href="${dataUri}"`);
       } else if (dataUri) {
-        const reOpen = new RegExp(`(<[^>]+id="${field.id}")`);
+        const reOpen = new RegExp(`(<[^>]+id="${targetId}")`);
         svg = svg.replace(reOpen, `$1 href="${dataUri}"`);
       }
       // no upload on an optional slot -> href left empty, slot renders blank
@@ -102,29 +167,52 @@ function buildSvg(templateDef, fieldValues) {
   return svg;
 }
 
-async function renderCertificate({ templateDef, fieldValues }) {
-  const svg = buildSvg(templateDef, fieldValues);
+async function renderCertificate({ templateDef, fieldValues, recipientLabel }) {
+  // FIX: normalize every uploaded image to PNG via sharp before it's
+  // embedded, so resvg never has to decode a format/variant it can't
+  // handle. Errors here are descriptive (which field, what was wrong)
+  // instead of an opaque native crash later.
+  const normalizedValues = await normalizeFieldValues(templateDef, fieldValues);
+  const svg = buildSvg(templateDef, normalizedValues);
   const pxW = templateDef.canvas_width || templateDef.canvas.width;
   const pxH = templateDef.canvas_height || templateDef.canvas.height;
 
-  const resvg = new Resvg(svg, {
-    fitTo: { mode: 'width', value: pxW },
-    background: 'white',
-    font: {
-      fontFiles: [
-        path.join(FONTS_DIR, 'Gelasio-Regular.ttf'),
-        path.join(FONTS_DIR, 'Gelasio-Bold.ttf'),
-        path.join(FONTS_DIR, 'Gelasio-Italic.ttf'),
-        path.join(FONTS_DIR, 'Gelasio-BoldItalic.ttf'),
-        path.join(FONTS_DIR, 'Arimo-Regular.ttf'),
-        path.join(FONTS_DIR, 'Arimo-Bold.ttf'),
-      ],
-      loadSystemFonts: false, // none exist in this container — skip the scan
-      defaultFontFamily: 'Gelasio',
-      serifFamily: 'Gelasio',
-      sansSerifFamily: 'Arimo',
-    },
-  });
+  let resvg;
+  try {
+    resvg = new Resvg(svg, {
+      fitTo: { mode: 'width', value: pxW },
+      background: 'white',
+      font: {
+        fontFiles: [
+          path.join(FONTS_DIR, 'Gelasio-Regular.ttf'),
+          path.join(FONTS_DIR, 'Gelasio-Bold.ttf'),
+          path.join(FONTS_DIR, 'Gelasio-Italic.ttf'),
+          path.join(FONTS_DIR, 'Gelasio-BoldItalic.ttf'),
+          path.join(FONTS_DIR, 'Arimo-Regular.ttf'),
+          path.join(FONTS_DIR, 'Arimo-Bold.ttf'),
+        ],
+        loadSystemFonts: false, // none exist in this container — skip the scan
+        defaultFontFamily: 'Gelasio',
+        serifFamily: 'Gelasio',
+        sansSerifFamily: 'Arimo',
+      },
+    });
+  } catch (err) {
+    // FIX: a bare Resvg constructor failure gives no context beyond a
+    // native stack trace. Log enough to actually debug it — which
+    // template/recipient, how big the final SVG was, and which image
+    // fields carried data — before rethrowing.
+    const imageFieldSizes = templateDef.fields
+      .filter((f) => f.type === 'image')
+      .map((f) => `${f.id}=${normalizedValues[f.id] ? normalizedValues[f.id].length + 'b' : 'blank'}`)
+      .join(', ');
+    console.error(
+      `[render] Resvg parse/construct failed for template="${templateDef.id}" recipient="${recipientLabel || 'unknown'}" ` +
+      `svgLength=${svg.length} imageFields={${imageFieldSizes}}: ${err.message}`
+    );
+    console.error(`[render] svg head: ${svg.slice(0, 500)}`);
+    throw err;
+  }
 
   const pngBuffer = resvg.render().asPng();
 
