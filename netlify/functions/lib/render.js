@@ -52,8 +52,26 @@ const { Resvg } = require('@resvg/resvg-js');
 const { PDFDocument } = require('pdf-lib');
 const sharp = require('sharp');
 
-const TEMPLATES_DIR = path.join(__dirname, '..', '..', '..', 'public', 'assets', 'templates');
-const FONTS_DIR = __dirname; // font .ttf files sit alongside render.js in lib/
+// FIX (deploy incident, Aug 2026): this used to be computed as
+// path.join(__dirname, '..', '..', '..', 'public', 'assets', 'templates'),
+// assuming render.js always lives at netlify/functions/lib/render.js on
+// disk at runtime. That broke the moment esbuild started bundling this
+// file normally (once sharp/resvg were marked external, esbuild inlined
+// lib/render.js's code directly into generate-batch-background.js instead
+// of keeping it as a separate required file) — __dirname then pointed at
+// netlify/functions instead of netlify/functions/lib, one level shallower
+// than the old math assumed, so '../../../' overshot past the deploy root
+// entirely (resulting in ENOENT for /var/public/assets/templates/...).
+//
+// Netlify Functions run on AWS Lambda, which always sets
+// LAMBDA_TASK_ROOT=/var/task as the deploy root regardless of how the
+// bundler flattens or inlines files inside it. included_files in
+// netlify.toml preserve their original repo-relative path under that
+// root, so anchoring to LAMBDA_TASK_ROOT instead of __dirname is stable
+// no matter how the function bundle's internal file layout changes.
+const TASK_ROOT = process.env.LAMBDA_TASK_ROOT || path.join(__dirname, '..', '..', '..');
+const TEMPLATES_DIR = path.join(TASK_ROOT, 'public', 'assets', 'templates');
+const FONTS_DIR = path.join(TASK_ROOT, 'netlify', 'functions', 'lib'); // matches included_files entry in netlify.toml
 
 function escapeXml(str) {
   return String(str)
@@ -103,7 +121,23 @@ async function normalizeFieldValues(templateDef, fieldValues) {
 
 function buildSvg(templateDef, fieldValues) {
   const svgPath = path.join(TEMPLATES_DIR, templateDef.svg_file || templateDef.file);
-  let svg = fs.readFileSync(svgPath, 'utf8');
+  let svg;
+  try {
+    svg = fs.readFileSync(svgPath, 'utf8');
+  } catch (err) {
+    // FIX: if the path is ever wrong again (bundler changes, moved files,
+    // etc.), list what's actually there instead of a bare ENOENT so it's
+    // a one-log-line fix instead of another guess-and-redeploy cycle.
+    let dirListing = '(could not read parent directory)';
+    try {
+      dirListing = fs.readdirSync(path.dirname(svgPath)).join(', ');
+    } catch (_) { /* parent directory itself missing — leave default message */ }
+    console.error(
+      `[render] Could not read template SVG at "${svgPath}" (TEMPLATES_DIR="${TEMPLATES_DIR}", ` +
+      `TASK_ROOT="${TASK_ROOT}", __dirname="${__dirname}"). Directory contents: ${dirListing}`
+    );
+    throw err;
+  }
   const values = fieldValues || {};
 
   for (const field of templateDef.fields) {
