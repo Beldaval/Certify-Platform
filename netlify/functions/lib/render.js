@@ -98,7 +98,27 @@ function parseDataUri(str) {
 // with an opaque GenericFailure) if sharp itself can't decode the input.
 async function normalizeImageDataUri(dataUri, fieldId) {
   const parsed = parseDataUri(dataUri);
-  if (!parsed) return dataUri; // blank / not a data URI — leave as-is
+  if (!parsed) {
+    // FIX (incident: "expected 'g' tag, not 'tspan'" parse corruption):
+    // a non-empty value that ISN'T a well-formed data URI used to be
+    // passed straight through and written unescaped into an href
+    // attribute in buildSvg. If that value contained a literal `"`, it
+    // silently terminated the attribute early and everything after it
+    // (however that string happened to be shaped) was parsed as real SVG
+    // markup — corrupting document structure in a way that only surfaces
+    // as a confusing mismatched-tag error dozens of lines later, nowhere
+    // near the actual image field. Whatever upstream reason produced a
+    // non-data-URI value here (failed upload, a stray error string, etc.)
+    // it must never reach the SVG. Treat it as blank instead of trusting
+    // it, and log loudly so the upstream bug that produced it is visible.
+    if (dataUri) {
+      console.error(
+        `[render] Field "${fieldId}" had a non-data-URI image value and was dropped instead of embedded: ` +
+        `${JSON.stringify(String(dataUri).slice(0, 120))}`
+      );
+    }
+    return '';
+  }
   try {
     const pngBuffer = await sharp(parsed.buffer).rotate().png().toBuffer();
     return `data:image/png;base64,${pngBuffer.toString('base64')}`;
@@ -155,7 +175,13 @@ function buildSvg(templateDef, fieldValues) {
       // <image> element carries the field id directly.
       const targetId = field.image_target_id || field.id;
       const reHref = new RegExp(`(<[^>]+id="${targetId}"[^>]*?)(?:xlink:href|href)="[^"]*"`);
-      const dataUri = raw || '';
+      // FIX: belt-and-suspenders on top of normalizeFieldValues dropping
+      // non-data-URI values upstream — never write a raw value into an
+      // attribute. escapeXml neutralizes a stray `"` (or `<`/`>`) that
+      // would otherwise terminate the href attribute early and get the
+      // remainder of the string parsed as real markup, corrupting the
+      // document structure well past this point.
+      const dataUri = escapeXml(raw || '');
       if (reHref.test(svg)) {
         svg = svg.replace(reHref, `$1href="${dataUri}"`);
       } else if (dataUri) {
@@ -244,7 +270,24 @@ async function renderCertificate({ templateDef, fieldValues, recipientLabel }) {
       `[render] Resvg parse/construct failed for template="${templateDef.id}" recipient="${recipientLabel || 'unknown'}" ` +
       `svgLength=${svg.length} imageFields={${imageFieldSizes}}: ${err.message}`
     );
-    console.error(`[render] svg head: ${svg.slice(0, 500)}`);
+    // FIX: resvg's parse errors report a line:col INTO THE FINAL SVG
+    // (e.g. "expected 'g' tag, not 'tspan' at 113:27"), which the svg head
+    // alone can't show for anything past the first ~10 lines. Extract that
+    // position from the error message and print the surrounding lines
+    // instead, so the actual offending markup is in the log directly.
+    const posMatch = /at (\d+):(\d+)/.exec(err.message);
+    if (posMatch) {
+      const line = parseInt(posMatch[1], 10);
+      const lines = svg.split('\n');
+      const from = Math.max(0, line - 4);
+      const to = Math.min(lines.length, line + 3);
+      const context = lines.slice(from, to)
+        .map((l, i) => `${from + i + 1}: ${l}`)
+        .join('\n');
+      console.error(`[render] svg around reported error (line ${line}):\n${context}`);
+    } else {
+      console.error(`[render] svg head: ${svg.slice(0, 500)}`);
+    }
     throw err;
   }
 
