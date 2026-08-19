@@ -79,8 +79,21 @@ function buildSvg(templateDef, fieldValues) {
 
     } else if (field.type === 'block-toggle') {
       if (raw === false) {
-        const re = new RegExp(`(<[^>]+id="${field.id}"[^>]*>)([\\s\\S]*?)(</[a-zA-Z]+>)`);
-        svg = svg.replace(re, (m, open, _old, close) => `${open}${close}`);
+        // Find the actual tag name the id sits on (usually <g>, could be
+        // any element) and match all the way to ITS OWN closing tag by
+        // name, not just the nearest closing tag of any kind. A naive
+        // "stop at the first </...>" match breaks any block wrapping more
+        // than one child element (e.g. two <text> lines) — it would clip
+        // off after the first child's close tag instead of the block's
+        // own, corrupting the SVG's XML structure and making resvg fail
+        // to parse it entirely. Same caveat as hide_container: assumes no
+        // same-named tag is nested inside itself.
+        const tagMatch = svg.match(new RegExp(`<([a-zA-Z]+)[^>]+id="${field.id}"`));
+        if (tagMatch) {
+          const tagName = tagMatch[1];
+          const re = new RegExp(`<${tagName}[^>]+id="${field.id}"[^>]*>[\\s\\S]*?<\\/${tagName}>`);
+          svg = svg.replace(re, '');
+        }
       }
       // true/undefined -> leave the template's own default content as-is
     }
