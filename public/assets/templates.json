@@ -1,5 +1,5 @@
 {
-  "_readme": "One entry per template. 'fields' lists every id the generation engine should treat as a data-binding target \u2014 i.e. text to replace or an image to inject. Purely decorative/structural ids (gradients, clip-paths, corner ornaments, wrapper groups, static design labels) are intentionally excluded; the SVGs contain many more ids than are listed here, and that's expected. type 'text' = replace element's text content. type 'image' = set the element's image href to the uploaded file, scaled to fit its bounding box. required=false fields may be left blank/skipped per FR-2.7 (optional fields render blank, template layout never shifts).",
+  "_readme": "One entry per template. 'fields' lists every id the generation engine should treat as a data-binding target — i.e. text to replace or an image to inject. Purely decorative/structural ids (gradients, clip-paths, corner ornaments, wrapper groups, static design labels) are intentionally excluded; the SVGs contain many more ids than are listed here, and that's expected. type 'text' = replace element's text content. type 'image' = set the element's image href to the uploaded file, scaled to fit its bounding box. 'image_target_id' (new): when an image field's id sits on a wrapping <g> rather than directly on the <image> element that carries the href, this names the actual <image> id to write to — render.js falls back to field.id when this is absent. required=false fields may be left blank/skipped per FR-2.7 (optional fields render blank, template layout never shifts).",
   "templates": [
     {
       "id": "exclusive-completion",
@@ -112,7 +112,7 @@
         "width": 3508,
         "height": 2481
       },
-      "notes": "No course-title or start-date/end-date fields by design \u2014 treated as a general achievement award, not tied to a specific course or date range.",
+      "notes": "No course-title or start-date/end-date fields by design — treated as a general achievement award, not tied to a specific course or date range.",
       "fields": [
         {
           "id": "institution-name",
@@ -201,7 +201,7 @@
         "width": 3508,
         "height": 2481
       },
-      "notes": "award-date-line is a single text field (e.g. 'Granted this 14th day of June, 2026') rather than separate day/month/year fields \u2014 different design choice from the other templates, intentionally left as-is.",
+      "notes": "award-date-line is a single text field (e.g. 'Granted this 14th day of June, 2026') rather than separate day/month/year fields — different design choice from the other templates, intentionally left as-is.",
       "fields": [
         {
           "id": "institution-name",
@@ -295,7 +295,7 @@
         "width": 3508,
         "height": 2480
       },
-      "notes": "church-name and dedication-church-name both hold the same value (name appears twice in the design) \u2014 bind both to one input. Same for sponsor-names/opt-sponsor-names if both present. scripture-text/scripture-reference and covenant-text are static design paragraphs, toggle the whole opt-scripture-section/opt-covenant-text block on or off rather than editing their wording.",
+      "notes": "church-name and dedication-church-name both hold the same value (name appears twice in the design) — bind both to one input. Same for sponsor-names/opt-sponsor-names if both present. scripture-text/scripture-reference and covenant-text are static design paragraphs, toggle the whole opt-scripture-section/opt-covenant-text block on or off rather than editing their wording. FIXED: the three image fields below carry image_target_id because their field id sits on a wrapping <g>, not on the <image> element itself — without this, uploaded logos/signatures were written to the wrong element and never rendered.",
       "fields": [
         {
           "id": "church-name",
@@ -372,12 +372,14 @@
         {
           "id": "opt-logo-slot",
           "type": "image",
-          "required": false
+          "required": false,
+          "image_target_id": "logo-image"
         },
         {
           "id": "signature-1",
           "type": "image",
-          "required": true
+          "required": true,
+          "image_target_id": "signature-1-image"
         },
         {
           "id": "signature-1-name",
@@ -392,7 +394,8 @@
         {
           "id": "opt-signature-2",
           "type": "image",
-          "required": false
+          "required": false,
+          "image_target_id": "opt-signature-2-image"
         },
         {
           "id": "opt-signature-2-name",
@@ -424,7 +427,7 @@
         "width": 3508,
         "height": 2481
       },
-      "notes": "Same as Modern Excellence \u2014 no course-title or date-range fields by design.",
+      "notes": "Same as Modern Excellence — no course-title or date-range fields by design.",
       "fields": [
         {
           "id": "institution-name",
