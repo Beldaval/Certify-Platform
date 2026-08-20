@@ -163,28 +163,34 @@
   </g>
 
   <!-- ============================= SEAL ============================= -->
-  <circle cx="3072" cy="1980" r="198" fill="url(#goldGrad)" stroke="#8E6E22" stroke-width="2"/>
-  <circle cx="3072" cy="1980" r="168" fill="none" stroke="#7A5E1E" stroke-width="1.5" opacity="0.7"/>
-  <circle cx="3072" cy="1980" r="120" fill="none" stroke="#7A5E1E" stroke-width="1" opacity="0.55"/>
+  <!-- FIX (Aug 2026): wrapped in <g id="seal-block"> so an unused opt-seal-slot
+       can hide the ENTIRE decorative medallion (gold circle, arc text, roman
+       numeral emblem, flourishes) via hide_container in templates.json — not
+       just clear the image href. Same fix as Exclusive Completion. -->
+  <g id="seal-block">
+    <circle cx="3072" cy="1980" r="198" fill="url(#goldGrad)" stroke="#8E6E22" stroke-width="2"/>
+    <circle cx="3072" cy="1980" r="168" fill="none" stroke="#7A5E1E" stroke-width="1.5" opacity="0.7"/>
+    <circle cx="3072" cy="1980" r="120" fill="none" stroke="#7A5E1E" stroke-width="1" opacity="0.55"/>
 
-  <text font-size="21" font-weight="700" letter-spacing="2.5" fill="#152442">
-    <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL</textPath>
-  </text>
-  <text font-size="15" letter-spacing="1.5" fill="#152442">
-    <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">EXCELLENCE &#183; SERVICE &#183; LEADERSHIP</textPath>
-  </text>
+    <text font-size="21" font-weight="700" letter-spacing="2.5" fill="#152442">
+      <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL</textPath>
+    </text>
+    <text font-size="15" letter-spacing="1.5" fill="#152442">
+      <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">EXCELLENCE &#183; SERVICE &#183; LEADERSHIP</textPath>
+    </text>
 
-  <g stroke="#152442" stroke-width="3" fill="none">
-    <line x1="3046" y1="1962" x2="3046" y2="1998"/>
-    <line x1="3072" y1="1962" x2="3072" y2="1998"/>
-    <line x1="3098" y1="1962" x2="3098" y2="1998"/>
-    <rect x="3038" y="1954" width="68" height="7" fill="#152442" stroke="none"/>
-    <rect x="3034" y="1998" width="76" height="7" fill="#152442" stroke="none"/>
+    <g stroke="#152442" stroke-width="3" fill="none">
+      <line x1="3046" y1="1962" x2="3046" y2="1998"/>
+      <line x1="3072" y1="1962" x2="3072" y2="1998"/>
+      <line x1="3098" y1="1962" x2="3098" y2="1998"/>
+      <rect x="3038" y="1954" width="68" height="7" fill="#152442" stroke="none"/>
+      <rect x="3034" y="1998" width="76" height="7" fill="#152442" stroke="none"/>
+    </g>
+    <path d="M2958,2032 C2938,2000 2938,1960 2964,1934" stroke="#152442" stroke-width="2.2" fill="none"/>
+    <path d="M3186,2032 C3206,2000 3206,1960 3180,1934" stroke="#152442" stroke-width="2.2" fill="none"/>
+
+    <image id="opt-seal-slot" x="2874" y="1782" width="396" height="396" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
   </g>
-  <path d="M2958,2032 C2938,2000 2938,1960 2964,1934" stroke="#152442" stroke-width="2.2" fill="none"/>
-  <path d="M3186,2032 C3206,2000 3206,1960 3180,1934" stroke="#152442" stroke-width="2.2" fill="none"/>
-
-  <image id="opt-seal-slot" x="2874" y="1782" width="396" height="396" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
 
   <!-- ============================= FOOTER BAND ============================= -->
   <rect x="88" y="2293" width="3332" height="98" fill="#152442"/>
