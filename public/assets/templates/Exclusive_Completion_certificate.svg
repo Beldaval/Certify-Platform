@@ -141,33 +141,41 @@
   </g>
 
   <!-- ============================= SEAL ============================= -->
-  <path d="M 3082.0,1870.0 L 3098.1,1882.5 L 3115.7,1872.2 L 3130.0,1886.7 L 3148.8,1878.8 L 3161.1,1895.1 L 3180.7,1889.6 L 3190.8,1907.4 L 3211.0,1904.6 L 3218.7,1923.5 L 3239.1,1923.3 L 3244.2,1943.0 L 3264.4,1945.6 L 3267.0,1965.8 L 3286.7,1970.9 L 3286.5,1991.3 L 3305.4,1999.0 L 3302.6,2019.2 L 3320.4,2029.3 L 3314.9,2048.9 L 3331.2,2061.2 L 3323.3,2080.0 L 3337.8,2094.3 L 3327.5,2111.9 L 3340.0,2128.0 L 3327.5,2144.1 L 3337.8,2161.7 L 3323.3,2176.0 L 3331.2,2194.8 L 3314.9,2207.1 L 3320.4,2226.7 L 3302.6,2236.8 L 3305.4,2257.0 L 3286.5,2264.7 L 3286.7,2285.1 L 3267.0,2290.2 L 3264.4,2310.4 L 3244.2,2313.0 L 3239.1,2332.7 L 3218.7,2332.5 L 3211.0,2351.4 L 3190.8,2348.6 L 3180.7,2366.4 L 3161.1,2360.9 L 3148.8,2377.2 L 3130.0,2369.3 L 3115.7,2383.8 L 3098.1,2373.5 L 3082.0,2386.0 L 3065.9,2373.5 L 3048.3,2383.8 L 3034.0,2369.3 L 3015.2,2377.2 L 3002.9,2360.9 L 2983.3,2366.4 L 2973.2,2348.6 L 2953.0,2351.4 L 2945.3,2332.5 L 2924.9,2332.7 L 2919.8,2313.0 L 2899.6,2310.4 L 2897.0,2290.2 L 2877.3,2285.1 L 2877.5,2264.7 L 2858.6,2257.0 L 2861.4,2236.8 L 2843.6,2226.7 L 2849.1,2207.1 L 2832.8,2194.8 L 2840.7,2176.0 L 2826.2,2161.7 L 2836.5,2144.1 L 2824.0,2128.0 L 2836.5,2111.9 L 2826.2,2094.3 L 2840.7,2080.0 L 2832.8,2061.2 L 2849.1,2048.9 L 2843.6,2029.3 L 2861.4,2019.2 L 2858.6,1999.0 L 2877.5,1991.3 L 2877.3,1970.9 L 2897.0,1965.8 L 2899.6,1945.6 L 2919.8,1943.0 L 2924.9,1923.3 L 2945.3,1923.5 L 2953.0,1904.6 L 2973.2,1907.4 L 2983.3,1889.6 L 3002.9,1895.1 L 3015.2,1878.8 L 3034.0,1886.7 L 3048.3,1872.2 L 3065.9,1882.5 Z"
-        fill="url(#goldGrad)"/>
-  <circle cx="3082" cy="2128" r="234" fill="#14161B" stroke="url(#goldGrad)" stroke-width="3"/>
-  <circle cx="3082" cy="2128" r="196" fill="none" stroke="#C9A227" stroke-width="1.5"/>
-  <circle cx="3082" cy="2128" r="160" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.7"/>
+  <!-- FIX (Aug 2026): wrapped in <g id="seal-block"> so an unused opt-seal-slot
+       can hide the ENTIRE decorative medallion (burst shape, rings, arc text,
+       shield emblem) via hide_container in templates.json — not just clear the
+       image href. Unlike the signature blocks, this artwork had no wrapping
+       group before; without one, the full gold seal design rendered on every
+       certificate whether a real seal image was uploaded or not. -->
+  <g id="seal-block">
+    <path d="M 3082.0,1870.0 L 3098.1,1882.5 L 3115.7,1872.2 L 3130.0,1886.7 L 3148.8,1878.8 L 3161.1,1895.1 L 3180.7,1889.6 L 3190.8,1907.4 L 3211.0,1904.6 L 3218.7,1923.5 L 3239.1,1923.3 L 3244.2,1943.0 L 3264.4,1945.6 L 3267.0,1965.8 L 3286.7,1970.9 L 3286.5,1991.3 L 3305.4,1999.0 L 3302.6,2019.2 L 3320.4,2029.3 L 3314.9,2048.9 L 3331.2,2061.2 L 3323.3,2080.0 L 3337.8,2094.3 L 3327.5,2111.9 L 3340.0,2128.0 L 3327.5,2144.1 L 3337.8,2161.7 L 3323.3,2176.0 L 3331.2,2194.8 L 3314.9,2207.1 L 3320.4,2226.7 L 3302.6,2236.8 L 3305.4,2257.0 L 3286.5,2264.7 L 3286.7,2285.1 L 3267.0,2290.2 L 3264.4,2310.4 L 3244.2,2313.0 L 3239.1,2332.7 L 3218.7,2332.5 L 3211.0,2351.4 L 3190.8,2348.6 L 3180.7,2366.4 L 3161.1,2360.9 L 3148.8,2377.2 L 3130.0,2369.3 L 3115.7,2383.8 L 3098.1,2373.5 L 3082.0,2386.0 L 3065.9,2373.5 L 3048.3,2383.8 L 3034.0,2369.3 L 3015.2,2377.2 L 3002.9,2360.9 L 2983.3,2366.4 L 2973.2,2348.6 L 2953.0,2351.4 L 2945.3,2332.5 L 2924.9,2332.7 L 2919.8,2313.0 L 2899.6,2310.4 L 2897.0,2290.2 L 2877.3,2285.1 L 2877.5,2264.7 L 2858.6,2257.0 L 2861.4,2236.8 L 2843.6,2226.7 L 2849.1,2207.1 L 2832.8,2194.8 L 2840.7,2176.0 L 2826.2,2161.7 L 2836.5,2144.1 L 2824.0,2128.0 L 2836.5,2111.9 L 2826.2,2094.3 L 2840.7,2080.0 L 2832.8,2061.2 L 2849.1,2048.9 L 2843.6,2029.3 L 2861.4,2019.2 L 2858.6,1999.0 L 2877.5,1991.3 L 2877.3,1970.9 L 2897.0,1965.8 L 2899.6,1945.6 L 2919.8,1943.0 L 2924.9,1923.3 L 2945.3,1923.5 L 2953.0,1904.6 L 2973.2,1907.4 L 2983.3,1889.6 L 3002.9,1895.1 L 3015.2,1878.8 L 3034.0,1886.7 L 3048.3,1872.2 L 3065.9,1882.5 Z"
+          fill="url(#goldGrad)"/>
+    <circle cx="3082" cy="2128" r="234" fill="#14161B" stroke="url(#goldGrad)" stroke-width="3"/>
+    <circle cx="3082" cy="2128" r="196" fill="none" stroke="#C9A227" stroke-width="1.5"/>
+    <circle cx="3082" cy="2128" r="160" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.7"/>
 
-  <text font-size="23" font-weight="700" letter-spacing="2.5" fill="url(#goldGrad)">
-    <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL OF AUTHENTICATION</textPath>
-  </text>
-  <text font-size="17" letter-spacing="2" fill="#C9A227">
-    <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">EXCELLENCE &#183; INTEGRITY &#183; LEADERSHIP</textPath>
-  </text>
+    <text font-size="23" font-weight="700" letter-spacing="2.5" fill="url(#goldGrad)">
+      <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL OF AUTHENTICATION</textPath>
+    </text>
+    <text font-size="17" letter-spacing="2" fill="#C9A227">
+      <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">EXCELLENCE &#183; INTEGRITY &#183; LEADERSHIP</textPath>
+    </text>
 
-  <!-- shield + column + star emblem -->
-  <path d="M3082,2010 L3132,2028 L3132,2068 C3132,2108 3082,2136 3082,2136 C3082,2136 3032,2108 3032,2068 L3032,2028 Z"
-        fill="none" stroke="#C9A227" stroke-width="2.5"/>
-  <g stroke="#C9A227" stroke-width="2.5" fill="none">
-    <line x1="3054" y1="2050" x2="3054" y2="2090"/>
-    <line x1="3082" y1="2050" x2="3082" y2="2090"/>
-    <line x1="3110" y1="2050" x2="3110" y2="2090"/>
-    <rect x="3044" y="2042" width="76" height="8" fill="#C9A227" stroke="none"/>
-    <rect x="3040" y="2090" width="84" height="8" fill="#C9A227" stroke="none"/>
+    <!-- shield + column + star emblem -->
+    <path d="M3082,2010 L3132,2028 L3132,2068 C3132,2108 3082,2136 3082,2136 C3082,2136 3032,2108 3032,2068 L3032,2028 Z"
+          fill="none" stroke="#C9A227" stroke-width="2.5"/>
+    <g stroke="#C9A227" stroke-width="2.5" fill="none">
+      <line x1="3054" y1="2050" x2="3054" y2="2090"/>
+      <line x1="3082" y1="2050" x2="3082" y2="2090"/>
+      <line x1="3110" y1="2050" x2="3110" y2="2090"/>
+      <rect x="3044" y="2042" width="76" height="8" fill="#C9A227" stroke="none"/>
+      <rect x="3040" y="2090" width="84" height="8" fill="#C9A227" stroke="none"/>
+    </g>
+    <path d="M3082,1996 L3088,2010 L3102,2010 L3091,2019 L3095,2033 L3082,2025 L3069,2033 L3073,2019 L3062,2010 L3076,2010 Z" fill="#C9A227"/>
+    <path d="M2996,2140 C2976,2110 2976,2070 3000,2044" stroke="#C9A227" stroke-width="2" fill="none"/>
+    <path d="M3168,2140 C3188,2110 3188,2070 3164,2044" stroke="#C9A227" stroke-width="2" fill="none"/>
+
+    <image id="opt-seal-slot" x="2852" y="1898" width="460" height="460" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
   </g>
-  <path d="M3082,1996 L3088,2010 L3102,2010 L3091,2019 L3095,2033 L3082,2025 L3069,2033 L3073,2019 L3062,2010 L3076,2010 Z" fill="#C9A227"/>
-  <path d="M2996,2140 C2976,2110 2976,2070 3000,2044" stroke="#C9A227" stroke-width="2" fill="none"/>
-  <path d="M3168,2140 C3188,2110 3188,2070 3164,2044" stroke="#C9A227" stroke-width="2" fill="none"/>
-
-  <image id="opt-seal-slot" x="2852" y="1898" width="460" height="460" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
 
 </svg>
