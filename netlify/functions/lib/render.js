@@ -139,6 +139,47 @@ async function normalizeFieldValues(templateDef, fieldValues) {
   return values;
 }
 
+// FIX (Aug 2026 — Baby Dedication removal follow-up: Signature 2 / Seal
+// placeholders surviving in output): both hide_container removal and
+// block-toggle removal used to match "<tag ... id="X">[\s\S]*?</tag>" —
+// a lazy match that stops at the FIRST closing tag of that name it finds.
+// Every signature/seal container nests its own inner <g> (placeholder box,
+// label, caption/title text), so the lazy match closed on that inner </g>
+// instead of the container's own, leaving the outer wrapper's remainder —
+// including the literal "Signature (PNG)" / "Seal" placeholder text —
+// still in the document. This walks the tag stream counting open/close
+// pairs of the same tag name (ignoring self-closing tags) to find the
+// container's true matching close tag, however deeply it's nested, and
+// removes exactly that span. Returns the svg unchanged if the id isn't
+// found, so a bad/missing id in templates.json fails silently (same as
+// before) rather than corrupting the document.
+function removeElementById(svg, tagName, elementId) {
+  const openTagRe = new RegExp(`<${tagName}\\b[^>]*\\bid="${elementId}"[^>]*>`);
+  const openMatch = openTagRe.exec(svg);
+  if (!openMatch || openMatch[0].endsWith('/>')) return svg; // not found, or self-closing (nothing to remove)
+
+  const startIdx = openMatch.index;
+  const tagStreamRe = new RegExp(`<\\/?${tagName}\\b[^>]*?>`, 'g');
+  tagStreamRe.lastIndex = startIdx + openMatch[0].length;
+
+  let depth = 1;
+  let m;
+  while ((m = tagStreamRe.exec(svg)) !== null) {
+    const tag = m[0];
+    if (tag.startsWith('</')) {
+      depth--;
+      if (depth === 0) {
+        const endIdx = m.index + tag.length;
+        return svg.slice(0, startIdx) + svg.slice(endIdx);
+      }
+    } else if (!tag.endsWith('/>')) {
+      depth++;
+    }
+    // self-closing opening tags (<tag ... />) don't change depth
+  }
+  return svg; // unbalanced/malformed — leave untouched rather than guess
+}
+
 function buildSvg(templateDef, fieldValues) {
   const svgPath = path.join(TEMPLATES_DIR, templateDef.svg_file || templateDef.file);
   let svg;
@@ -194,30 +235,23 @@ function buildSvg(templateDef, fieldValues) {
         // Optional slot left blank -> remove the whole wrapper block
         // (dashed placeholder box, label, caption/title text) so nothing
         // is left dangling, instead of just clearing the image href.
-        // NOTE: assumes the container has no nested <g> elements of its
-        // own — true for every template's signature/seal blocks today,
-        // but if a future template nests a <g> inside one, this regex
-        // would stop at the first inner </g> instead of the outer one.
-        const reContainer = new RegExp(`<g id="${field.hide_container}"[^>]*>[\\s\\S]*?<\\/g>`);
-        svg = svg.replace(reContainer, '');
+        // Uses removeElementById (balanced-tag scan) so containers with
+        // their own nested <g> children are removed in full, not just up
+        // to their first inner close tag — see fix note above.
+        svg = removeElementById(svg, 'g', field.hide_container);
       }
 
     } else if (field.type === 'block-toggle') {
       if (raw === false) {
         // Find the actual tag name the id sits on (usually <g>, could be
-        // any element) and match all the way to ITS OWN closing tag by
-        // name, not just the nearest closing tag of any kind. A naive
-        // "stop at the first </...>" match breaks any block wrapping more
-        // than one child element (e.g. two <text> lines) — it would clip
-        // off after the first child's close tag instead of the block's
-        // own, corrupting the SVG's XML structure and making resvg fail
-        // to parse it entirely. Same caveat as hide_container: assumes no
-        // same-named tag is nested inside itself.
+        // any element) and remove that element's full span via
+        // removeElementById's balanced-tag scan — correct for blocks
+        // wrapping more than one child element (e.g. two <text> lines),
+        // where a naive "stop at the first closing tag" match would clip
+        // off after the first child instead of the block's own close tag.
         const tagMatch = svg.match(new RegExp(`<([a-zA-Z]+)[^>]+id="${field.id}"`));
         if (tagMatch) {
-          const tagName = tagMatch[1];
-          const re = new RegExp(`<${tagName}[^>]+id="${field.id}"[^>]*>[\\s\\S]*?<\\/${tagName}>`);
-          svg = svg.replace(re, '');
+          svg = removeElementById(svg, tagMatch[1], field.id);
         }
       }
       // true/undefined -> leave the template's own default content as-is
