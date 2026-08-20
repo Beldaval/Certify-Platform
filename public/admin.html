@@ -18,18 +18,54 @@
 </div>
 
 <div class="container hidden" id="admin-content">
-  <h2>Manual token credit</h2>
-  <p class="muted">Every credit here is logged as an auditable transaction (admin, amount, reason, timestamp) — never a silent balance edit.</p>
-  <div class="card" style="max-width:520px;">
-    <label>User ID (uuid)</label>
-    <input type="text" id="credit-user-id" placeholder="from the profiles table">
-    <label>Tokens to credit</label>
-    <input type="number" id="credit-amount" value="10">
-    <label>Reason</label>
-    <input type="text" id="credit-reason" placeholder="e.g. Missed webhook for ref xyz">
-    <button class="btn btn-primary" id="credit-btn" style="margin-top:16px;">Credit tokens</button>
-    <div class="error-text hidden" id="credit-error"></div>
-    <div class="success-text hidden" id="credit-success"></div>
+
+  <h2>Look up a user</h2>
+  <p class="muted">Find a user by email to see their wallet balance, recent token activity, and recent certificates — no UUID copy-pasting needed.</p>
+  <div class="card" style="max-width:560px;">
+    <label>User email</label>
+    <div style="display:flex;gap:10px;">
+      <input type="email" id="lookup-email" placeholder="user@example.com" style="flex:1;">
+      <button class="btn btn-primary" id="lookup-btn">Look up</button>
+    </div>
+    <div class="error-text hidden" id="lookup-error"></div>
+  </div>
+
+  <div id="lookup-results" class="hidden" style="margin-top:24px;">
+    <div class="card" style="max-width:720px;">
+      <h3 id="result-name"></h3>
+      <p class="muted" id="result-meta"></p>
+      <div class="token-pill" id="result-balance-pill" style="margin-top:8px;"></div>
+      <p class="muted" id="result-balance-breakdown" style="font-size:12px;margin-top:4px;"></p>
+    </div>
+
+    <div class="card" style="max-width:720px;margin-top:18px;">
+      <h3>Credit tokens for this user</h3>
+      <div class="grid grid-2">
+        <div><label>Tokens to credit</label><input type="number" id="credit-amount" value="10"></div>
+        <div><label>Reason</label><input type="text" id="credit-reason" placeholder="e.g. Missed webhook for ref xyz"></div>
+      </div>
+      <button class="btn btn-primary" id="credit-btn" style="margin-top:16px;">Credit tokens</button>
+      <div class="error-text hidden" id="credit-error"></div>
+      <div class="success-text hidden" id="credit-success"></div>
+    </div>
+
+    <div class="card" style="max-width:720px;margin-top:18px;">
+      <h3>Recent token activity</h3>
+      <p class="muted" id="no-transactions" style="display:none;">No token activity yet.</p>
+      <table id="transactions-table">
+        <thead><tr><th>When</th><th>Type</th><th>Change</th><th>Before → After</th><th>Note</th></tr></thead>
+        <tbody id="transactions-rows"></tbody>
+      </table>
+    </div>
+
+    <div class="card" style="max-width:720px;margin-top:18px;">
+      <h3>Recent certificates</h3>
+      <p class="muted" id="no-certificates" style="display:none;">No certificates created yet.</p>
+      <table id="certificates-table">
+        <thead><tr><th>Recipient</th><th>Program</th><th>Cert #</th><th>Generation</th><th>Delivery</th><th>Created</th></tr></thead>
+        <tbody id="certificates-rows"></tbody>
+      </table>
+    </div>
   </div>
 
   <h2 style="margin-top:40px;">Export user emails</h2>
@@ -41,6 +77,8 @@
 <script src="/js/config.js"></script>
 <script src="/js/supabaseClient.js"></script>
 <script>
+let currentLookupUserId = null;
+
 init();
 async function init() {
   const session = await requireSession();
@@ -54,19 +92,104 @@ async function init() {
   }
   document.getElementById('admin-content').classList.remove('hidden');
 
+  document.getElementById('lookup-btn').addEventListener('click', lookupUser);
+  document.getElementById('lookup-email').addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupUser(); });
   document.getElementById('credit-btn').addEventListener('click', creditTokens);
   document.getElementById('export-btn').addEventListener('click', exportEmails);
+}
+
+async function lookupUser() {
+  const errEl = document.getElementById('lookup-error');
+  errEl.classList.add('hidden');
+  document.getElementById('lookup-results').classList.add('hidden');
+  currentLookupUserId = null;
+
+  const email = document.getElementById('lookup-email').value.trim();
+  if (!email) return;
+
+  const headers = await getAuthHeader();
+  const resp = await fetch(`/api/admin-user-lookup?email=${encodeURIComponent(email)}`, { headers });
+  const data = await resp.json();
+
+  if (!resp.ok) { errEl.textContent = data.error || 'Lookup failed.'; errEl.classList.remove('hidden'); return; }
+  if (!data.found) { errEl.textContent = 'No user found with that email.'; errEl.classList.remove('hidden'); return; }
+
+  currentLookupUserId = data.profile.id;
+  renderLookupResult(data);
+  document.getElementById('lookup-results').classList.remove('hidden');
+}
+
+function renderLookupResult(data) {
+  const { profile, wallet, transactions, certificates } = data;
+
+  document.getElementById('result-name').textContent = profile.full_name || profile.email;
+  document.getElementById('result-meta').textContent =
+    `${profile.email}${profile.organization_name ? ' · ' + profile.organization_name : ''} · joined ${new Date(profile.created_at).toLocaleDateString()}${profile.is_admin ? ' · admin' : ''}`;
+
+  const balancePill = document.getElementById('result-balance-pill');
+  const breakdown = document.getElementById('result-balance-breakdown');
+  if (wallet) {
+    balancePill.textContent = `🪙 ${wallet.total} tokens`;
+    breakdown.textContent = `${wallet.trial_tokens_remaining} trial + ${wallet.purchased_tokens} purchased`;
+  } else {
+    balancePill.textContent = 'No wallet found';
+    breakdown.textContent = '';
+  }
+
+  const txRows = document.getElementById('transactions-rows');
+  txRows.innerHTML = '';
+  document.getElementById('no-transactions').style.display = transactions.length ? 'none' : 'block';
+  for (const t of transactions) {
+    const tr = document.createElement('tr');
+    const changeClass = t.token_amount >= 0 ? 'success-text' : 'error-text';
+    tr.innerHTML = `
+      <td>${new Date(t.created_at).toLocaleString()}</td>
+      <td>${escapeHtml(t.type)}</td>
+      <td class="${changeClass}">${t.token_amount >= 0 ? '+' : ''}${t.token_amount}</td>
+      <td>${t.balance_before} → ${t.balance_after}</td>
+      <td class="muted">${escapeHtml(t.note || '')}</td>
+    `;
+    txRows.appendChild(tr);
+  }
+
+  const certRows = document.getElementById('certificates-rows');
+  certRows.innerHTML = '';
+  document.getElementById('no-certificates').style.display = certificates.length ? 'none' : 'block';
+  for (const c of certificates) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${escapeHtml(c.recipient_name)}</td>
+      <td>${escapeHtml(c.program_title)}</td>
+      <td>${escapeHtml(c.certificate_number)}</td>
+      <td>${statusBadge(c.generation_status)}</td>
+      <td>${statusBadge(c.delivery_status)}</td>
+      <td>${new Date(c.created_at).toLocaleString()}</td>
+    `;
+    certRows.appendChild(tr);
+  }
+}
+
+function statusBadge(s) {
+  const cls = s === 'generated' || s === 'sent' ? 'badge-verified' : s === 'failed' ? 'badge-failed' : 'badge-pending';
+  return `<span class="badge ${cls}">${escapeHtml(s)}</span>`;
 }
 
 async function creditTokens() {
   const errEl = document.getElementById('credit-error');
   const okEl = document.getElementById('credit-success');
   errEl.classList.add('hidden'); okEl.classList.add('hidden');
+
+  if (!currentLookupUserId) {
+    errEl.textContent = 'Look up a user first.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
   const headers = { 'Content-Type': 'application/json', ...(await getAuthHeader()) };
   const resp = await fetch('/api/admin-manual-credit', {
     method: 'POST', headers,
     body: JSON.stringify({
-      targetUserId: document.getElementById('credit-user-id').value.trim(),
+      targetUserId: currentLookupUserId,
       amount: Number(document.getElementById('credit-amount').value),
       reason: document.getElementById('credit-reason').value.trim(),
     }),
@@ -75,6 +198,8 @@ async function creditTokens() {
   if (!resp.ok) { errEl.textContent = data.error; errEl.classList.remove('hidden'); return; }
   okEl.textContent = `Done — new balance: ${data.newBalance} tokens.`;
   okEl.classList.remove('hidden');
+
+  await lookupUser();
 }
 
 async function exportEmails() {
@@ -88,6 +213,8 @@ async function exportEmails() {
   const url = URL.createObjectURL(blob);
   document.getElementById('export-result').innerHTML = `<a class="btn btn-primary" href="${url}" download="users.csv">Download users.csv (${data.users.length} users)</a>`;
 }
+
+function escapeHtml(s){ const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }
 </script>
 </body>
 </html>
