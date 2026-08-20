@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certify — Certificate Generation &amp; Delivery</title>
+<title>Certsift.com — Certificate Generation &amp; Delivery</title>
 <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -11,6 +11,7 @@
 <div style="background:var(--ink);color:#fff;text-align:center;padding:6px 16px;font-size:13px;">
   Need help? <a href="tel:+2347013527505" style="color:#fff;font-weight:600;text-decoration:underline;">Contact Support: +234-701-3527-505</a>
 </div>
+
 <div class="nav">
   <a class="brand" href="/">
     <div class="mark">C</div>
@@ -22,11 +23,23 @@
   </div>
 </div>
 
+<div class="container" id="verify" style="padding-top:28px;">
+  <div class="card" style="max-width:640px;margin:0 auto;">
+    <h2>Verify a certificate</h2>
+    <p>Enter the certificate number exactly as it appears on the document.</p>
+    <div style="display:flex;gap:10px;margin-top:10px;">
+      <input type="text" id="verify-input" placeholder="e.g. CERT-A1B2C3D4E5">
+      <button class="btn btn-primary" id="verify-btn">Verify</button>
+    </div>
+    <div id="verify-result" style="margin-top:18px;"></div>
+  </div>
+</div>
+
 <div class="hero">
   <div>
     <div class="eyebrow">Built for churches, seminars &amp; training programs</div>
     <h1 class="display" style="font-size:44px;line-height:1.1;">Professional certificates, issued in minutes — not hours.</h1>
-    <p style="font-size:16px;margin-top:14px;">Pick a template, fill in your recipients, and Certify generates, emails, and records every certificate for you — with a public verification page so no one has to wonder if it's real.</p>
+    <p style="font-size:16px;margin-top:14px;">Pick a template, fill in your recipients, and Certsift generates, emails, and records every certificate for you — with a public verification page so no one has to wonder if it's real.</p>
     <div style="display:flex;gap:12px;margin-top:22px;">
       <a class="btn btn-gold" href="/login.html?mode=signup">Start free — 10 certificates</a>
       <a class="btn btn-ghost" href="#verify">Verify a certificate</a>
@@ -37,22 +50,10 @@
     <h3>How it works</h3>
     <ol style="color:var(--ink-soft);padding-left:18px;">
       <li>Choose one of 8 pre-built templates</li>
-      <li>Add recipients — one at a time, or repeat-and-edit for a batch of up to 50</li>
-      <li>Certify generates each PDF, emails it, and keeps a downloadable backup</li>
-      <li>Anyone can verify authenticity on this site, no login needed</li>
+      <li>Add recipients — one at a time, or add sections with repeated details and edit for a batch of up to 50 certificates</li>
+      <li>Certsift generates each PDF, emails it, and gives a downloadable backup after generating</li>
+      <li>Anyone can verify authenticity on this site — no login needed</li>
     </ol>
-  </div>
-</div>
-
-<div class="container" id="verify">
-  <div class="card" style="max-width:640px;margin:0 auto;">
-    <h2>Verify a certificate</h2>
-    <p>Enter the certificate number exactly as it appears on the document.</p>
-    <div style="display:flex;gap:10px;margin-top:10px;">
-      <input type="text" id="verify-input" placeholder="e.g. CERT-A1B2C3D4E5">
-      <button class="btn btn-primary" id="verify-btn">Verify</button>
-    </div>
-    <div id="verify-result" style="margin-top:18px;"></div>
   </div>
 </div>
 
