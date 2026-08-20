@@ -9,6 +9,7 @@
         "width": 3508,
         "height": 2481
       },
+      "notes": "FIX (Aug 2026): opt-seal-slot now declares hide_container: 'seal-block' — the seal artwork (medallion, arc text, shield emblem) was previously a set of bare sibling elements with no wrapping group, so it rendered on every certificate even when no seal image was uploaded. The SVG was updated to wrap that artwork in <g id=\"seal-block\">.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -27,7 +28,7 @@
         { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
         { "id": "opt-signature-2-caption", "type": "text", "required": false },
         { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
+        { "id": "opt-seal-slot", "type": "image", "required": false, "hide_container": "seal-block" }
       ]
     },
     {
@@ -69,135 +70,4 @@
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
-        { "id": "recipient-name", "type": "text", "required": true },
-        { "id": "course-title", "type": "text", "required": true },
-        { "id": "start-date", "type": "text", "required": true },
-        { "id": "end-date", "type": "text", "required": true },
-        { "id": "award-date-line", "type": "text", "required": true },
-        { "id": "certificate-number", "type": "text", "required": true, "auto": true },
-        { "id": "logo-slot", "type": "image", "required": true },
-        { "id": "signature-1", "type": "image", "required": true },
-        { "id": "signature-1-caption", "type": "text", "required": true },
-        { "id": "signature-1-title", "type": "text", "required": true },
-        { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
-        { "id": "opt-signature-2-caption", "type": "text", "required": false },
-        { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
-      ]
-    },
-    {
-      "id": "certificate-of-excellence",
-      "name": "Certificate of Excellence",
-      "file": "certificate_of_excellence.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
-      "notes": "Same as Modern Excellence — no course-title or date-range fields by design.",
-      "fields": [
-        { "id": "institution-name", "type": "text", "required": true },
-        { "id": "opt-subtitle", "type": "text", "required": false },
-        { "id": "recipient-name", "type": "text", "required": true },
-        { "id": "award-day", "type": "text", "required": true },
-        { "id": "award-month", "type": "text", "required": true },
-        { "id": "award-year", "type": "text", "required": true },
-        { "id": "certificate-number", "type": "text", "required": true, "auto": true },
-        { "id": "logo-slot", "type": "image", "required": true },
-        { "id": "signature-1", "type": "image", "required": true },
-        { "id": "signature-1-caption", "type": "text", "required": true },
-        { "id": "signature-1-title", "type": "text", "required": true },
-        { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
-        { "id": "opt-signature-2-caption", "type": "text", "required": false },
-        { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
-      ]
-    },
-    {
-      "id": "classic-completion",
-      "name": "Classic Completion",
-      "file": "classic__completion_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2480
-      },
-      "fields": [
-        { "id": "institution-name", "type": "text", "required": true },
-        { "id": "opt-subtitle", "type": "text", "required": false },
-        { "id": "recipient-name", "type": "text", "required": true },
-        { "id": "course-title", "type": "text", "required": true },
-        { "id": "start-date", "type": "text", "required": true },
-        { "id": "end-date", "type": "text", "required": true },
-        { "id": "award-day", "type": "text", "required": true },
-        { "id": "award-month", "type": "text", "required": true },
-        { "id": "award-year", "type": "text", "required": true },
-        { "id": "certificate-number", "type": "text", "required": true, "auto": true },
-        { "id": "opt-logo-slot", "type": "image", "required": false },
-        { "id": "signature-1", "type": "image", "required": true },
-        { "id": "signature-1-caption", "type": "text", "required": true },
-        { "id": "signature-1-title", "type": "text", "required": true },
-        { "id": "opt-signature-2", "type": "image", "required": false },
-        { "id": "opt-signature-2-caption", "type": "text", "required": false },
-        { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
-      ]
-    },
-    {
-      "id": "dulux-completion",
-      "name": "Dulux Completion",
-      "file": "dulux_complition_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
-      "fields": [
-        { "id": "institution-name", "type": "text", "required": true },
-        { "id": "opt-subtitle", "type": "text", "required": false },
-        { "id": "recipient-name", "type": "text", "required": true },
-        { "id": "course-title", "type": "text", "required": true },
-        { "id": "program-start-date", "type": "text", "required": true },
-        { "id": "program-end-date", "type": "text", "required": true },
-        { "id": "award-day", "type": "text", "required": true },
-        { "id": "award-month", "type": "text", "required": true },
-        { "id": "award-year", "type": "text", "required": true },
-        { "id": "certificate-number", "type": "text", "required": true, "auto": true },
-        { "id": "logo-slot", "type": "image", "required": true },
-        { "id": "signature-1", "type": "image", "required": true },
-        { "id": "signature-1-caption", "type": "text", "required": true },
-        { "id": "signature-1-title", "type": "text", "required": true },
-        { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
-        { "id": "opt-signature-2-caption", "type": "text", "required": false },
-        { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
-      ]
-    },
-    {
-      "id": "global-spec",
-      "name": "Global Spec",
-      "file": "global_spec_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
-      "fields": [
-        { "id": "institution-name", "type": "text", "required": true },
-        { "id": "opt-subtitle", "type": "text", "required": false },
-        { "id": "recipient-name", "type": "text", "required": true },
-        { "id": "course-title", "type": "text", "required": true },
-        { "id": "start-date", "type": "text", "required": true },
-        { "id": "end-date", "type": "text", "required": true },
-        { "id": "award-day", "type": "text", "required": true },
-        { "id": "award-month", "type": "text", "required": true },
-        { "id": "award-year", "type": "text", "required": true },
-        { "id": "certificate-number", "type": "text", "required": true, "auto": true },
-        { "id": "logo-slot", "type": "image", "required": true },
-        { "id": "signature-1", "type": "image", "required": true },
-        { "id": "signature-1-caption", "type": "text", "required": true },
-        { "id": "signature-1-title", "type": "text", "required": true },
-        { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
-        { "id": "opt-signature-2-caption", "type": "text", "required": false },
-        { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
-      ]
-    }
-  ]
-}
+        { "id":
