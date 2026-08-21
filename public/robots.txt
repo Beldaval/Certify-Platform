@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /admin.html
+Disallow: /login.html
+
+Sitemap: https://certsift.com/sitemap.xml
