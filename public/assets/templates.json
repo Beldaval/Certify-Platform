@@ -66,7 +66,7 @@
         "width": 3508,
         "height": 2481
       },
-      "notes": "award-date-line is a single text field (e.g. 'Granted this 14th day of June, 2026') rather than separate day/month/year fields — different design choice from the other templates, intentionally left as-is.",
+      "notes": "award-date-line is a single text field (e.g. 'Granted this 14th day of June, 2026') rather than separate day/month/year fields — different design choice from the other templates, intentionally left as-is. FIX (Aug 2026): the SVG's signature-1/signature-2/opt-seal-slot groups previously had NO actual <image> element inside them (render.js was writing an uploaded image's href onto a <g>, which never renders) — every upload on this template silently did nothing. The SVG now has real <image> elements nested in renamed wrapper groups (signature-1-block, signature-2-block, seal-block), so uploads actually render and hide_container now works for both signature-2 and the seal.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -83,7 +83,7 @@
         { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
         { "id": "opt-signature-2-caption", "type": "text", "required": false },
         { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
+        { "id": "opt-seal-slot", "type": "image", "required": false, "hide_container": "seal-block" }
       ]
     },
     {
