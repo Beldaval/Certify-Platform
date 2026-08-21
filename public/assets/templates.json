@@ -66,7 +66,7 @@
         "width": 3508,
         "height": 2481
       },
-      "notes": "award-date-line is a single text field (e.g. 'Granted this 14th day of June, 2026') rather than separate day/month/year fields — different design choice from the other templates, intentionally left as-is. FIX (Aug 2026): the SVG's signature-1/signature-2/opt-seal-slot groups previously had NO actual <image> element inside them (render.js was writing an uploaded image's href onto a <g>, which never renders) — every upload on this template silently did nothing. The SVG now has real <image> elements nested in renamed wrapper groups (signature-1-block, signature-2-block, seal-block), so uploads actually render and hide_container now works for both signature-2 and the seal.",
+      "notes": "FIX (Aug 2026): award-date-line (a single combined field) was replaced with separate award-day/award-month/award-year fields to match every other template — the combined field made it easy to type a date phrase without a year and have it silently missing, since whatever was typed replaced the whole placeholder sentence verbatim. SVG's award line is now left-anchored (previously centered) since centered text with multiple per-field tspans can mis-measure in some SVG renderers, same as the other templates' own day/month/year lines. Also FIX: the SVG's signature-1/signature-2/opt-seal-slot groups previously had NO actual <image> element inside them (render.js was writing an uploaded image's href onto a <g>, which never renders) — every upload on this template silently did nothing. The SVG now has real <image> elements nested in renamed wrapper groups (signature-1-block, signature-2-block, seal-block), so uploads actually render and hide_container now works for both signature-2 and the seal.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -74,7 +74,9 @@
         { "id": "course-title", "type": "text", "required": true },
         { "id": "start-date", "type": "text", "required": true },
         { "id": "end-date", "type": "text", "required": true },
-        { "id": "award-date-line", "type": "text", "required": true },
+        { "id": "award-day", "type": "text", "required": true },
+        { "id": "award-month", "type": "text", "required": true },
+        { "id": "award-year", "type": "text", "required": true },
         { "id": "certificate-number", "type": "text", "required": true, "auto": true },
         { "id": "logo-slot", "type": "image", "required": true },
         { "id": "signature-1", "type": "image", "required": true },
