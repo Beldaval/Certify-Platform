@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certsift.com — Certificate Generation &amp; Delivery</title>
+<title>Certsift — Professional Certificates, Issued in Minutes</title>
+<meta name="description" content="Certsift generates, emails, and records professional certificates for churches, seminars, and training programs — with a public verification page so recipients and employers can confirm authenticity instantly.">
+<link rel="canonical" href="https://certsift.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Certsift — Professional Certificates, Issued in Minutes">
+<meta property="og:description" content="Pick a template, add recipients, and Certsift generates, emails, and records every certificate — with public verification, no login needed.">
+<meta property="og:url" content="https://certsift.com/">
+<meta property="og:site_name" content="Certsift">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Certsift — Professional Certificates, Issued in Minutes">
+<meta name="twitter:description" content="Pick a template, add recipients, and Certsift generates, emails, and records every certificate — with public verification, no login needed.">
+
 <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -23,15 +36,16 @@
   </div>
 </div>
 
-<div class="container" id="verify" style="padding-top:28px;">
-  <div class="card" style="max-width:640px;margin:0 auto;">
-    <h2>Verify a certificate</h2>
-    <p>Enter the certificate number exactly as it appears on the document.</p>
-    <div style="display:flex;gap:10px;margin-top:10px;">
-      <input type="text" id="verify-input" placeholder="e.g. CERT-A1B2C3D4E5">
-      <button class="btn btn-primary" id="verify-btn">Verify</button>
+<!-- Compact verify bar: single line, minimal padding, so it doesn't push
+     the hero content (the site's main sell) below the fold. -->
+<div class="container" id="verify" style="padding-top:14px;padding-bottom:0;">
+  <div class="card" style="max-width:560px;margin:0 auto;padding:12px 16px;">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <strong style="font-size:13.5px;white-space:nowrap;">Verify a certificate:</strong>
+      <input type="text" id="verify-input" placeholder="e.g. CERT-A1B2C3D4E5" style="flex:1;min-width:160px;padding:8px 10px;font-size:13px;">
+      <button class="btn btn-primary" id="verify-btn" style="padding:8px 16px;font-size:13px;">Verify</button>
     </div>
-    <div id="verify-result" style="margin-top:18px;"></div>
+    <div id="verify-result" style="margin-top:10px;font-size:13.5px;"></div>
   </div>
 </div>
 
@@ -49,7 +63,7 @@
   <div class="card">
     <h3>How it works</h3>
     <ol style="color:var(--ink-soft);padding-left:18px;">
-      <li>Choose one of 8 pre-built templates</li>
+      <li>Choose one of 7 pre-built templates</li>
       <li>Add recipients — one at a time, or add sections with repeated details and edit for a batch of up to 50 certificates</li>
       <li>Certsift generates each PDF, emails it, and gives a downloadable backup after generating</li>
       <li>Anyone can verify authenticity on this site — no login needed</li>
@@ -72,7 +86,7 @@ async function verify() {
     if (data.found) {
       const c = data.certificate;
       resultEl.innerHTML = `
-        <div class="badge badge-verified" style="margin-bottom:12px;">✓ Verified</div>
+        <div class="badge badge-verified" style="margin-bottom:8px;">✓ Verified</div>
         <table>
           <tr><th>Recipient</th><td>${escapeHtml(c.recipient_name)}</td></tr>
           <tr><th>Program</th><td>${escapeHtml(c.program_title)}</td></tr>
@@ -81,7 +95,7 @@ async function verify() {
           <tr><th>Certificate No.</th><td>${escapeHtml(c.certificate_number)}</td></tr>
         </table>`;
     } else {
-      resultEl.innerHTML = '<div class="badge badge-failed">✕ Not found</div><p style="margin-top:10px;">No certificate matches that number.</p>';
+      resultEl.innerHTML = '<div class="badge badge-failed">✕ Not found</div><p style="margin-top:8px;">No certificate matches that number.</p>';
     }
   } catch (err) {
     resultEl.innerHTML = `<p class="error-text">Something went wrong: ${escapeHtml(err.message)}</p>`;
