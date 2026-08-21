@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Log in — Certify</title>
+<title>Log in — Certsift</title>
 <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
 <div class="nav">
-  <a class="brand" href="/"><div class="mark">C</div><div class="name">Certify</div></a>
+  <a class="brand" href="/"><div class="mark">C</div><div class="name">Certsift</div></a>
 </div>
 
 <div class="container" style="max-width:440px;padding-top:20px;">
   <div class="card">
-    <div style="display:flex;gap:8px;margin-bottom:18px;">
+    <div id="tabs-row" style="display:flex;gap:8px;margin-bottom:18px;">
       <button class="btn btn-ghost" id="tab-login" style="flex:1;">Log in</button>
       <button class="btn btn-ghost" id="tab-signup" style="flex:1;">Sign up</button>
     </div>
@@ -41,6 +41,17 @@
       <div class="error-text hidden" id="signup-error"></div>
       <div class="success-text hidden" id="signup-success"></div>
     </form>
+
+    <form id="reset-password-form" class="hidden">
+      <p class="muted" style="margin-bottom:12px;">Enter a new password for your account.</p>
+      <label>New password</label>
+      <input type="password" id="reset-password" minlength="8" required>
+      <label>Confirm new password</label>
+      <input type="password" id="reset-password-confirm" minlength="8" required>
+      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:18px;">Set new password</button>
+      <div class="error-text hidden" id="reset-error"></div>
+      <div class="success-text hidden" id="reset-success"></div>
+    </form>
   </div>
 </div>
 
@@ -50,6 +61,8 @@
 <script>
 const loginForm = document.getElementById('login-form');
 const signupForm = document.getElementById('signup-form');
+const resetForm = document.getElementById('reset-password-form');
+const tabsRow = document.getElementById('tabs-row');
 const tabLogin = document.getElementById('tab-login');
 const tabSignup = document.getElementById('tab-signup');
 
@@ -58,6 +71,15 @@ function showLogin() { signupForm.classList.add('hidden'); loginForm.classList.r
 tabLogin.addEventListener('click', showLogin);
 tabSignup.addEventListener('click', showSignup);
 if (new URLSearchParams(location.search).get('mode') === 'signup') showSignup();
+
+supabaseClient.auth.onAuthStateChange((event) => {
+  if (event === 'PASSWORD_RECOVERY') {
+    tabsRow.classList.add('hidden');
+    loginForm.classList.add('hidden');
+    signupForm.classList.add('hidden');
+    resetForm.classList.remove('hidden');
+  }
+});
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -77,6 +99,28 @@ document.getElementById('forgot-btn').addEventListener('click', async () => {
   await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/login.html` });
   okEl.textContent = 'Password reset email sent — check your inbox.';
   okEl.classList.remove('hidden');
+});
+
+resetForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const errEl = document.getElementById('reset-error');
+  const okEl = document.getElementById('reset-success');
+  errEl.classList.add('hidden'); okEl.classList.add('hidden');
+
+  const pw = document.getElementById('reset-password').value;
+  const pwConfirm = document.getElementById('reset-password-confirm').value;
+  if (pw !== pwConfirm) {
+    errEl.textContent = "Passwords don't match.";
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.updateUser({ password: pw });
+  if (error) { errEl.textContent = error.message; errEl.classList.remove('hidden'); return; }
+
+  okEl.textContent = 'Password updated — redirecting to your dashboard…';
+  okEl.classList.remove('hidden');
+  setTimeout(() => { window.location.href = '/dashboard.html'; }, 1200);
 });
 
 signupForm.addEventListener('submit', async (e) => {
