@@ -5,7 +5,6 @@
   <title>Certificate of Completion — Leadership Training Template</title>
 
   <defs>
-    <!-- ============ GRADIENTS ============ -->
     <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%"  stop-color="#F4E2A1"/>
       <stop offset="18%" stop-color="#D9B855"/>
@@ -38,7 +37,8 @@
       <stop offset="100%" stop-color="#3A2E14" stop-opacity="0.06"/>
     </radialGradient>
 
-    <!-- ============ PAPER TEXTURE ============ -->
+    <clipPath id="premiumSealClip"><circle cx="0" cy="0" r="140"/></clipPath>
+
     <filter id="paperTexture" x="-5%" y="-5%" width="110%" height="110%">
       <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="noise"/>
       <feColorMatrix in="noise" type="matrix"
@@ -62,7 +62,6 @@
       <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#0E1930" flood-opacity="0.28"/>
     </filter>
 
-    <!-- ============ WATERMARK EMBLEM (abstract flame/dove) ============ -->
     <g id="watermarkEmblem">
       <path d="M0,-430
                C 140,-360 210,-210 170,-70
@@ -84,30 +83,19 @@
             fill="#1B2A4C"/>
       <circle cx="0" cy="220" r="55" fill="#1B2A4C"/>
     </g>
-
   </defs>
 
-  <!-- ======================================================= -->
-  <!-- BACKGROUND -->
-  <!-- ======================================================= -->
   <rect id="bg-base" x="0" y="0" width="3508" height="2481" fill="#FBF6E9"/>
   <rect id="bg-texture" x="0" y="0" width="3508" height="2481" filter="url(#paperTexture)" opacity="0.12"/>
   <rect id="bg-vignette" x="0" y="0" width="3508" height="2481" fill="url(#ivoryVignette)"/>
 
-  <!-- Watermark, centered behind all content -->
   <g id="opt-watermark" transform="translate(1754,1260) scale(1.55)" opacity="0.045">
     <use xlink:href="#watermarkEmblem"/>
   </g>
 
-  <!-- ======================================================= -->
-  <!-- OUTER HAIRLINE FRAME -->
-  <!-- ======================================================= -->
   <rect x="70" y="70" width="3368" height="2341" fill="none" stroke="#C9A227" stroke-width="2" opacity="0.55"/>
   <rect x="96" y="96" width="3316" height="2289" fill="none" stroke="#1B2A4C" stroke-width="2" opacity="0.35"/>
 
-  <!-- ======================================================= -->
-  <!-- CORNER GEOMETRIC PANELS (navy, gold accent lines) -->
-  <!-- ======================================================= -->
   <g id="corner-top-left">
     <polygon points="0,0 560,0 0,560" fill="url(#navyGradient)"/>
     <polygon points="0,0 420,0 0,420" fill="none" stroke="url(#goldGradient)" stroke-width="4"/>
@@ -132,13 +120,9 @@
     <line x1="3508" y1="2011" x2="3038" y2="2481" stroke="url(#goldGradient)" stroke-width="3"/>
   </g>
 
-  <!-- ======================================================= -->
-  <!-- TOP: LOGO EMBLEM + INSTITUTION NAME -->
-  <!-- ================================================================= -->
   <g id="logo-slot" transform="translate(1754,300)">
     <circle cx="0" cy="0" r="150" fill="#FBF6E9" stroke="url(#goldGradient)" stroke-width="6"/>
     <circle cx="0" cy="0" r="128" fill="none" stroke="#1B2A4C" stroke-width="2" opacity="0.5"/>
-    <!-- Placeholder mark: replace this <g> content with the institution's own emblem/image -->
     <text x="0" y="16" text-anchor="middle" font-size="30" fill="#9C9C9C"
           font-style="italic" letter-spacing="1">LOGO</text>
   </g>
@@ -157,9 +141,6 @@
         stroke="#C9A227" stroke-width="3"/>
   <circle cx="1754" cy="668" r="6" fill="#C9A227"/>
 
-  <!-- ======================================================= -->
-  <!-- MAIN HEADING -->
-  <!-- ======================================================= -->
   <text id="certificate-heading" x="1754" y="830" text-anchor="middle"
         font-size="128" font-weight="800" fill="#1B2A4C" letter-spacing="10">
     CERTIFICATE OF COMPLETION
@@ -171,9 +152,6 @@
     <line x1="1894" y1="900" x2="2254" y2="900" stroke="#C9A227" stroke-width="3"/>
   </g>
 
-  <!-- ======================================================= -->
-  <!-- RECIPIENT -->
-  <!-- ======================================================= -->
   <text id="awarded-to-label" x="1754" y="1020" text-anchor="middle"
         font-size="44" font-weight="400" fill="#3A3A3A" font-style="italic">
     This is officially awarded to:
@@ -186,9 +164,6 @@
   <line id="recipient-underline" x1="854" y1="1198" x2="2654" y2="1198"
         stroke="#C9A227" stroke-width="3"/>
 
-  <!-- ======================================================= -->
-  <!-- RECOGNITION TEXT -->
-  <!-- ======================================================= -->
   <text id="recognition-text" text-anchor="middle" font-size="38" fill="#333333">
     <tspan x="1754" y="1320">in recognition of their dedicated participation and successful fulfillment of all</tspan>
     <tspan x="1754" y="1372">requirements established for the training program titled:</tspan>
@@ -209,22 +184,17 @@
     Granted this ________ day of ______________, 20____.
   </text>
 
-  <!-- ======================================================= -->
-  <!-- BOTTOM ROW: CERT NO. / SIGNATURES / SEAL -->
-  <!-- ======================================================= -->
-
-  <!-- Certificate number, bottom-left -->
   <g id="certificate-no" transform="translate(360,2180)">
     <text x="0" y="46" font-size="28" fill="#1B2A4C" font-weight="700" letter-spacing="2">CERTIFICATE NO.</text>
     <text id="certificate-number" x="0" y="88" font-size="34" fill="#3A3A3A" letter-spacing="1">HB-2025-00001</text>
   </g>
 
-  <!-- Signature 1 -->
-  <g id="signature-1" transform="translate(1130,2245)">
+  <g id="signature-1-block" transform="translate(1130,2245)">
     <rect id="signature-1-slot" x="-190" y="-162" width="380" height="96" rx="6"
           fill="none" stroke="#B7B7B7" stroke-width="2" stroke-dasharray="10,8"/>
     <text x="0" y="-108" text-anchor="middle" font-size="26" fill="#B0B0B0"
           font-style="italic" letter-spacing="1">Signature</text>
+    <image id="signature-1" x="-190" y="-162" width="380" height="96" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
     <line x1="-260" y1="0" x2="260" y2="0" stroke="#1B2A4C" stroke-width="2"/>
     <text id="signature-1-caption" x="0" y="-24" text-anchor="middle" font-size="36" fill="#9C9C9C"
           font-style="italic">Full Name of Signer</text>
@@ -233,12 +203,12 @@
     </text>
   </g>
 
-  <!-- Signature 2 -->
-  <g id="signature-2" transform="translate(2378,2245)">
+  <g id="signature-2-block" transform="translate(2378,2245)">
     <rect id="signature-2-slot" x="-190" y="-162" width="380" height="96" rx="6"
           fill="none" stroke="#B7B7B7" stroke-width="2" stroke-dasharray="10,8"/>
     <text x="0" y="-108" text-anchor="middle" font-size="26" fill="#B0B0B0"
           font-style="italic" letter-spacing="1">Signature</text>
+    <image id="signature-2" x="-190" y="-162" width="380" height="96" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
     <line x1="-260" y1="0" x2="260" y2="0" stroke="#1B2A4C" stroke-width="2"/>
     <text id="opt-signature-2-caption" x="0" y="-24" text-anchor="middle" font-size="36" fill="#9C9C9C"
           font-style="italic">Full Name of Signer</text>
@@ -247,14 +217,12 @@
     </text>
   </g>
 
-  <!-- Official Seal, lower-right -->
-  <g id="opt-seal-slot" transform="translate(3100,2130)" filter="url(#dropShadowSoft)">
+  <g id="seal-block" transform="translate(3100,2130)" filter="url(#dropShadowSoft)">
     <circle r="165" fill="url(#sealGradient)"/>
     <circle r="165" fill="none" stroke="url(#goldGradient)" stroke-width="5"/>
     <circle r="140" fill="none" stroke="#EFD98C" stroke-width="1.5" opacity="0.7"/>
     <circle r="112" fill="none" stroke="url(#goldGradient)" stroke-width="2.5"/>
 
-    <!-- circular text path -->
     <defs>
       <path id="sealTextPathTop" d="M -128,-18 A 132,132 0 0 1 128,-18"/>
       <path id="sealTextPathBottom" d="M -132,0 A 132,132 0 0 0 132,0"/>
@@ -266,15 +234,13 @@
       <textPath href="#sealTextPathBottom" startOffset="50%" text-anchor="middle">OF AUTHENTICATION</textPath>
     </text>
 
-    <!-- central emblem -->
     <g transform="translate(0,-6) scale(0.19)" opacity="0.95">
       <use xlink:href="#watermarkEmblem" fill="#EFD98C"/>
     </g>
+
+    <image id="opt-seal-slot" x="-140" y="-140" width="280" height="280" href="" xlink:href="" clip-path="url(#premiumSealClip)" preserveAspectRatio="xMidYMid slice"/>
   </g>
 
-  <!-- ======================================================= -->
-  <!-- FOOTER BAND -->
-  <!-- ======================================================= -->
   <rect x="0" y="2331" width="3508" height="150" fill="url(#navyGradient)"/>
   <line x1="0" y1="2331" x2="3508" y2="2331" stroke="#C9A227" stroke-width="4"/>
 
