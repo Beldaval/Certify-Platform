@@ -156,28 +156,34 @@
   </g>
 
   <!-- ============================= SEAL ============================= -->
-  <circle cx="3082" cy="2128" r="252" fill="#152442" stroke="url(#goldGrad)" stroke-width="8"/>
-  <circle cx="3082" cy="2128" r="216" fill="none" stroke="#C6A24D" stroke-width="2"/>
-  <circle cx="3082" cy="2128" r="180" fill="none" stroke="#C6A24D" stroke-width="1.5"/>
+  <!-- FIX (Aug 2026): wrapped the seal artwork in its own group so an unused
+       opt-seal-slot can hide the whole decorative medallion (rings, arc
+       text, columns, laurel arcs, star) instead of it always rendering
+       regardless of whether a real seal image was uploaded. -->
+  <g id="seal-block">
+    <circle cx="3082" cy="2128" r="252" fill="#152442" stroke="url(#goldGrad)" stroke-width="8"/>
+    <circle cx="3082" cy="2128" r="216" fill="none" stroke="#C6A24D" stroke-width="2"/>
+    <circle cx="3082" cy="2128" r="180" fill="none" stroke="#C6A24D" stroke-width="1.5"/>
 
-  <text font-size="27" font-weight="700" letter-spacing="3" fill="#D8BB63">
-    <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL</textPath>
-  </text>
-  <text font-size="24" font-weight="700" letter-spacing="2.5" fill="#D8BB63">
-    <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">OF AUTHENTICATION</textPath>
-  </text>
+    <text font-size="27" font-weight="700" letter-spacing="3" fill="#D8BB63">
+      <textPath href="#sealArcTop" xlink:href="#sealArcTop" startOffset="50%" text-anchor="middle">OFFICIAL SEAL</textPath>
+    </text>
+    <text font-size="24" font-weight="700" letter-spacing="2.5" fill="#D8BB63">
+      <textPath href="#sealArcBottom" xlink:href="#sealArcBottom" startOffset="50%" text-anchor="middle">OF AUTHENTICATION</textPath>
+    </text>
 
-  <g stroke="#D8BB63" stroke-width="4" fill="none">
-    <rect x="3022" y="2078" width="120" height="14" fill="#D8BB63" stroke="none"/>
-    <line x1="3037" y1="2092" x2="3037" y2="2168"/>
-    <line x1="3082" y1="2092" x2="3082" y2="2168"/>
-    <line x1="3127" y1="2092" x2="3127" y2="2168"/>
-    <rect x="3017" y="2168" width="130" height="14" fill="#D8BB63" stroke="none"/>
+    <g stroke="#D8BB63" stroke-width="4" fill="none">
+      <rect x="3022" y="2078" width="120" height="14" fill="#D8BB63" stroke="none"/>
+      <line x1="3037" y1="2092" x2="3037" y2="2168"/>
+      <line x1="3082" y1="2092" x2="3082" y2="2168"/>
+      <line x1="3127" y1="2092" x2="3127" y2="2168"/>
+      <rect x="3017" y="2168" width="130" height="14" fill="#D8BB63" stroke="none"/>
+    </g>
+    <path d="M2950,2160 C2916,2120 2916,2060 2955,2020" stroke="#D8BB63" stroke-width="3" fill="none"/>
+    <path d="M3214,2160 C3248,2120 3248,2060 3209,2020" stroke="#D8BB63" stroke-width="3" fill="none"/>
+    <path d="M3082,2200 L3096,2228 L3127,2231 L3104,2252 L3110,2283 L3082,2267 L3054,2283 L3060,2252 L3037,2231 L3068,2228 Z" fill="#D8BB63"/>
+
+    <image id="opt-seal-slot" x="2830" y="1876" width="504" height="504" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
   </g>
-  <path d="M2950,2160 C2916,2120 2916,2060 2955,2020" stroke="#D8BB63" stroke-width="3" fill="none"/>
-  <path d="M3214,2160 C3248,2120 3248,2060 3209,2020" stroke="#D8BB63" stroke-width="3" fill="none"/>
-  <path d="M3082,2200 L3096,2228 L3127,2231 L3104,2252 L3110,2283 L3082,2267 L3054,2283 L3060,2252 L3037,2231 L3068,2228 Z" fill="#D8BB63"/>
-
-  <image id="opt-seal-slot" x="2830" y="1876" width="504" height="504" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
 
 </svg>
