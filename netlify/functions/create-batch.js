@@ -15,7 +15,7 @@ exports.handler = async (event) => {
     const user = await getUserFromRequest(event, supabase);
     if (!user) return { statusCode: 401, body: JSON.stringify({ error: 'Not authenticated' }) };
 
-    const { templateId, sameEmail, certificates, issuingOrganization } = JSON.parse(event.body || '{}');
+        const { templateId, sameEmail, copyToSelf, certificates, issuingOrganization } = JSON.parse(event.body || '{}');
 
     if (!templateId || !Array.isArray(certificates) || certificates.length === 0) {
       return { statusCode: 400, body: JSON.stringify({ error: 'templateId and at least one certificate are required' }) };
@@ -45,7 +45,7 @@ exports.handler = async (event) => {
     //    attach the deduction/refund transactions to.
     const { data: batch, error: batchErr } = await supabase
       .from('batches')
-      .insert({ user_id: user.id, template_id: templateId, token_cost: tokenCost, same_email: !!sameEmail, status: 'pending' })
+      .insert({ user_id: user.id, template_id: templateId, token_cost: tokenCost, same_email: !!sameEmail, copy_to_self: !!copyToSelf, status: 'pending' })
       .select()
       .single();
     if (batchErr) throw batchErr;
