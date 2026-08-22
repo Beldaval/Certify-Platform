@@ -38,6 +38,12 @@
       <stop offset="100%" stop-color="#3A2E14" stop-opacity="0.06"/>
     </radialGradient>
 
+    <!-- FIX (Aug 2026): clip circles for the logo and seal images, each in the
+         LOCAL coordinate space of their own wrapper group (which carries its
+         own translate transform below). -->
+    <clipPath id="duluxLogoClip"><circle cx="0" cy="0" r="122"/></clipPath>
+    <clipPath id="duluxSealClip"><circle cx="0" cy="0" r="140"/></clipPath>
+
     <!-- ============ PAPER TEXTURE ============ -->
     <filter id="paperTexture" x="-5%" y="-5%" width="110%" height="110%">
       <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="noise"/>
@@ -135,14 +141,21 @@
   <!-- ======================================================= -->
   <!-- TOP: LOGO EMBLEM + INSTITUTION NAME -->
   <!-- ================================================================= -->
-  <g id="logo-slot" transform="translate(1754,300)">
+  <!-- FIX (Aug 2026): this group previously had id="logo-slot" with NO
+       actual <image> element inside it — render.js had nothing valid to
+       write an uploaded logo's href onto, so logo uploads silently never
+       appeared. Renamed the wrapper to "logo-slot-block" and added a real
+       <image id="logo-slot"> clipped to the same circle the placeholder
+       ring draws. -->
+  <g id="logo-slot-block" transform="translate(1754,300)">
     <circle cx="0" cy="0" r="150" fill="#FBF6E9" stroke="url(#goldGradient)" stroke-width="6"/>
     <circle cx="0" cy="0" r="122" fill="none" stroke="#B7B7B7" stroke-width="2" stroke-dasharray="10,8"/>
-    <!-- Placeholder: replace with an <image> (PNG/SVG logo), clipped to the r=122 circle above -->
+    <!-- Placeholder mark: covered once a logo is uploaded (image sits on top) -->
     <text id="logo-slot-label" x="0" y="6" text-anchor="middle" font-size="28" fill="#B0B0B0"
           font-style="italic" letter-spacing="1">Logo</text>
     <text id="logo-slot-format" x="0" y="38" text-anchor="middle" font-size="18" fill="#B0B0B0"
           font-style="italic" letter-spacing="1">(PNG)</text>
+    <image id="logo-slot" x="-122" y="-122" width="244" height="244" href="" xlink:href="" clip-path="url(#duluxLogoClip)" preserveAspectRatio="xMidYMid slice"/>
   </g>
 
   <text id="institution-name" x="1754" y="565" text-anchor="middle"
@@ -224,13 +237,18 @@
   <g id="opt-signatures-section">
 
   <!-- Signature 1 -->
-  <g id="signature-1" transform="translate(1130,2245)">
+  <!-- FIX (Aug 2026): same missing-<image> issue as Logo — this group had
+       no actual image element to write an uploaded signature onto. Renamed
+       the wrapper to "signature-1-block" and added a real
+       <image id="signature-1"> sized to the existing dashed placeholder box. -->
+  <g id="signature-1-block" transform="translate(1130,2245)">
     <rect id="signature-1-slot" x="-190" y="-162" width="380" height="96" rx="6"
           fill="none" stroke="#B7B7B7" stroke-width="2" stroke-dasharray="10,8"/>
     <text id="signature-1-slot-label" x="0" y="-116" text-anchor="middle" font-size="24" fill="#B0B0B0"
           font-style="italic" letter-spacing="1">Signature</text>
     <text id="signature-1-slot-format" x="0" y="-90" text-anchor="middle" font-size="18" fill="#B0B0B0"
           font-style="italic" letter-spacing="1">(PNG)</text>
+    <image id="signature-1" x="-190" y="-162" width="380" height="96" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
     <line x1="-260" y1="0" x2="260" y2="0" stroke="#1B2A4C" stroke-width="2"/>
     <text id="signature-1-caption" x="0" y="-24" text-anchor="middle" font-size="36" fill="#9C9C9C"
           font-style="italic">Full Name of Signer</text>
@@ -240,13 +258,21 @@
   </g>
 
   <!-- Signature 2 -->
-  <g id="signature-2" transform="translate(2378,2245)">
+  <!-- FIX (Aug 2026): same issue as Signature 1, plus this fixes a second
+       bug: the templates table already declared hide_container:
+       "signature-2-block" for this field, but no element in this file had
+       that id (the group was just "signature-2"), so an unused Signature 2
+       never actually hid its placeholder either. Renaming the wrapper to
+       "signature-2-block" makes that existing hide_container declaration
+       work correctly for the first time. -->
+  <g id="signature-2-block" transform="translate(2378,2245)">
     <rect id="signature-2-slot" x="-190" y="-162" width="380" height="96" rx="6"
           fill="none" stroke="#B7B7B7" stroke-width="2" stroke-dasharray="10,8"/>
     <text id="signature-2-slot-label" x="0" y="-116" text-anchor="middle" font-size="24" fill="#B0B0B0"
           font-style="italic" letter-spacing="1">Signature</text>
     <text id="signature-2-slot-format" x="0" y="-90" text-anchor="middle" font-size="18" fill="#B0B0B0"
           font-style="italic" letter-spacing="1">(PNG)</text>
+    <image id="signature-2" x="-190" y="-162" width="380" height="96" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
     <line x1="-260" y1="0" x2="260" y2="0" stroke="#1B2A4C" stroke-width="2"/>
     <text id="opt-signature-2-caption" x="0" y="-24" text-anchor="middle" font-size="36" fill="#9C9C9C"
           font-style="italic">Full Name of Signer</text>
@@ -259,16 +285,24 @@
   <!-- /opt-signatures-section -->
 
   <!-- Official Seal, lower-right -->
-  <g id="opt-seal-slot" transform="translate(3100,2130)" filter="url(#dropShadowSoft)">
+  <!-- FIX (Aug 2026): same missing-<image> issue, plus wrapped as
+       "seal-block" (renamed from "opt-seal-slot") so a new hide_container
+       declaration on this field can remove the whole medallion — rings,
+       placeholder text, drop shadow — when no seal is uploaded. The real
+       upload target is now the nested <image id="opt-seal-slot">, clipped
+       to the same circle the dashed placeholder ring draws. -->
+  <g id="seal-block" transform="translate(3100,2130)" filter="url(#dropShadowSoft)">
     <circle r="165" fill="url(#sealGradient)"/>
     <circle r="165" fill="none" stroke="url(#goldGradient)" stroke-width="5"/>
     <circle r="140" fill="none" stroke="#EFD98C" stroke-width="2" stroke-dasharray="9,7" opacity="0.85"/>
 
-    <!-- Placeholder: replace with an <image> (PNG seal artwork), clipped to the r=140 circle above -->
+    <!-- Placeholder mark: covered once a seal is uploaded (image sits on top) -->
     <text id="seal-slot-label" y="-10" text-anchor="middle" font-size="30" fill="#EFD98C"
           font-style="italic" letter-spacing="1">Official Seal</text>
     <text id="seal-slot-format" y="24" text-anchor="middle" font-size="20" fill="#EFD98C"
           font-style="italic" letter-spacing="1">(PNG)</text>
+
+    <image id="opt-seal-slot" x="-140" y="-140" width="280" height="280" href="" xlink:href="" clip-path="url(#duluxSealClip)" preserveAspectRatio="xMidYMid slice"/>
   </g>
 
   <!-- ======================================================= -->
