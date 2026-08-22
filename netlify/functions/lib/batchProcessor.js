@@ -79,8 +79,6 @@ async function processBatch(batchId) {
       allAttachments.push({ filename: `${safeName}.pdf`, content: Buffer.from(pdfBytes) });
 
       if (cert.recipient_email && cert.delivery_status !== 'skipped') {
-
-      if (cert.recipient_email && cert.delivery_status !== 'skipped') {
         if (batch.same_email) {
           sameEmailAttachments.push({ filename: `${safeName}.pdf`, content: Buffer.from(pdfBytes) });
         } else {
@@ -98,20 +96,27 @@ async function processBatch(batchId) {
           await sleep(EMAIL_PACING_MS);
         }
       }
-} catch (err) {
-  // Log the real error — without this, a failed certificate shows up
-  // in the UI as just "failed" with no way to tell why. This shows up
-  // in Netlify's generate-batch-background function logs.
-  console.error(`Certificate ${cert.id} (${cert.recipient_name}) failed:`, err);
-  anyFailures = true;
-  await supabase.from('certificates').update({ generation_status: 'failed' }).eq('id', cert.id);
-  await supabase.rpc('refund_token', {
-    p_user_id: batch.user_id,
-    p_amount: TOKENS_PER_CERTIFICATE,
-    p_batch_id: batchId,
-    p_reason: `Generation failed for certificate ${cert.id}: ${err.message}`,
-  });
-}
+    } catch (err) {
+      // Log the real error — without this, a failed certificate shows up
+      // in the UI as just "failed" with no way to tell why. This shows up
+      // in Netlify's function logs.
+      console.error(`Certificate ${cert.id} (${cert.recipient_name}) failed:`, err);
+      anyFailures = true;
+      await supabase.from('certificates').update({ generation_status: 'failed' }).eq('id', cert.id);
+
+      const { error: refundErr } = await supabase.rpc('refund_token', {
+        p_user_id: batch.user_id,
+        p_amount: TOKENS_PER_CERTIFICATE,
+        p_batch_id: batchId,
+        p_reason: `Generation failed for certificate ${cert.id}: ${err.message}`,
+      });
+      if (refundErr) {
+        // If the refund itself fails, this must not be silent — otherwise
+        // a user is charged for a certificate that never generated with no
+        // way for anyone to notice.
+        console.error(`refund_token RPC failed for batch ${batchId}, certificate ${cert.id}:`, refundErr.message);
+      }
+    }
   }
 
   if (batch.same_email && sameEmailAttachments.length > 0) {
