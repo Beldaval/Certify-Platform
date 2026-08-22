@@ -141,7 +141,7 @@
   </g>
 
   <!-- ============================= SEAL ============================= -->
-  <!-- FIX (Aug 2026): wrapped in <g id="seal-block"> so an unused opt-seal-slot
+<!-- FIX (Aug 2026): wrapped the seal artwork in its own group so an unused opt-seal-slot
        can hide the ENTIRE decorative medallion (burst shape, rings, arc text,
        shield emblem) via hide_container in templates.json — not just clear the
        image href. Unlike the signature blocks, this artwork had no wrapping
