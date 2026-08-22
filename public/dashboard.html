@@ -61,12 +61,13 @@
   <section id="step-status" class="hidden" style="margin-top:36px;">
     <h2>Batch status</h2>
     <div class="card">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <span id="batch-status-badge" class="badge badge-pending">Processing…</span>
         <div>
           <button class="btn btn-ghost" id="download-all-btn">Download all (.zip)</button>
         </div>
       </div>
+      <div class="success-text hidden" id="refund-notice" style="margin-bottom:12px;"></div>
       <div id="batch-progress-wrap" style="margin-bottom:16px;">
         <div style="background:#e5e7eb;border-radius:8px;height:10px;overflow:hidden;">
           <div id="batch-progress-bar" style="background:#4f46e5;height:100%;width:0%;transition:width 0.3s ease;"></div>
@@ -107,6 +108,8 @@ let selectedTemplate = null;
 let rowCount = 0;
 let currentBatchId = null;
 let statusPoll = null;
+let notifiedFailedCertIds = new Set();
+let tokensRefundedThisBatch = 0;
 
 const FIXED_FIELD_IDS = ['recipient-name', 'course-title', 'institution-name', 'certificate-number'];
 
@@ -356,6 +359,9 @@ async function submitBatch() {
 
 async function pollStatus() {
   clearInterval(statusPoll);
+  notifiedFailedCertIds = new Set();
+  tokensRefundedThisBatch = 0;
+  document.getElementById('refund-notice').classList.add('hidden');
   await fetchStatus();
   statusPoll = setInterval(fetchStatus, 4000);
 }
@@ -390,6 +396,7 @@ async function fetchStatus() {
 
   const tbody = document.getElementById('status-rows');
   tbody.innerHTML = '';
+  const newlyFailed = [];
   for (const c of data.certificates) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -401,6 +408,25 @@ async function fetchStatus() {
       <td>${c.pdf_path ? `<button class="btn btn-ghost" style="padding:4px 10px;" onclick="downloadOne('${c.id}')">Download</button>` : ''}</td>
     `;
     tbody.appendChild(tr);
+
+    if (c.generation_status === 'failed' && !notifiedFailedCertIds.has(c.id)) {
+      notifiedFailedCertIds.add(c.id);
+      newlyFailed.push(c);
+    }
+  }
+
+  // A failed certificate is automatically refunded 50 tokens server-side —
+  // this surfaces that refund the moment it's detected, instead of the
+  // balance silently changing with nothing telling the user why.
+  if (newlyFailed.length > 0) {
+    tokensRefundedThisBatch += newlyFailed.length * 50;
+    const namesList = newlyFailed.map((c) => escapeHtml(c.recipient_name)).join(', ');
+    const notice = document.getElementById('refund-notice');
+    notice.textContent = `${newlyFailed.length} certificate(s) failed to generate (${namesList}) — ${newlyFailed.length * 50} token(s) refunded. Total refunded this batch: ${tokensRefundedThisBatch}.`;
+    notice.classList.remove('hidden');
+    await refreshWallet(); // pull the updated balance immediately, not on next page load
+  } else {
+    await refreshWallet(); // keep the balance live during processing even with no failures yet
   }
 }
 
