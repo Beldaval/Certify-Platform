@@ -214,14 +214,14 @@ function addCertRow(sourceRowEl) {
   let dynamicHtml = '';
   for (const f of dynamicFields) {
     if (f.type === 'text') {
-      dynamicHtml += `<div><label>${labelFor(f.id)}${f.required ? '' : ' (optional)'}</label>
+      dynamicHtml += `<div><label>${labelFor(f)}${f.required ? '' : ' (optional)'}</label>
         <input type="text" data-field="${f.id}" data-kind="text" ${f.required ? 'required' : ''}></div>`;
     } else if (f.type === 'image') {
-      dynamicHtml += `<div><label>${labelFor(f.id)}${f.required ? '' : ' (optional)'}</label>
+      dynamicHtml += `<div><label>${labelFor(f)}${f.required ? '' : ' (optional)'}</label>
         <input type="file" accept="image/png,image/jpeg" data-field="${f.id}" data-kind="image" ${f.required ? 'required' : ''}></div>`;
     } else if (f.type === 'block-toggle') {
       dynamicHtml += `<div style="display:flex;align-items:center;gap:8px;margin-top:14px;">
-        <input type="checkbox" data-field="${f.id}" data-kind="toggle" checked style="width:auto;"> <label style="margin:0;">Include: ${labelFor(f.id)}</label></div>`;
+        <input type="checkbox" data-field="${f.id}" data-kind="toggle" checked style="width:auto;"> <label style="margin:0;">Include: ${labelFor(f)}</label></div>`;
     }
   }
 
@@ -273,8 +273,11 @@ function addCertRow(sourceRowEl) {
   updateBatchCost();
 }
 
-function labelFor(id) {
-  return id.replace(/^opt-/, '').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+function labelFor(f) {
+  // Use a custom label if the field declares one; otherwise fall back to
+  // auto-generating one from the field's id, same as before.
+  if (f.label) return f.label;
+  return f.id.replace(/^opt-/, '').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 function updateBatchCost() {
