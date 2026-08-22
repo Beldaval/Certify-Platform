@@ -48,6 +48,7 @@ async function processBatch(batchId) {
   if (certsErr) throw certsErr;
 
   const sameEmailAttachments = []; // used only if batch.same_email is true
+  const allAttachments = []; // every generated certificate, regardless of same_email — used for the optional "copy me" email
   let anyFailures = false;
 
   for (const cert of certs) {
@@ -74,6 +75,10 @@ async function processBatch(batchId) {
         .from('certificates')
         .update({ generation_status: 'generated', pdf_path: pdfPath })
         .eq('id', cert.id);
+
+      allAttachments.push({ filename: `${safeName}.pdf`, content: Buffer.from(pdfBytes) });
+
+      if (cert.recipient_email && cert.delivery_status !== 'skipped') {
 
       if (cert.recipient_email && cert.delivery_status !== 'skipped') {
         if (batch.same_email) {
@@ -122,6 +127,26 @@ async function processBatch(batchId) {
         await supabase.from('certificates').update({ delivery_status: 'sent' }).eq('batch_id', batchId).eq('recipient_email', firstWithEmail.recipient_email);
       } catch {
         await supabase.from('certificates').update({ delivery_status: 'failed' }).eq('batch_id', batchId);
+      }
+    }
+  }
+
+  // "Copy me" — additive, independent of same_email: sends every generated
+  // certificate as one bundled email to the account's own registered
+  // email, regardless of how recipients themselves were emailed. Lets the
+  // sender keep a complete set to print, without changing recipient delivery.
+  if (batch.copy_to_self && allAttachments.length > 0) {
+    const { data: ownerProfile } = await supabase.from('profiles').select('email').eq('id', batch.user_id).single();
+    if (ownerProfile?.email) {
+      try {
+        await sendCertificateEmail({
+          to: ownerProfile.email,
+          subject: `Your copy — ${template.name} batch (${allAttachments.length} certificate(s))`,
+          html: `<p>Attached is a copy of all ${allAttachments.length} certificate(s) generated in this batch.</p>`,
+          attachments: allAttachments,
+        });
+      } catch (copyErr) {
+        console.error(`copy_to_self email failed for batch ${batchId}:`, copyErr.message);
       }
     }
   }
