@@ -15,6 +15,7 @@
   <a class="brand" href="/"><div class="mark">C</div><div class="name">Certsift</div></a>
   <div class="nav-links">
     <div style="display:flex;flex-direction:column;align-items:flex-end;">
+      <div class="muted" id="user-email" style="font-size:12px;"></div>
       <div class="token-pill" id="token-pill" title="">🪙 <span id="token-balance">–</span> tokens</div>
       <div class="muted" id="token-breakdown" style="font-size:11px;margin-top:2px;"></div>
     </div>
@@ -139,6 +140,10 @@ async function init() {
 
 async function refreshWallet() {
   const { data: { user } } = await supabaseClient.auth.getUser();
+  // FIX (Aug 2026): surface the logged-in account's email in the nav bar —
+  // with multiple accounts in use, there was previously no way to tell
+  // which one was active without logging out.
+  document.getElementById('user-email').textContent = user?.email || '';
   const { data, error } = await supabaseClient.from('wallets').select('trial_tokens_remaining, purchased_tokens').eq('user_id', user.id).single();
   if (!error && data) {
     const total = data.trial_tokens_remaining + data.purchased_tokens;
