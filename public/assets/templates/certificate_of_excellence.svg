@@ -117,7 +117,10 @@
   </text>
 
   <!-- Presented this / date line (left-anchored: avoids a text-anchor="middle" + tspan measurement bug present in several SVG renderers) -->
-  <text x="1120" y="1750" font-size="46" font-style="italic" fill="#333029">Presented this <tspan id="award-day" fill="#152442" font-weight="700" font-style="normal" style="text-decoration:underline;">Day</tspan> day of <tspan id="award-month" fill="#152442" font-weight="700" font-style="normal" style="text-decoration:underline;">Month</tspan>, 20<tspan id="award-year" fill="#152442" font-weight="700" font-style="normal" style="text-decoration:underline;">YY</tspan></text>
+  <!-- FIX (Aug 2026): removed the hardcoded "20" prefix before award-year —
+       it combined with a full year typed by the user (e.g. "2026") to
+       produce "202026". award-year now expects the complete year. -->
+  <text x="1120" y="1750" font-size="46" font-style="italic" fill="#333029">Presented this <tspan id="award-day" fill="#152442" font-weight="700" font-style="normal" style="text-decoration:underline;">Day</tspan> day of <tspan id="award-month" fill="#152442" font-weight="700" font-style="normal" style="text-decoration:underline;">Month</tspan>, <tspan id="award-year" fill="#152442" font-weight="700" font-style="normal" style="text-decoration:underline;">Year</tspan></text>
 
   <!-- ============================= SERIAL NUMBER (bottom left) ============================= -->
   <text id="certificate-number-label" x="230" y="2250" font-size="34" font-style="italic" fill="#6B6250">Serial Number:</text>
@@ -154,32 +157,38 @@
   </g>
 
   <!-- ============================= SEAL ============================= -->
-  <circle cx="3082" cy="2128" r="232" fill="url(#goldGrad)" stroke="#8E6E22" stroke-width="2"/>
-  <circle cx="3082" cy="2128" r="196" fill="none" stroke="#7A5E1E" stroke-width="1.5" opacity="0.7"/>
-  <circle cx="3082" cy="2128" r="160" fill="none" stroke="#7A5E1E" stroke-width="1" opacity="0.5"/>
+  <!-- FIX (Aug 2026): wrapped the seal artwork in its own group so an unused
+       opt-seal-slot can hide the whole decorative medallion (rings, shield,
+       stars, laurel arcs) instead of it always rendering regardless of
+       whether a real seal image was uploaded. -->
+  <g id="seal-block">
+    <circle cx="3082" cy="2128" r="232" fill="url(#goldGrad)" stroke="#8E6E22" stroke-width="2"/>
+    <circle cx="3082" cy="2128" r="196" fill="none" stroke="#7A5E1E" stroke-width="1.5" opacity="0.7"/>
+    <circle cx="3082" cy="2128" r="160" fill="none" stroke="#7A5E1E" stroke-width="1" opacity="0.5"/>
 
-  <g fill="#152442">
-    <path d="M3082,2000 L3092,2020 L3114,2020 L3097,2034 L3104,2056 L3082,2043 L3060,2056 L3067,2034 L3050,2020 L3072,2020 Z"/>
-    <path d="M3022,2000 L3029,2014 L3044,2014 L3033,2023 L3037,2038 L3022,2029 L3007,2038 L3011,2023 L3000,2014 L3015,2014 Z" opacity="0.85"/>
-    <path d="M3142,2000 L3149,2014 L3164,2014 L3153,2023 L3157,2038 L3142,2029 L3127,2038 L3131,2023 L3120,2014 L3135,2014 Z" opacity="0.85"/>
-  </g>
+    <g fill="#152442">
+      <path d="M3082,2000 L3092,2020 L3114,2020 L3097,2034 L3104,2056 L3082,2043 L3060,2056 L3067,2034 L3050,2020 L3072,2020 Z"/>
+      <path d="M3022,2000 L3029,2014 L3044,2014 L3033,2023 L3037,2038 L3022,2029 L3007,2038 L3011,2023 L3000,2014 L3015,2014 Z" opacity="0.85"/>
+      <path d="M3142,2000 L3149,2014 L3164,2014 L3153,2023 L3157,2038 L3142,2029 L3127,2038 L3131,2023 L3120,2014 L3135,2014 Z" opacity="0.85"/>
+    </g>
 
-  <path d="M3082,2060 L3132,2078 L3132,2118 C3132,2158 3082,2186 3082,2186 C3082,2186 3032,2158 3032,2118 L3032,2078 Z"
-        fill="none" stroke="#152442" stroke-width="3.5"/>
-  <g stroke="#152442" stroke-width="2.5" fill="none">
-    <line x1="3054" y1="2100" x2="3054" y2="2140"/>
-    <line x1="3082" y1="2100" x2="3082" y2="2140"/>
-    <line x1="3110" y1="2100" x2="3110" y2="2140"/>
-    <rect x="3044" y="2092" width="76" height="8" fill="#152442" stroke="none"/>
-    <rect x="3040" y="2140" width="84" height="8" fill="#152442" stroke="none"/>
-  </g>
-  <g stroke="#152442" stroke-width="2.5" fill="none">
-    <path d="M2960,2190 C2936,2154 2936,2108 2966,2078"/>
-    <path d="M3204,2190 C3228,2154 3228,2108 3198,2078"/>
-    <path d="M2958,2110 L2942,2100 M2954,2140 L2937,2134 M2966,2168 L2951,2166"/>
-    <path d="M3206,2110 L3222,2100 M3210,2140 L3227,2134 M3198,2168 L3213,2166"/>
-  </g>
+    <path d="M3082,2060 L3132,2078 L3132,2118 C3132,2158 3082,2186 3082,2186 C3082,2186 3032,2158 3032,2118 L3032,2078 Z"
+          fill="none" stroke="#152442" stroke-width="3.5"/>
+    <g stroke="#152442" stroke-width="2.5" fill="none">
+      <line x1="3054" y1="2100" x2="3054" y2="2140"/>
+      <line x1="3082" y1="2100" x2="3082" y2="2140"/>
+      <line x1="3110" y1="2100" x2="3110" y2="2140"/>
+      <rect x="3044" y="2092" width="76" height="8" fill="#152442" stroke="none"/>
+      <rect x="3040" y="2140" width="84" height="8" fill="#152442" stroke="none"/>
+    </g>
+    <g stroke="#152442" stroke-width="2.5" fill="none">
+      <path d="M2960,2190 C2936,2154 2936,2108 2966,2078"/>
+      <path d="M3204,2190 C3228,2154 3228,2108 3198,2078"/>
+      <path d="M2958,2110 L2942,2100 M2954,2140 L2937,2134 M2966,2168 L2951,2166"/>
+      <path d="M3206,2110 L3222,2100 M3210,2140 L3227,2134 M3198,2168 L3213,2166"/>
+    </g>
 
-  <image id="opt-seal-slot" x="2852" y="1898" width="460" height="460" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
+    <image id="opt-seal-slot" x="2852" y="1898" width="460" height="460" href="" xlink:href="" clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
+  </g>
 
 </svg>
