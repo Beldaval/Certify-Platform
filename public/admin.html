@@ -19,8 +19,23 @@
 
 <div class="container hidden" id="admin-content">
 
-  <h2>Look up a user</h2>
-  <p class="muted">Find a user by email to see their wallet balance, recent token activity, and recent certificates — no UUID copy-pasting needed.</p>
+  <h2>All users</h2>
+  <p class="muted">Loads automatically — click any row to see that user's full activity, or search by email below.</p>
+  <div class="card" style="max-width:900px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <input type="text" id="users-filter" placeholder="Filter by name, email, or organization…" style="max-width:340px;">
+      <span class="muted" id="users-count" style="font-size:13px;white-space:nowrap;margin-left:12px;"></span>
+    </div>
+    <p class="muted" id="users-loading">Loading users…</p>
+    <p class="error-text hidden" id="users-error"></p>
+    <table id="users-table" class="hidden">
+      <thead><tr><th>Name</th><th>Email</th><th>Organization</th><th>Joined</th></tr></thead>
+      <tbody id="users-rows"></tbody>
+    </table>
+  </div>
+
+  <h2 style="margin-top:40px;">Look up a user</h2>
+  <p class="muted">Or search directly by email — same result as clicking a row above.</p>
   <div class="card" style="max-width:560px;">
     <label>User email</label>
     <div style="display:flex;gap:10px;">
@@ -78,6 +93,7 @@
 <script src="/js/supabaseClient.js"></script>
 <script>
 let currentLookupUserId = null;
+let allUsers = [];
 
 init();
 async function init() {
@@ -96,6 +112,60 @@ async function init() {
   document.getElementById('lookup-email').addEventListener('keydown', (e) => { if (e.key === 'Enter') lookupUser(); });
   document.getElementById('credit-btn').addEventListener('click', creditTokens);
   document.getElementById('export-btn').addEventListener('click', exportEmails);
+  document.getElementById('users-filter').addEventListener('input', renderUsersTable);
+
+  loadAllUsers();
+}
+
+async function loadAllUsers() {
+  const loadingEl = document.getElementById('users-loading');
+  const errEl = document.getElementById('users-error');
+  try {
+    const headers = await getAuthHeader();
+    const resp = await fetch('/api/admin-export-emails', { headers });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Failed to load users.');
+
+    allUsers = data.users;
+    loadingEl.classList.add('hidden');
+    document.getElementById('users-table').classList.remove('hidden');
+    renderUsersTable();
+  } catch (err) {
+    loadingEl.classList.add('hidden');
+    errEl.textContent = err.message;
+    errEl.classList.remove('hidden');
+  }
+}
+
+function renderUsersTable() {
+  const filter = document.getElementById('users-filter').value.trim().toLowerCase();
+  const filtered = filter
+    ? allUsers.filter((u) =>
+        (u.email || '').toLowerCase().includes(filter) ||
+        (u.full_name || '').toLowerCase().includes(filter) ||
+        (u.organization_name || '').toLowerCase().includes(filter))
+    : allUsers;
+
+  document.getElementById('users-count').textContent = `${filtered.length} of ${allUsers.length} users`;
+
+  const rows = document.getElementById('users-rows');
+  rows.innerHTML = '';
+  for (const u of filtered) {
+    const tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
+    tr.innerHTML = `
+      <td>${escapeHtml(u.full_name || '—')}</td>
+      <td>${escapeHtml(u.email)}</td>
+      <td>${escapeHtml(u.organization_name || '—')}</td>
+      <td>${new Date(u.created_at).toLocaleDateString()}</td>
+    `;
+    tr.addEventListener('click', () => {
+      document.getElementById('lookup-email').value = u.email;
+      lookupUser();
+      document.getElementById('lookup-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    rows.appendChild(tr);
+  }
 }
 
 async function lookupUser() {
