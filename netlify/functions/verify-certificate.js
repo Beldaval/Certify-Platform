@@ -7,7 +7,7 @@ const { getSupabaseAdmin } = require('./lib/supabaseAdmin');
 
 exports.handler = async (event) => {
   try {
-    const number = (event.queryStringParameters?.number || '').trim();
+    const number = (event.queryStringParameters?.number || '').trim().toUpperCase();
     if (!number) return { statusCode: 400, body: JSON.stringify({ error: 'Missing certificate number' }) };
 
     const supabase = getSupabaseAdmin();
