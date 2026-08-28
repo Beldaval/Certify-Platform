@@ -8,14 +8,10 @@
 </head>
 <body>
 
-<div style="background:var(--ink);color:#fff;text-align:center;padding:6px 16px;font-size:13px;">
-  Need help? <a href="tel:+2347013527505" style="color:#fff;font-weight:600;text-decoration:underline;">Contact Support: +234-701-3527-505</a>
-</div>
 <div class="nav">
   <a class="brand" href="/"><div class="mark">C</div><div class="name">Certsift</div></a>
   <div class="nav-links">
     <div style="display:flex;flex-direction:column;align-items:flex-end;">
-      <div class="muted" id="user-email" style="font-size:12px;"></div>
       <div class="token-pill" id="token-pill" title="">🪙 <span id="token-balance">–</span> tokens</div>
       <div class="muted" id="token-breakdown" style="font-size:11px;margin-top:2px;"></div>
     </div>
@@ -42,9 +38,6 @@
       <label style="display:flex;align-items:center;gap:8px;margin-top:16px;">
         <input type="checkbox" id="same-email" style="width:auto;"> Send all certificates in this batch as one email with multiple attachments
       </label>
-      <label style="display:flex;align-items:center;gap:8px;margin-top:10px;">
-        <input type="checkbox" id="copy-me" style="width:auto;"> Copy me — also send all certificates in this batch to my own email, in addition to recipients
-      </label>
     </div>
 
     <div id="cert-rows"></div>
@@ -65,15 +58,10 @@
         <span id="batch-status-badge" class="badge badge-pending">Processing…</span>
         <div>
           <button class="btn btn-ghost" id="download-all-btn">Download all (.zip)</button>
+          <button class="btn btn-primary" id="new-batch-btn" style="margin-left:8px;">Start a new batch</button>
         </div>
       </div>
       <div class="success-text hidden" id="refund-notice" style="margin-bottom:12px;"></div>
-      <div id="batch-progress-wrap" style="margin-bottom:16px;">
-        <div style="background:#e5e7eb;border-radius:8px;height:10px;overflow:hidden;">
-          <div id="batch-progress-bar" style="background:#4f46e5;height:100%;width:0%;transition:width 0.3s ease;"></div>
-        </div>
-        <p class="muted" id="batch-progress-text" style="margin-top:6px;font-size:13px;"></p>
-      </div>
       <table>
         <thead><tr><th>Recipient</th><th>Program</th><th>Cert #</th><th>Generation</th><th>Delivery</th><th></th></tr></thead>
         <tbody id="status-rows"></tbody>
@@ -138,22 +126,16 @@ async function init() {
   });
   document.getElementById('submit-batch-btn').addEventListener('click', submitBatch);
   document.getElementById('download-all-btn').addEventListener('click', downloadAll);
+  document.getElementById('new-batch-btn').addEventListener('click', resetBatchForm);
   updateTopupPreview();
 }
 
 async function refreshWallet() {
   const { data: { user } } = await supabaseClient.auth.getUser();
-  // FIX (Aug 2026): surface the logged-in account's email in the nav bar —
-  // with multiple accounts in use, there was previously no way to tell
-  // which one was active without logging out.
-  document.getElementById('user-email').textContent = user?.email || '';
   const { data, error } = await supabaseClient.from('wallets').select('trial_tokens_remaining, purchased_tokens').eq('user_id', user.id).single();
   if (!error && data) {
     const total = data.trial_tokens_remaining + data.purchased_tokens;
     document.getElementById('token-balance').textContent = total;
-    // Breakdown shown separately so "516 tokens" is never read as "516
-    // certificates just purchased" — trial tokens and purchased (₦-paid)
-    // tokens are always shown apart, with the ₦ amount that bought them.
     document.getElementById('token-pill').title =
       `${data.trial_tokens_remaining} free trial + ${data.purchased_tokens} purchased (₦${data.purchased_tokens * 50} paid) = ${total} tokens`;
     document.getElementById('token-breakdown').textContent =
@@ -177,8 +159,6 @@ async function loadTemplates() {
 }
 
 function templateFile(t) {
-  // fields don't include the filename (that lives only in templates.json on
-  // disk); refetch the static json once to map id -> file for thumbnails.
   return window.__templateFiles?.[t.id] || `${t.id}.svg`;
 }
 
@@ -194,16 +174,11 @@ async function selectTemplate(t, cardEl) {
     addCertRow();
     updateBatchCost();
   } catch (err) {
-    // Surface build errors in the UI instead of failing silently — a
-    // template with an unexpected field shape would otherwise leave the
-    // page looking like the click did nothing.
     const errEl = document.getElementById('batch-error');
     errEl.textContent = `Couldn't build the recipient form for this template: ${err.message}`;
     errEl.classList.remove('hidden');
     console.error(err);
   }
-  // The builder renders below the template grid — scroll to it so selecting
-  // a template visibly does something instead of appearing to do nothing.
   document.getElementById('step-builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -222,14 +197,14 @@ function addCertRow(sourceRowEl) {
   let dynamicHtml = '';
   for (const f of dynamicFields) {
     if (f.type === 'text') {
-      dynamicHtml += `<div><label>${labelFor(f)}${f.required ? '' : ' (optional)'}</label>
+      dynamicHtml += `<div><label>${labelFor(f.id)}${f.required ? '' : ' (optional)'}</label>
         <input type="text" data-field="${f.id}" data-kind="text" ${f.required ? 'required' : ''}></div>`;
     } else if (f.type === 'image') {
-      dynamicHtml += `<div><label>${labelFor(f)}${f.required ? '' : ' (optional)'}</label>
+      dynamicHtml += `<div><label>${labelFor(f.id)}${f.required ? '' : ' (optional)'}</label>
         <input type="file" accept="image/png,image/jpeg" data-field="${f.id}" data-kind="image" ${f.required ? 'required' : ''}></div>`;
     } else if (f.type === 'block-toggle') {
       dynamicHtml += `<div style="display:flex;align-items:center;gap:8px;margin-top:14px;">
-        <input type="checkbox" data-field="${f.id}" data-kind="toggle" checked style="width:auto;"> <label style="margin:0;">Include: ${labelFor(f)}</label></div>`;
+        <input type="checkbox" data-field="${f.id}" data-kind="toggle" checked style="width:auto;"> <label style="margin:0;">Include: ${labelFor(f.id)}</label></div>`;
     }
   }
 
@@ -246,16 +221,11 @@ function addCertRow(sourceRowEl) {
   wrapper.querySelector('.remove-row-btn').addEventListener('click', () => { wrapper.remove(); updateBatchCost(); });
   document.getElementById('cert-rows').appendChild(wrapper);
 
-  // "Reusing shared details and editing only what changes" (FR-3.2): carry
-  // forward everything from the previous recipient row EXCEPT name and
-  // email, which are unique per person and must be entered fresh each time
-  // — carrying those forward would risk sending the wrong certificate to
-  // the wrong recipient.
   if (sourceRowEl) {
     for (const newInput of wrapper.querySelectorAll('[data-field]')) {
       const field = newInput.dataset.field;
       const kind = newInput.dataset.kind;
-      if (kind === 'core' && (field === 'recipient_name' || field === 'recipient_email')) continue; // stays blank
+      if (kind === 'core' && (field === 'recipient_name' || field === 'recipient_email')) continue;
 
       const oldInput = sourceRowEl.querySelector(`[data-field="${field}"]`);
       if (!oldInput) continue;
@@ -263,16 +233,12 @@ function addCertRow(sourceRowEl) {
       if (kind === 'toggle') {
         newInput.checked = oldInput.checked;
       } else if (kind === 'image') {
-        // File inputs can't be set from a string value, but the File object
-        // itself can be carried over via DataTransfer so an uploaded logo
-        // or signature doesn't have to be re-picked for every recipient.
         if (oldInput.files && oldInput.files[0]) {
           const dt = new DataTransfer();
           dt.items.add(oldInput.files[0]);
           newInput.files = dt.files;
         }
       } else {
-        // text and core fields other than name/email (e.g. program_title)
         newInput.value = oldInput.value;
       }
     }
@@ -281,11 +247,8 @@ function addCertRow(sourceRowEl) {
   updateBatchCost();
 }
 
-function labelFor(f) {
-  // Use a custom label if the field declares one; otherwise fall back to
-  // auto-generating one from the field's id, same as before.
-  if (f.label) return f.label;
-  return f.id.replace(/^opt-/, '').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+function labelFor(id) {
+  return id.replace(/^opt-/, '').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 function updateBatchCost() {
@@ -333,28 +296,69 @@ async function submitBatch() {
   }
 
   const headers = { 'Content-Type': 'application/json', ...(await getAuthHeader()) };
-  const resp = await fetch('/api/create-batch', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
-      templateId: selectedTemplate.id,
-      issuingOrganization: document.getElementById('issuing-org').value.trim(),
-      sameEmail: document.getElementById('same-email').checked,
-      copyToSelf: document.getElementById('copy-me').checked,
-      certificates,
-    }),
-  });
-  const data = await resp.json();
+  const submitBtn = document.getElementById('submit-batch-btn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+  let resp, data;
+  try {
+    resp = await fetch('/api/create-batch', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        templateId: selectedTemplate.id,
+        issuingOrganization: document.getElementById('issuing-org').value.trim(),
+        sameEmail: document.getElementById('same-email').checked,
+        certificates,
+      }),
+    });
+    data = await resp.json();
+  } catch (networkErr) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Generate & send batch';
+    errEl.textContent = 'Could not reach the server — check your connection. If tokens were already deducted, check your balance before retrying to avoid a duplicate batch.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
   if (!resp.ok) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Generate & send batch';
     errEl.textContent = data.error || 'Something went wrong.';
     errEl.classList.remove('hidden');
     return;
   }
 
+  submitBtn.textContent = 'Batch submitted ✓';
+  document.getElementById('add-row-btn').disabled = true;
+  for (const input of document.querySelectorAll('#cert-rows input')) input.disabled = true;
+  for (const btn of document.querySelectorAll('.remove-row-btn')) btn.disabled = true;
+
   currentBatchId = data.batchId;
   document.getElementById('step-status').classList.remove('hidden');
+  document.getElementById('step-status').scrollIntoView({ behavior: 'smooth', block: 'start' });
   await refreshWallet();
   pollStatus();
+}
+
+function resetBatchForm() {
+  clearInterval(statusPoll);
+  currentBatchId = null;
+  document.getElementById('step-status').classList.add('hidden');
+  document.getElementById('cert-rows').innerHTML = '';
+  rowCount = 0;
+  document.getElementById('batch-error').classList.add('hidden');
+  document.getElementById('refund-notice').classList.add('hidden');
+
+  const submitBtn = document.getElementById('submit-batch-btn');
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Generate & send batch';
+  document.getElementById('add-row-btn').disabled = false;
+
+  if (selectedTemplate) {
+    addCertRow();
+    updateBatchCost();
+  }
+  document.getElementById('step-builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 async function pollStatus() {
@@ -380,19 +384,9 @@ async function fetchStatus() {
   } else if (data.batch.status === 'failed') {
     badge.textContent = 'Failed'; badge.className = 'badge badge-failed';
     clearInterval(statusPoll);
- } else {
+  } else {
     badge.textContent = 'Processing…'; badge.className = 'badge badge-pending';
   }
-
-  const total = data.certificates.length;
-  const done = data.certificates.filter(c => c.generation_status !== 'pending').length;
-  const failed = data.certificates.filter(c => c.generation_status === 'failed').length;
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-  document.getElementById('batch-progress-bar').style.width = `${pct}%`;
-  document.getElementById('batch-progress-text').textContent =
-    data.batch.status === 'completed'
-      ? `Done — ${done - failed} generated, ${failed} failed`
-      : `${done} / ${total} processed`;
 
   const tbody = document.getElementById('status-rows');
   tbody.innerHTML = '';
@@ -415,18 +409,15 @@ async function fetchStatus() {
     }
   }
 
-  // A failed certificate is automatically refunded 50 tokens server-side —
-  // this surfaces that refund the moment it's detected, instead of the
-  // balance silently changing with nothing telling the user why.
   if (newlyFailed.length > 0) {
     tokensRefundedThisBatch += newlyFailed.length * 50;
     const namesList = newlyFailed.map((c) => escapeHtml(c.recipient_name)).join(', ');
     const notice = document.getElementById('refund-notice');
     notice.textContent = `${newlyFailed.length} certificate(s) failed to generate (${namesList}) — ${newlyFailed.length * 50} token(s) refunded. Total refunded this batch: ${tokensRefundedThisBatch}.`;
     notice.classList.remove('hidden');
-    await refreshWallet(); // pull the updated balance immediately, not on next page load
+    await refreshWallet();
   } else {
-    await refreshWallet(); // keep the balance live during processing even with no failures yet
+    await refreshWallet();
   }
 }
 
@@ -454,11 +445,10 @@ async function downloadAll() {
   URL.revokeObjectURL(url);
 }
 
-// ---------- Top-up / Paystack ----------
 function updateTopupPreview() {
   const amount = Number(document.getElementById('topup-amount').value || 0);
-  const tokens = Math.floor(amount); // ₦1 = 1 token
-  const certs = Math.floor(tokens / 50); // 50 tokens = 1 certificate
+  const tokens = Math.floor(amount);
+  const certs = Math.floor(tokens / 50);
   document.getElementById('topup-tokens-preview').textContent = amount >= 800
     ? `₦${amount} = ${tokens} tokens (worth ${certs} certificates) — adds to your existing balance`
     : 'Minimum top-up is ₦800';
@@ -492,8 +482,6 @@ async function maybeVerifyPendingTopup() {
 
 function escapeHtml(s){ const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }
 
-// Fetches templates.json client-side too, purely to map id -> svg filename for thumbnails
-// (the /api/templates-list function intentionally returns only DB-safe metadata, not the file path).
 async function loadTemplateFileMap() {
   const resp = await fetch('/assets/templates.json');
   const j = await resp.json();
