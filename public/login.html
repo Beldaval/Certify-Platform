@@ -136,6 +136,21 @@ signupForm.addEventListener('submit', async (e) => {
     options: { data: { full_name: org } },
   });
   if (error) { errEl.textContent = error.message; errEl.classList.remove('hidden'); return; }
+
+  // Meta Pixel — fires exactly once, right when Supabase confirms the
+  // account was actually created, so Meta's ad learning gets a genuine
+  // signup signal instead of firing on every form view. Guarded with a
+  // typeof check since the pixel is injected separately via Netlify's
+  // post-processing snippet injection, not loaded by this page directly —
+  // if that injection is ever delayed or fails, this must never throw and
+  // block the real signup flow.
+  if (typeof window.fbq === 'function') {
+    window.fbq('track', 'CompleteRegistration', {
+      content_name: 'Certsift account signup',
+      status: true,
+    });
+  }
+
   if (data.session) {
     window.location.href = '/dashboard.html';
   } else {
