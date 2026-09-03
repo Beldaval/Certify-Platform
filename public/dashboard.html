@@ -38,6 +38,9 @@
       <label style="display:flex;align-items:center;gap:8px;margin-top:16px;">
         <input type="checkbox" id="same-email" style="width:auto;"> Send all certificates in this batch as one email with multiple attachments
       </label>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:10px;">
+        <input type="checkbox" id="copy-me" style="width:auto;"> Copy me — also send all certificates in this batch to my own email, in addition to recipients
+      </label>
     </div>
 
     <div id="cert-rows"></div>
@@ -121,7 +124,7 @@ async function init() {
   document.getElementById('topup-confirm-btn').addEventListener('click', startTopup);
   document.getElementById('add-row-btn').addEventListener('click', () => {
     const rows = document.querySelectorAll('#cert-rows > div');
-    const lastRow = rows[rows.length - 1]; // may be undefined if none exist yet — addCertRow handles that
+    const lastRow = rows[rows.length - 1];
     addCertRow(lastRow);
   });
   document.getElementById('submit-batch-btn').addEventListener('click', submitBatch);
@@ -308,6 +311,7 @@ async function submitBatch() {
         templateId: selectedTemplate.id,
         issuingOrganization: document.getElementById('issuing-org').value.trim(),
         sameEmail: document.getElementById('same-email').checked,
+        copyToSelf: document.getElementById('copy-me').checked,
         certificates,
       }),
     });
