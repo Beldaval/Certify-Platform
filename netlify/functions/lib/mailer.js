@@ -1,22 +1,28 @@
-// Gmail SMTP sender using an App Password (Phase 1 — see BRD/FRD 9/10).
-// GMAIL_USER and GMAIL_APP_PASSWORD are read from Netlify environment
-// variables only. Never hardcode these or commit them to any file.
+// Resend SMTP relay — replaces the earlier Gmail SMTP setup. Using the
+// same Resend account (and the same verified certsift.com sending domain)
+// that Supabase Auth's emails already go through, so every email the
+// platform sends — signup confirmations, password resets, AND certificate
+// delivery — comes from one consistent, properly SPF/DKIM-authenticated
+// source instead of certificate emails looking like they come from a
+// personal Gmail account while auth emails look like they come from the
+// real domain.
 const nodemailer = require('nodemailer');
 
 function getTransport() {
-  const user = process.env.GMAIL_USER;
-  const pass = process.env.GMAIL_APP_PASSWORD;
-  if (!user || !pass) throw new Error('Missing GMAIL_USER or GMAIL_APP_PASSWORD env vars');
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error('Missing RESEND_API_KEY env var');
   return nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user, pass },
+    host: 'smtp.resend.com',
+    port: 465,
+    secure: true, // port 465 = implicit SSL/TLS, per Resend's own docs
+    auth: { user: 'resend', pass: apiKey }, // literal string "resend" as username — the API key is the password
   });
 }
 
 async function sendCertificateEmail({ to, subject, html, attachments }) {
   const transport = getTransport();
   return transport.sendMail({
-    from: `"${process.env.SENDER_NAME || 'Certify'}" <${process.env.GMAIL_USER}>`,
+    from: `"${process.env.SENDER_NAME || 'Certsift'}" <${process.env.SENDER_EMAIL || 'noreply@certsift.com'}>`,
     to,
     subject,
     html,
