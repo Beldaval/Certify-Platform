@@ -14,8 +14,8 @@ function getTransport() {
   return nodemailer.createTransport({
     host: 'smtp.resend.com',
     port: 465,
-    secure: true, // port 465 = implicit SSL/TLS, per Resend's own docs
-    auth: { user: 'resend', pass: apiKey }, // literal string "resend" as username — the API key is the password
+    secure: true,
+    auth: { user: 'resend', pass: apiKey },
   });
 }
 
@@ -26,7 +26,7 @@ async function sendCertificateEmail({ to, subject, html, attachments }) {
     to,
     subject,
     html,
-    attachments, // [{ filename, content: Buffer }]
+    attachments,
   });
 }
 
