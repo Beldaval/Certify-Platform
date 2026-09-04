@@ -5,6 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Log in — Certsift</title>
 <link rel="stylesheet" href="/css/styles.css">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4123921544572253');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4123921544572253&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 </head>
 <body>
 
@@ -139,11 +158,11 @@ signupForm.addEventListener('submit', async (e) => {
 
   // Meta Pixel — fires exactly once, right when Supabase confirms the
   // account was actually created, so Meta's ad learning gets a genuine
-  // signup signal instead of firing on every form view. Guarded with a
-  // typeof check since the pixel is injected separately via Netlify's
-  // post-processing snippet injection, not loaded by this page directly —
-  // if that injection is ever delayed or fails, this must never throw and
-  // block the real signup flow.
+  // signup signal instead of firing on every form view. Now that the
+  // base pixel is loaded directly in this page's <head> (not relying on
+  // Netlify snippet injection), window.fbq should always be defined by
+  // the time this runs — the typeof guard stays as a safety net in case
+  // script loading is ever delayed, so a signup can never be blocked.
   if (typeof window.fbq === 'function') {
     window.fbq('track', 'CompleteRegistration', {
       content_name: 'Certsift account signup',
