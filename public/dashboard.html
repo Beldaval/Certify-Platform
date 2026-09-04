@@ -12,6 +12,7 @@
   <a class="brand" href="/"><div class="mark">C</div><div class="name">Certsift</div></a>
   <div class="nav-links">
     <div style="display:flex;flex-direction:column;align-items:flex-end;">
+      <div class="muted" id="signed-in-email" style="font-size:11px;"></div>
       <div class="token-pill" id="token-pill" title="">🪙 <span id="token-balance">–</span> tokens</div>
       <div class="muted" id="token-breakdown" style="font-size:11px;margin-top:2px;"></div>
     </div>
@@ -135,6 +136,7 @@ async function init() {
 
 async function refreshWallet() {
   const { data: { user } } = await supabaseClient.auth.getUser();
+  document.getElementById('signed-in-email').textContent = user.email;
   const { data, error } = await supabaseClient.from('wallets').select('trial_tokens_remaining, purchased_tokens').eq('user_id', user.id).single();
   if (!error && data) {
     const total = data.trial_tokens_remaining + data.purchased_tokens;
