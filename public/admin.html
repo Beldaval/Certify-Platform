@@ -70,7 +70,7 @@
     <p class="muted" id="users-loading">Loading users…</p>
     <p class="error-text hidden" id="users-error"></p>
     <table id="users-table" class="hidden">
-      <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Organization</th><th>Certs generated</th><th>Joined</th></tr></thead>
+      <thead><tr><th><input type="checkbox" id="users-select-all" style="width:auto;" title="Select all"></th><th>Name</th><th>Email</th><th>Phone</th><th>Organization</th><th>Certs generated</th><th>Joined</th></tr></thead>
       <tbody id="users-rows"></tbody>
     </table>
   </div>
@@ -126,14 +126,16 @@
   </div>
 
   <h2 style="margin-top:40px;">Send an announcement</h2>
-  <p class="muted">Sent to every registered user, personalized with each person's registered name before your message.</p>
+  <p class="muted">Personalized with each person's registered name before your message. Tick specific rows in the "All users" table above to message just those people — leave nothing selected to send to everyone.</p>
   <div class="card" style="max-width:640px;">
+    <p class="muted" id="broadcast-recipients-label" style="font-size:13px;margin-bottom:10px;">📬 Sending to: <strong>all users</strong></p>
     <label>Subject</label>
     <input type="text" id="broadcast-subject" placeholder="e.g. New certificate templates now available">
     <label>Message</label>
     <textarea id="broadcast-body" rows="6" placeholder="Write your message here. Each recipient will see &quot;Dear [their name],&quot; before this text." style="width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;"></textarea>
     <p class="muted" style="font-size:12px;margin-top:8px;" id="broadcast-preview"></p>
-    <button class="btn btn-primary" id="broadcast-send-btn" style="margin-top:14px;">Send to all users</button>
+    <button class="btn btn-primary" id="broadcast-send-btn" style="margin-top:14px;">Send</button>
+    <button class="btn btn-ghost" id="broadcast-clear-selection-btn" style="margin-top:14px;margin-left:8px;">Clear selection</button>
     <div class="error-text hidden" id="broadcast-error"></div>
     <div class="success-text hidden" id="broadcast-success"></div>
   </div>
@@ -158,6 +160,7 @@
 <script>
 let currentLookupUserId = null;
 let allUsers = [];
+let selectedUserIds = new Set();
 
 init();
 async function init() {
@@ -179,6 +182,18 @@ async function init() {
   document.getElementById('users-filter').addEventListener('input', renderUsersTable);
   document.getElementById('broadcast-send-btn').addEventListener('click', sendBroadcast);
   document.getElementById('broadcast-body').addEventListener('input', updateBroadcastPreview);
+  document.getElementById('broadcast-clear-selection-btn').addEventListener('click', () => {
+    selectedUserIds.clear();
+    renderUsersTable();
+    updateBroadcastRecipientsLabel();
+  });
+  document.getElementById('users-select-all').addEventListener('change', (e) => {
+    const visibleIds = getFilteredUsers().map((u) => u.id);
+    if (e.target.checked) visibleIds.forEach((id) => selectedUserIds.add(id));
+    else visibleIds.forEach((id) => selectedUserIds.delete(id));
+    renderUsersTable();
+    updateBroadcastRecipientsLabel();
+  });
 
   loadPlatformStats();
   loadAllUsers();
@@ -265,16 +280,30 @@ async function loadAllUsers() {
   }
 }
 
-function renderUsersTable() {
+function getFilteredUsers() {
   const filter = document.getElementById('users-filter').value.trim().toLowerCase();
-  const filtered = filter
+  return filter
     ? allUsers.filter((u) =>
         (u.email || '').toLowerCase().includes(filter) ||
         (u.full_name || '').toLowerCase().includes(filter) ||
         (u.organization_name || '').toLowerCase().includes(filter))
     : allUsers;
+}
 
+function updateBroadcastRecipientsLabel() {
+  const label = document.getElementById('broadcast-recipients-label');
+  label.innerHTML = selectedUserIds.size > 0
+    ? `📬 Sending to: <strong>${selectedUserIds.size} selected user(s)</strong>`
+    : '📬 Sending to: <strong>all users</strong>';
+}
+
+function renderUsersTable() {
+  const filtered = getFilteredUsers();
   document.getElementById('users-count').textContent = `${filtered.length} of ${allUsers.length} users`;
+
+  const selectAllBox = document.getElementById('users-select-all');
+  const visibleIds = filtered.map((u) => u.id);
+  selectAllBox.checked = visibleIds.length > 0 && visibleIds.every((id) => selectedUserIds.has(id));
 
   const rows = document.getElementById('users-rows');
   rows.innerHTML = '';
@@ -282,7 +311,9 @@ function renderUsersTable() {
     const tr = document.createElement('tr');
     tr.style.cursor = 'pointer';
     const phone = u.phone_number ? `${u.phone_country_code || ''} ${u.phone_number}` : '—';
+    const checked = selectedUserIds.has(u.id) ? 'checked' : '';
     tr.innerHTML = `
+      <td><input type="checkbox" class="user-select-checkbox" data-user-id="${u.id}" style="width:auto;" ${checked}></td>
       <td>${escapeHtml(u.full_name || '—')}</td>
       <td>${escapeHtml(u.email)}</td>
       <td>${escapeHtml(phone)}</td>
@@ -290,6 +321,14 @@ function renderUsersTable() {
       <td>${u.certificates_generated}</td>
       <td>${new Date(u.created_at).toLocaleDateString()}</td>
     `;
+    tr.querySelector('.user-select-checkbox').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (e.target.checked) selectedUserIds.add(u.id);
+      else selectedUserIds.delete(u.id);
+      updateBroadcastRecipientsLabel();
+      const stillFiltered = getFilteredUsers().map((x) => x.id);
+      document.getElementById('users-select-all').checked = stillFiltered.every((id) => selectedUserIds.has(id));
+    });
     tr.addEventListener('click', () => {
       document.getElementById('lookup-email').value = u.email;
       lookupUser();
@@ -427,7 +466,9 @@ async function sendBroadcast() {
     return;
   }
 
-  if (!confirm(`Send this announcement to all registered users?\n\nSubject: ${subject}`)) return;
+  const recipientUserIds = Array.from(selectedUserIds);
+  const recipientDescription = recipientUserIds.length > 0 ? `${recipientUserIds.length} selected user(s)` : 'all registered users';
+  if (!confirm(`Send this announcement to ${recipientDescription}?\n\nSubject: ${subject}`)) return;
 
   const btn = document.getElementById('broadcast-send-btn');
   btn.disabled = true;
@@ -437,7 +478,11 @@ async function sendBroadcast() {
     const headers = { 'Content-Type': 'application/json', ...(await getAuthHeader()) };
     const resp = await fetch('/api/admin-broadcast', {
       method: 'POST', headers,
-      body: JSON.stringify({ subject, body: `<p>${escapeHtml(body).replace(/\n/g, '<br>')}</p>` }),
+      body: JSON.stringify({
+        subject,
+        body: `<p>${escapeHtml(body).replace(/\n/g, '<br>')}</p>`,
+        recipientUserIds: recipientUserIds.length > 0 ? recipientUserIds : undefined,
+      }),
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.error || 'Failed to send.');
@@ -446,6 +491,9 @@ async function sendBroadcast() {
     okEl.classList.remove('hidden');
     document.getElementById('broadcast-subject').value = '';
     document.getElementById('broadcast-body').value = '';
+    selectedUserIds.clear();
+    renderUsersTable();
+    updateBroadcastRecipientsLabel();
     updateBroadcastPreview();
     setTimeout(loadBroadcastHistory, 3000);
   } catch (err) {
