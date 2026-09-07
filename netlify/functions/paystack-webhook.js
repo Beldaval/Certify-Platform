@@ -61,6 +61,7 @@ exports.handler = async (event) => {
       p_reference: reference,
       p_amount_kobo: amountKobo,
       p_tokens: tokens,
+      p_mode: verifyData.data.domain,
     });
     if (error) throw error;
 
