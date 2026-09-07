@@ -73,7 +73,11 @@ async function processBatch(batchId) {
 
       await supabase
         .from('certificates')
-        .update({ generation_status: 'generated', pdf_path: pdfPath })
+        .update({
+          generation_status: 'generated',
+          pdf_path: pdfPath,
+          pdf_expires_at: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(),
+        })
         .eq('id', cert.id);
 
       allAttachments.push({ filename: `${safeName}.pdf`, content: Buffer.from(pdfBytes) });
