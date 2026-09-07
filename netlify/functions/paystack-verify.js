@@ -35,9 +35,9 @@ exports.handler = async (event) => {
       p_reference: reference,
       p_amount_kobo: verifyData.data.amount,
       p_tokens: tokens,
+      p_mode: verifyData.data.domain,
     });
     if (error) throw error;
-
     return { statusCode: 200, body: JSON.stringify({ credited: true, balance: newBalance }) };
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
