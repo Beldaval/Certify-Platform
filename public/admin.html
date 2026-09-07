@@ -64,20 +64,22 @@
     </table>
   </details>
 
-  <h2>All users</h2>
-  <p class="muted">Loads automatically — click any row to see that user's full activity, or search by email below.</p>
-  <div class="card" style="max-width:1000px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <input type="text" id="users-filter" placeholder="Filter by name, email, or organization…" style="max-width:340px;">
-      <span class="muted" id="users-count" style="font-size:13px;white-space:nowrap;margin-left:12px;"></span>
+  <details id="all-users-section" style="margin-bottom:20px;">
+    <summary style="cursor:pointer;"><h2 style="display:inline;">All users <span id="all-users-count-badge" class="muted" style="font-weight:400;font-size:14px;"></span></h2></summary>
+    <p class="muted">Loads automatically — click any row to see that user's full activity, or search by email below.</p>
+    <div class="card" style="max-width:1000px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <input type="text" id="users-filter" placeholder="Filter by name, email, or organization…" style="max-width:340px;">
+        <span class="muted" id="users-count" style="font-size:13px;white-space:nowrap;margin-left:12px;"></span>
+      </div>
+      <p class="muted" id="users-loading">Loading users…</p>
+      <p class="error-text hidden" id="users-error"></p>
+      <table id="users-table" class="hidden">
+        <thead><tr><th><input type="checkbox" id="users-select-all" style="width:auto;" title="Select all"></th><th>Name</th><th>Email</th><th>Phone</th><th>Organization</th><th>Certs generated</th><th>Joined</th></tr></thead>
+        <tbody id="users-rows"></tbody>
+      </table>
     </div>
-    <p class="muted" id="users-loading">Loading users…</p>
-    <p class="error-text hidden" id="users-error"></p>
-    <table id="users-table" class="hidden">
-      <thead><tr><th><input type="checkbox" id="users-select-all" style="width:auto;" title="Select all"></th><th>Name</th><th>Email</th><th>Phone</th><th>Organization</th><th>Certs generated</th><th>Joined</th></tr></thead>
-      <tbody id="users-rows"></tbody>
-    </table>
-  </div>
+  </details>
 
   <h2 style="margin-top:40px;">Look up a user</h2>
   <p class="muted">Or search directly by email — same result as clicking a row above.</p>
@@ -306,6 +308,7 @@ function renderUsersTable() {
   const filtered = getFilteredUsers();
   document.getElementById('users-count').textContent = `${filtered.length} of ${allUsers.length} users`;
   document.getElementById('stat-total-users').textContent = allUsers.length;
+  document.getElementById('all-users-count-badge').textContent = `(${allUsers.length})`;
 
   const selectAllBox = document.getElementById('users-select-all');
   const visibleIds = filtered.map((u) => u.id);
