@@ -25,15 +25,16 @@
   <h2>Platform stats</h2>
   <p class="muted" id="stats-loading">Loading…</p>
   <p class="error-text hidden" id="stats-error"></p>
-  <details class="card hidden" id="failed-card" style="max-width:900px;margin-bottom:36px;">
-    <summary style="cursor:pointer;font-weight:600;font-size:17px;">Recent failed certificates <span id="failed-count-badge" class="muted" style="font-weight:400;font-size:13px;"></span></summary>
-    <p class="muted" style="font-size:12px;margin:10px 0;">Which user hit a failure, and whether their tokens were automatically reversed — so you can follow up if not.</p>
-    <p class="muted" id="no-failed" style="display:none;">No failed certificates. 🎉</p>
-    <table>
-      <thead><tr><th>User</th><th>Recipient</th><th>Program</th><th>Cert #</th><th>When</th><th>Tokens reversed?</th></tr></thead>
-      <tbody id="failed-rows"></tbody>
-    </table>
-  </details>
+  <div class="grid grid-3 hidden" id="stats-grid" style="margin-bottom:18px;">
+    <div class="card">
+      <p class="muted" style="font-size:12px;">Total users</p>
+      <h3 id="stat-total-users" style="font-size:28px;">–</h3>
+    </div>
+    <div class="card">
+      <p class="muted" style="font-size:12px;">Total certificates</p>
+      <h3 id="stat-total" style="font-size:28px;">–</h3>
+      <p class="muted" style="font-size:12px;" id="stat-breakdown"></p>
+    </div>
     <div class="card">
       <p class="muted" style="font-size:12px;">Tokens bought (real Naira, Paystack only)</p>
       <h3 id="stat-tokens-bought" style="font-size:28px;">–</h3>
@@ -53,15 +54,15 @@
     </table>
   </div>
 
-  <div class="card hidden" id="failed-card" style="max-width:900px;margin-bottom:36px;">
-    <h3 style="margin-bottom:6px;">Recent failed certificates</h3>
-    <p class="muted" style="font-size:12px;margin-bottom:10px;">Which user hit a failure, and whether their tokens were automatically reversed — so you can follow up if not.</p>
+  <details class="card hidden" id="failed-card" style="max-width:900px;margin-bottom:36px;">
+    <summary style="cursor:pointer;font-weight:600;font-size:17px;">Recent failed certificates <span id="failed-count-badge" class="muted" style="font-weight:400;font-size:13px;"></span></summary>
+    <p class="muted" style="font-size:12px;margin:10px 0;">Which user hit a failure, and whether their tokens were automatically reversed — so you can follow up if not.</p>
     <p class="muted" id="no-failed" style="display:none;">No failed certificates. 🎉</p>
     <table>
       <thead><tr><th>User</th><th>Recipient</th><th>Program</th><th>Cert #</th><th>When</th><th>Tokens reversed?</th></tr></thead>
       <tbody id="failed-rows"></tbody>
     </table>
-  </div>
+  </details>
 
   <h2>All users</h2>
   <p class="muted">Loads automatically — click any row to see that user's full activity, or search by email below.</p>
@@ -239,7 +240,8 @@ async function loadPlatformStats() {
       document.getElementById('popularity-card').classList.remove('hidden');
     }
 
-        document.getElementById('failed-count-badge').textContent = `(${(data.failedCertificates || []).length})`;
+    document.getElementById('failed-card').classList.remove('hidden');
+    document.getElementById('failed-count-badge').textContent = `(${(data.failedCertificates || []).length})`;
     const failedRows = document.getElementById('failed-rows');
     failedRows.innerHTML = '';
     document.getElementById('no-failed').style.display = (data.failedCertificates || []).length ? 'none' : 'block';
@@ -303,6 +305,7 @@ function updateBroadcastRecipientsLabel() {
 function renderUsersTable() {
   const filtered = getFilteredUsers();
   document.getElementById('users-count').textContent = `${filtered.length} of ${allUsers.length} users`;
+  document.getElementById('stat-total-users').textContent = allUsers.length;
 
   const selectAllBox = document.getElementById('users-select-all');
   const visibleIds = filtered.map((u) => u.id);
