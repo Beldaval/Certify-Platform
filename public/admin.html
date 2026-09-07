@@ -10,7 +10,10 @@
 
 <div class="nav">
   <a class="brand" href="/dashboard.html"><div class="mark">C</div><div class="name">Certsift</div></a>
-  <div class="nav-links"><a class="btn btn-ghost" href="/dashboard.html">Back to dashboard</a></div>
+  <div class="nav-links">
+    <a class="btn btn-ghost" href="/" title="Return to the homepage — you'll stay logged in">🏠 Home</a>
+    <a class="btn btn-ghost" href="/dashboard.html">Back to dashboard</a>
+  </div>
 </div>
 
 <div class="container hidden" id="admin-denied">
@@ -19,9 +22,47 @@
 
 <div class="container hidden" id="admin-content">
 
+  <h2>Platform stats</h2>
+  <p class="muted" id="stats-loading">Loading…</p>
+  <p class="error-text hidden" id="stats-error"></p>
+  <div class="grid grid-3 hidden" id="stats-grid" style="margin-bottom:18px;">
+    <div class="card">
+      <p class="muted" style="font-size:12px;">Total certificates</p>
+      <h3 id="stat-total" style="font-size:28px;">–</h3>
+      <p class="muted" style="font-size:12px;" id="stat-breakdown"></p>
+    </div>
+    <div class="card">
+      <p class="muted" style="font-size:12px;">Tokens bought (real Naira, Paystack only)</p>
+      <h3 id="stat-tokens-bought" style="font-size:28px;">–</h3>
+      <p class="muted" style="font-size:12px;" id="stat-naira-equivalent"></p>
+    </div>
+    <div class="card">
+      <p class="muted" style="font-size:12px;">Most-used template</p>
+      <h3 id="stat-top-template" style="font-size:20px;">–</h3>
+    </div>
+  </div>
+
+  <div class="card hidden" id="popularity-card" style="max-width:520px;margin-bottom:18px;">
+    <h3 style="margin-bottom:10px;">Template popularity</h3>
+    <table>
+      <thead><tr><th>Template</th><th>Certificates generated</th></tr></thead>
+      <tbody id="admin-popularity-rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card hidden" id="failed-card" style="max-width:900px;margin-bottom:36px;">
+    <h3 style="margin-bottom:6px;">Recent failed certificates</h3>
+    <p class="muted" style="font-size:12px;margin-bottom:10px;">Which user hit a failure, and whether their tokens were automatically reversed — so you can follow up if not.</p>
+    <p class="muted" id="no-failed" style="display:none;">No failed certificates. 🎉</p>
+    <table>
+      <thead><tr><th>User</th><th>Recipient</th><th>Program</th><th>Cert #</th><th>When</th><th>Tokens reversed?</th></tr></thead>
+      <tbody id="failed-rows"></tbody>
+    </table>
+  </div>
+
   <h2>All users</h2>
   <p class="muted">Loads automatically — click any row to see that user's full activity, or search by email below.</p>
-  <div class="card" style="max-width:900px;">
+  <div class="card" style="max-width:1000px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <input type="text" id="users-filter" placeholder="Filter by name, email, or organization…" style="max-width:340px;">
       <span class="muted" id="users-count" style="font-size:13px;white-space:nowrap;margin-left:12px;"></span>
@@ -29,7 +70,7 @@
     <p class="muted" id="users-loading">Loading users…</p>
     <p class="error-text hidden" id="users-error"></p>
     <table id="users-table" class="hidden">
-      <thead><tr><th>Name</th><th>Email</th><th>Organization</th><th>Joined</th></tr></thead>
+      <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Organization</th><th>Certs generated</th><th>Joined</th></tr></thead>
       <tbody id="users-rows"></tbody>
     </table>
   </div>
@@ -49,6 +90,7 @@
     <div class="card" style="max-width:720px;">
       <h3 id="result-name"></h3>
       <p class="muted" id="result-meta"></p>
+      <p class="muted" id="result-phone" style="font-size:13px;margin-top:4px;"></p>
       <div class="token-pill" id="result-balance-pill" style="margin-top:8px;"></div>
       <p class="muted" id="result-balance-breakdown" style="font-size:12px;margin-top:4px;"></p>
     </div>
@@ -83,6 +125,28 @@
     </div>
   </div>
 
+  <h2 style="margin-top:40px;">Send an announcement</h2>
+  <p class="muted">Sent to every registered user, personalized with each person's registered name before your message.</p>
+  <div class="card" style="max-width:640px;">
+    <label>Subject</label>
+    <input type="text" id="broadcast-subject" placeholder="e.g. New certificate templates now available">
+    <label>Message</label>
+    <textarea id="broadcast-body" rows="6" placeholder="Write your message here. Each recipient will see &quot;Dear [their name],&quot; before this text." style="width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;"></textarea>
+    <p class="muted" style="font-size:12px;margin-top:8px;" id="broadcast-preview"></p>
+    <button class="btn btn-primary" id="broadcast-send-btn" style="margin-top:14px;">Send to all users</button>
+    <div class="error-text hidden" id="broadcast-error"></div>
+    <div class="success-text hidden" id="broadcast-success"></div>
+  </div>
+
+  <div class="card" style="max-width:640px;margin-top:18px;">
+    <h3>Recent broadcasts</h3>
+    <p class="muted" id="no-broadcasts" style="display:none;">No broadcasts sent yet.</p>
+    <table id="broadcast-history-table">
+      <thead><tr><th>Subject</th><th>Recipients</th><th>Status</th><th>Sent</th></tr></thead>
+      <tbody id="broadcast-history-rows"></tbody>
+    </table>
+  </div>
+
   <h2 style="margin-top:40px;">Export user emails</h2>
   <button class="btn btn-ghost" id="export-btn">Export as CSV</button>
   <div id="export-result" style="margin-top:16px;"></div>
@@ -113,16 +177,80 @@ async function init() {
   document.getElementById('credit-btn').addEventListener('click', creditTokens);
   document.getElementById('export-btn').addEventListener('click', exportEmails);
   document.getElementById('users-filter').addEventListener('input', renderUsersTable);
+  document.getElementById('broadcast-send-btn').addEventListener('click', sendBroadcast);
+  document.getElementById('broadcast-body').addEventListener('input', updateBroadcastPreview);
 
+  loadPlatformStats();
   loadAllUsers();
+  loadBroadcastHistory();
+  updateBroadcastPreview();
 }
 
+// ---------- Platform stats ----------
+async function loadPlatformStats() {
+  const loadingEl = document.getElementById('stats-loading');
+  const errEl = document.getElementById('stats-error');
+  try {
+    const headers = await getAuthHeader();
+    const resp = await fetch('/api/admin-platform-stats', { headers });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Failed to load stats.');
+
+    loadingEl.classList.add('hidden');
+    document.getElementById('stats-grid').classList.remove('hidden');
+
+    const s = data.stats;
+    document.getElementById('stat-total').textContent = s.total_certificates;
+    document.getElementById('stat-breakdown').textContent =
+      `${s.successful} successful · ${s.failed} failed · ${s.pending} pending`;
+
+    document.getElementById('stat-tokens-bought').textContent = data.tokensBought;
+    document.getElementById('stat-naira-equivalent').textContent = `≈ ₦${data.tokensBought} paid (₦1 = 1 token)`;
+
+    const popularity = (data.templatePopularity || []).filter((t) => t.usage_count > 0);
+    document.getElementById('stat-top-template').textContent = popularity.length ? popularity[0].template_name : '—';
+
+    if (popularity.length) {
+      const rows = document.getElementById('admin-popularity-rows');
+      rows.innerHTML = '';
+      for (const t of data.templatePopularity) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${escapeHtml(t.template_name)}</td><td>${t.usage_count}</td>`;
+        rows.appendChild(tr);
+      }
+      document.getElementById('popularity-card').classList.remove('hidden');
+    }
+
+    document.getElementById('failed-card').classList.remove('hidden');
+    const failedRows = document.getElementById('failed-rows');
+    failedRows.innerHTML = '';
+    document.getElementById('no-failed').style.display = (data.failedCertificates || []).length ? 'none' : 'block';
+    for (const f of data.failedCertificates || []) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escapeHtml(f.user_name || f.user_email || 'Unknown')}</td>
+        <td>${escapeHtml(f.recipient_name)}</td>
+        <td>${escapeHtml(f.program_title)}</td>
+        <td>${escapeHtml(f.certificate_number)}</td>
+        <td>${new Date(f.created_at).toLocaleString()}</td>
+        <td>${f.token_reversed ? '<span class="badge badge-verified">Yes</span>' : '<span class="badge badge-failed">No — follow up</span>'}</td>
+      `;
+      failedRows.appendChild(tr);
+    }
+  } catch (err) {
+    loadingEl.classList.add('hidden');
+    errEl.textContent = err.message;
+    errEl.classList.remove('hidden');
+  }
+}
+
+// ---------- All users table ----------
 async function loadAllUsers() {
   const loadingEl = document.getElementById('users-loading');
   const errEl = document.getElementById('users-error');
   try {
     const headers = await getAuthHeader();
-    const resp = await fetch('/api/admin-export-emails', { headers });
+    const resp = await fetch('/api/admin-users-overview', { headers });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.error || 'Failed to load users.');
 
@@ -153,10 +281,13 @@ function renderUsersTable() {
   for (const u of filtered) {
     const tr = document.createElement('tr');
     tr.style.cursor = 'pointer';
+    const phone = u.phone_number ? `${u.phone_country_code || ''} ${u.phone_number}` : '—';
     tr.innerHTML = `
       <td>${escapeHtml(u.full_name || '—')}</td>
       <td>${escapeHtml(u.email)}</td>
+      <td>${escapeHtml(phone)}</td>
       <td>${escapeHtml(u.organization_name || '—')}</td>
+      <td>${u.certificates_generated}</td>
       <td>${new Date(u.created_at).toLocaleDateString()}</td>
     `;
     tr.addEventListener('click', () => {
@@ -168,6 +299,7 @@ function renderUsersTable() {
   }
 }
 
+// ---------- Individual user lookup ----------
 async function lookupUser() {
   const errEl = document.getElementById('lookup-error');
   errEl.classList.add('hidden');
@@ -195,6 +327,9 @@ function renderLookupResult(data) {
   document.getElementById('result-name').textContent = profile.full_name || profile.email;
   document.getElementById('result-meta').textContent =
     `${profile.email}${profile.organization_name ? ' · ' + profile.organization_name : ''} · joined ${new Date(profile.created_at).toLocaleDateString()}${profile.is_admin ? ' · admin' : ''}`;
+  document.getElementById('result-phone').textContent = profile.phone_number
+    ? `📞 ${profile.phone_country_code || ''} ${profile.phone_number}`
+    : '📞 No phone number provided';
 
   const balancePill = document.getElementById('result-balance-pill');
   const breakdown = document.getElementById('result-balance-breakdown');
@@ -270,6 +405,82 @@ async function creditTokens() {
   okEl.classList.remove('hidden');
 
   await lookupUser();
+}
+
+// ---------- Broadcast ----------
+function updateBroadcastPreview() {
+  const body = document.getElementById('broadcast-body').value;
+  const preview = document.getElementById('broadcast-preview');
+  preview.textContent = body ? `Preview: "Dear [Name], ${body.slice(0, 80)}${body.length > 80 ? '…' : ''}"` : '';
+}
+
+async function sendBroadcast() {
+  const errEl = document.getElementById('broadcast-error');
+  const okEl = document.getElementById('broadcast-success');
+  errEl.classList.add('hidden'); okEl.classList.add('hidden');
+
+  const subject = document.getElementById('broadcast-subject').value.trim();
+  const body = document.getElementById('broadcast-body').value.trim();
+  if (!subject || !body) {
+    errEl.textContent = 'Both a subject and a message body are required.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  if (!confirm(`Send this announcement to all registered users?\n\nSubject: ${subject}`)) return;
+
+  const btn = document.getElementById('broadcast-send-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    const headers = { 'Content-Type': 'application/json', ...(await getAuthHeader()) };
+    const resp = await fetch('/api/admin-broadcast', {
+      method: 'POST', headers,
+      body: JSON.stringify({ subject, body: `<p>${escapeHtml(body).replace(/\n/g, '<br>')}</p>` }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Failed to send.');
+
+    okEl.textContent = `Sending to ${data.recipientCount} user(s) — this happens in the background and may take a few minutes for larger lists.`;
+    okEl.classList.remove('hidden');
+    document.getElementById('broadcast-subject').value = '';
+    document.getElementById('broadcast-body').value = '';
+    updateBroadcastPreview();
+    setTimeout(loadBroadcastHistory, 3000);
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send to all users';
+  }
+}
+
+async function loadBroadcastHistory() {
+  try {
+    const headers = await getAuthHeader();
+    const resp = await fetch('/api/admin-broadcast-history', { headers });
+    const data = await resp.json();
+    if (!resp.ok) return;
+
+    const rows = document.getElementById('broadcast-history-rows');
+    rows.innerHTML = '';
+    document.getElementById('no-broadcasts').style.display = (data.broadcasts || []).length ? 'none' : 'block';
+    for (const b of data.broadcasts || []) {
+      const tr = document.createElement('tr');
+      const statusClass = b.status === 'completed' ? 'badge-verified' : b.status === 'failed' ? 'badge-failed' : 'badge-pending';
+      tr.innerHTML = `
+        <td>${escapeHtml(b.subject)}</td>
+        <td>${b.recipient_count}</td>
+        <td><span class="badge ${statusClass}">${escapeHtml(b.status)}</span></td>
+        <td>${new Date(b.created_at).toLocaleString()}</td>
+      `;
+      rows.appendChild(tr);
+    }
+  } catch (err) {
+    console.error('Failed to load broadcast history:', err);
+  }
 }
 
 async function exportEmails() {
