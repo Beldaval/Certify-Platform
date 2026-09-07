@@ -56,7 +56,40 @@ src="https://www.facebook.com/tr?id=4123921544572253&ev=PageView&noscript=1"
       <input type="email" id="signup-email" required>
       <label>Password</label>
       <input type="password" id="signup-password" minlength="8" required>
-      <button class="btn btn-gold" type="submit" style="width:100%;margin-top:18px;">Create account — 10 free certificates</button>
+
+      <label>Phone number <span class="muted" style="font-weight:400;">(optional)</span></label>
+      <div style="display:flex;gap:8px;">
+        <select id="signup-country-code" style="max-width:120px;">
+          <option value="+234" selected>🇳🇬 +234</option>
+          <option value="+1">🇺🇸 +1</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+233">🇬🇭 +233</option>
+          <option value="+254">🇰🇪 +254</option>
+          <option value="+27">🇿🇦 +27</option>
+          <option value="+91">🇮🇳 +91</option>
+          <option value="+61">🇦🇺 +61</option>
+        </select>
+        <input type="tel" id="signup-phone" placeholder="801 234 5678" style="flex:1;">
+      </div>
+
+      <label style="margin-top:16px;">Terms of Service &amp; Privacy Policy</label>
+      <div id="policy-scroll-box" style="border:1px solid var(--line);border-radius:8px;padding:12px 14px;max-height:180px;overflow-y:auto;font-size:12.5px;color:var(--ink-soft);line-height:1.6;background:var(--paper-dim);">
+        <p><strong>What Certsift does.</strong> Certsift lets you generate, personalize, and deliver professional certificates for training programs, seminars, church activities, and similar events. You choose a template, fill in recipient details, and we generate a PDF, email it to your recipients, and keep a record that lets anyone verify the certificate's authenticity later.</p>
+        <p><strong>Your account and what we collect.</strong> To use Certsift, we collect your name, organization name, email address, and — if you provide it — a phone number, so we can identify your account and reach you if needed. We also keep a record of your token balance, payment history, and the batches and certificates you generate. We do not sell your personal information to third parties, and we only share what's necessary to process payments (via Paystack) and send emails (via our email provider).</p>
+        <p><strong>Certificate files and how long we keep things.</strong> Your downloadable copy remains available for <strong>21 days</strong> after generation, after which the file itself is removed from our storage. However, the <strong>verification record</strong> for every certificate — recipient's name, program title, issuing organization, issue date, and certificate number — is kept permanently, so anyone can verify a certificate's authenticity through our public verification page, even years later.</p>
+        <p><strong>Tokens and payments.</strong> Tokens are a prepaid credit (1 certificate = 50 tokens). New accounts receive a free trial grant. Purchased tokens are non-refundable except where a certificate genuinely fails to generate, in which case those tokens are automatically returned. We do not store your card details; all payment processing is handled directly by Paystack.</p>
+        <p><strong>What we expect from you.</strong> You're responsible for the accuracy of information you enter. Certsift is a tool for legitimate certificates for real programs and achievements; you agree not to use it to create fraudulent, misleading, or impersonating documents. You're responsible for keeping your password secure.</p>
+        <p><strong>No warranty, and a word on liability.</strong> We work hard to keep Certsift running reliably, but can't promise perfect uptime. Certsift isn't liable for indirect losses, and our total liability to you is limited to the amount you've paid us in the past 2 months in tokens.</p>
+        <p><strong>Changes to this policy.</strong> If we make meaningful changes, we'll update the version number and date, and — where significant — ask existing users to re-accept it.</p>
+        <p><strong>Contact.</strong> Questions about this policy, your data, or your account: +234-701-3527-505.</p>
+        <p class="muted" style="margin-top:8px;">Full document: <a href="/terms.html" target="_blank">/terms.html</a></p>
+      </div>
+      <label style="display:flex;align-items:flex-start;gap:8px;margin-top:10px;font-weight:400;">
+        <input type="checkbox" id="signup-policy-checkbox" style="width:auto;margin-top:3px;" disabled required>
+        <span>I have read and agree to the Terms of Service &amp; Privacy Policy. <span class="muted" id="policy-scroll-hint">(scroll to the bottom to enable)</span></span>
+      </label>
+
+      <button class="btn btn-gold" type="submit" id="signup-submit-btn" style="width:100%;margin-top:18px;" disabled>Create account — 10 free certificates</button>
       <div class="error-text hidden" id="signup-error"></div>
       <div class="success-text hidden" id="signup-success"></div>
     </form>
@@ -71,6 +104,29 @@ src="https://www.facebook.com/tr?id=4123921544572253&ev=PageView&noscript=1"
       <div class="error-text hidden" id="reset-error"></div>
       <div class="success-text hidden" id="reset-success"></div>
     </form>
+  </div>
+</div>
+
+<!-- One-time re-acceptance prompt for existing accounts that predate the
+     policy feature (or haven't accepted a newer version yet). Blocking:
+     the dashboard redirect is held until this is accepted. -->
+<div id="policy-reaccept-modal" class="hidden" style="position:fixed;inset:0;background:rgba(22,35,63,.6);display:flex;align-items:center;justify-content:center;z-index:300;">
+  <div class="card" style="max-width:480px;width:92%;">
+    <h3>Our Terms &amp; Privacy Policy have been updated</h3>
+    <p class="muted" style="font-size:13px;">Please review and accept to continue to your dashboard.</p>
+    <div id="reaccept-scroll-box" style="border:1px solid var(--line);border-radius:8px;padding:12px 14px;max-height:220px;overflow-y:auto;font-size:12.5px;color:var(--ink-soft);line-height:1.6;background:var(--paper-dim);margin-top:10px;">
+      <p><strong>What Certsift does.</strong> Certsift lets you generate, personalize, and deliver professional certificates for training programs, seminars, church activities, and similar events. We generate a PDF, email it to your recipients, and keep a record that lets anyone verify the certificate's authenticity later.</p>
+      <p><strong>Certificate files and how long we keep things.</strong> Your downloadable copy remains available for <strong>21 days</strong> after generation, after which the file is removed from storage. The <strong>verification record</strong> is kept permanently.</p>
+      <p><strong>Tokens and payments.</strong> Purchased tokens are non-refundable except where a certificate genuinely fails to generate, in which case those tokens are automatically returned.</p>
+      <p><strong>Liability.</strong> Our total liability to you is limited to the amount you've paid us in the past 2 months in tokens.</p>
+      <p class="muted" style="margin-top:8px;">Full document: <a href="/terms.html" target="_blank">/terms.html</a></p>
+    </div>
+    <label style="display:flex;align-items:flex-start;gap:8px;margin-top:10px;font-weight:400;">
+      <input type="checkbox" id="reaccept-checkbox" style="width:auto;margin-top:3px;" disabled>
+      <span>I have read and agree to the updated Terms of Service &amp; Privacy Policy. <span class="muted" id="reaccept-scroll-hint">(scroll to the bottom to enable)</span></span>
+    </label>
+    <button class="btn btn-primary" id="reaccept-continue-btn" style="width:100%;margin-top:16px;" disabled>Continue to dashboard</button>
+    <div class="error-text hidden" id="reaccept-error"></div>
   </div>
 </div>
 
@@ -91,6 +147,20 @@ tabLogin.addEventListener('click', showLogin);
 tabSignup.addEventListener('click', showSignup);
 if (new URLSearchParams(location.search).get('mode') === 'signup') showSignup();
 
+const policyScrollBox = document.getElementById('policy-scroll-box');
+const policyCheckbox = document.getElementById('signup-policy-checkbox');
+const signupSubmitBtn = document.getElementById('signup-submit-btn');
+policyScrollBox.addEventListener('scroll', () => {
+  const scrolledToBottom = policyScrollBox.scrollTop + policyScrollBox.clientHeight >= policyScrollBox.scrollHeight - 8;
+  if (scrolledToBottom) {
+    policyCheckbox.disabled = false;
+    document.getElementById('policy-scroll-hint').textContent = '';
+  }
+});
+policyCheckbox.addEventListener('change', () => {
+  signupSubmitBtn.disabled = !policyCheckbox.checked;
+});
+
 supabaseClient.auth.onAuthStateChange((event) => {
   if (event === 'PASSWORD_RECOVERY') {
     tabsRow.classList.add('hidden');
@@ -108,7 +178,54 @@ loginForm.addEventListener('submit', async (e) => {
   errEl.classList.add('hidden');
   const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
   if (error) { errEl.textContent = error.message; errEl.classList.remove('hidden'); return; }
+  await proceedAfterLogin();
+});
+
+async function proceedAfterLogin() {
+  try {
+    const headers = await getAuthHeader();
+    const resp = await fetch('/api/policy-check', { headers });
+    const data = await resp.json();
+    if (resp.ok && !data.accepted) {
+      showReacceptModal();
+      return;
+    }
+  } catch (err) {
+    console.error('policy-check failed:', err);
+  }
   window.location.href = '/dashboard.html';
+}
+
+function showReacceptModal() {
+  document.getElementById('policy-reaccept-modal').classList.remove('hidden');
+}
+
+const reacceptBox = document.getElementById('reaccept-scroll-box');
+const reacceptCheckbox = document.getElementById('reaccept-checkbox');
+const reacceptContinueBtn = document.getElementById('reaccept-continue-btn');
+reacceptBox.addEventListener('scroll', () => {
+  const scrolledToBottom = reacceptBox.scrollTop + reacceptBox.clientHeight >= reacceptBox.scrollHeight - 8;
+  if (scrolledToBottom) {
+    reacceptCheckbox.disabled = false;
+    document.getElementById('reaccept-scroll-hint').textContent = '';
+  }
+});
+reacceptCheckbox.addEventListener('change', () => {
+  reacceptContinueBtn.disabled = !reacceptCheckbox.checked;
+});
+reacceptContinueBtn.addEventListener('click', async () => {
+  const errEl = document.getElementById('reaccept-error');
+  errEl.classList.add('hidden');
+  try {
+    const headers = { 'Content-Type': 'application/json', ...(await getAuthHeader()) };
+    const resp = await fetch('/api/policy-accept', { method: 'POST', headers });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Could not record acceptance.');
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.classList.remove('hidden');
+  }
 });
 
 document.getElementById('forgot-btn').addEventListener('click', async () => {
@@ -147,22 +264,30 @@ signupForm.addEventListener('submit', async (e) => {
   const email = document.getElementById('signup-email').value;
   const password = document.getElementById('signup-password').value;
   const org = document.getElementById('signup-org').value;
+  const phone = document.getElementById('signup-phone').value.trim();
+  const countryCode = document.getElementById('signup-country-code').value;
   const errEl = document.getElementById('signup-error');
   const okEl = document.getElementById('signup-success');
   errEl.classList.add('hidden'); okEl.classList.add('hidden');
+
+  if (!policyCheckbox.checked) {
+    errEl.textContent = 'Please review and accept the Terms of Service & Privacy Policy first.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
   const { data, error } = await supabaseClient.auth.signUp({
     email, password,
-    options: { data: { full_name: org } },
+    options: {
+      data: {
+        full_name: org,
+        phone_number: phone || null,
+        phone_country_code: countryCode,
+      },
+    },
   });
   if (error) { errEl.textContent = error.message; errEl.classList.remove('hidden'); return; }
 
-  // Meta Pixel — fires exactly once, right when Supabase confirms the
-  // account was actually created, so Meta's ad learning gets a genuine
-  // signup signal instead of firing on every form view. Now that the
-  // base pixel is loaded directly in this page's <head> (not relying on
-  // Netlify snippet injection), window.fbq should always be defined by
-  // the time this runs — the typeof guard stays as a safety net in case
-  // script loading is ever delayed, so a signup can never be blocked.
   if (typeof window.fbq === 'function') {
     window.fbq('track', 'CompleteRegistration', {
       content_name: 'Certsift account signup',
@@ -171,6 +296,12 @@ signupForm.addEventListener('submit', async (e) => {
   }
 
   if (data.session) {
+    try {
+      const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${data.session.access_token}` };
+      await fetch('/api/policy-accept', { method: 'POST', headers });
+    } catch (err) {
+      console.error('policy-accept failed after signup:', err);
+    }
     window.location.href = '/dashboard.html';
   } else {
     okEl.textContent = 'Account created — check your email to confirm, then log in.';
