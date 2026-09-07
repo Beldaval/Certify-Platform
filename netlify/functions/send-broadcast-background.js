@@ -1,6 +1,10 @@
 // Triggered by admin-broadcast.js, not called directly. Fires "Dear
 // [registered name]," followed by the admin's message body, individually
 // per user, paced to avoid hammering Resend's rate limits.
+//
+// If the broadcast row has recipient_user_ids set (the admin selected
+// specific users), only those get emailed; otherwise every user does —
+// same as the original "send to all" behavior.
 const { getSupabaseAdmin } = require('./lib/supabaseAdmin');
 const { sendCertificateEmail, sleep } = require('./lib/mailer');
 
@@ -16,7 +20,11 @@ exports.handler = async (event) => {
 
   await supabase.from('admin_broadcasts').update({ status: 'sending' }).eq('id', broadcastId);
 
-  const { data: users, error: usersErr } = await supabase.from('profiles').select('email, full_name');
+  const hasSelection = Array.isArray(broadcast.recipient_user_ids) && broadcast.recipient_user_ids.length > 0;
+  const usersQuery = supabase.from('profiles').select('email, full_name');
+  const { data: users, error: usersErr } = hasSelection
+    ? await usersQuery.in('id', broadcast.recipient_user_ids)
+    : await usersQuery;
   if (usersErr) {
     await supabase.from('admin_broadcasts').update({ status: 'failed' }).eq('id', broadcastId);
     return { statusCode: 500, body: usersErr.message };
