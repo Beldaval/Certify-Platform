@@ -23,7 +23,7 @@ exports.handler = async (event) => {
 
     const { data: profile, error: profileErr } = await supabase
       .from('profiles')
-      .select('id, email, full_name, organization_name, is_admin, created_at')
+       .select('id, email, full_name, organization_name, phone_number, phone_country_code, is_admin, created_at')
       .ilike('email', email)
       .maybeSingle();
     if (profileErr) throw profileErr;
