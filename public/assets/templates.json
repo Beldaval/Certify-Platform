@@ -66,7 +66,7 @@
         "width": 3508,
         "height": 2481
       },
-      "notes": "FIX (Aug 2026): award-date-line (a single combined field) was replaced with separate award-day/award-month/award-year fields to match every other template — the combined field made it easy to type a date phrase without a year and have it silently missing, since whatever was typed replaced the whole placeholder sentence verbatim. SVG's award line is now left-anchored (previously centered) since centered text with multiple per-field tspans can mis-measure in some SVG renderers, same as the other templates' own day/month/year lines. Also FIX: the SVG's signature-1/signature-2/opt-seal-slot groups previously had NO actual <image> element inside them (render.js was writing an uploaded image's href onto a <g>, which never renders) — every upload on this template silently did nothing. The SVG now has real <image> elements nested in renamed wrapper groups (signature-1-block, signature-2-block, seal-block), so uploads actually render and hide_container now works for both signature-2 and the seal.",
+      "notes": "FIX (Aug 2026): award-date-line (a single combined field) was replaced with separate award-day/award-month/award-year fields to match every other template — the combined field made it easy to type a date phrase without a year and have it silently missing, since whatever was typed replaced the whole placeholder sentence verbatim. SVG's award line is now left-anchored (previously centered) since centered text with multiple per-field tspans can mis-measure in some SVG renderers, same as the other templates' own day/month/year lines. Also FIX: the SVG's signature-1/signature-2/opt-seal-slot groups previously had NO actual <image> element inside them (render.js was writing an uploaded image's href onto a <g>, which never renders) — every upload on this template silently did nothing. The SVG now has real <image> elements nested in renamed wrapper groups (signature-1-block, signature-2-block, seal-block), so uploads actually render and hide_container now works for both signature-2 and the seal. KNOWN OUTSTANDING BUG (confirmed Sep 2026, not yet fixed): logo-slot has the exact same missing-<image> problem — it's a <g> containing only decorative circles and placeholder text, with no image element to write an upload to. Every institution logo uploaded to this template has silently failed to appear. Needs the same SVG-level fix as signature-1/signature-2/seal received.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -96,7 +96,7 @@
         "width": 3508,
         "height": 2481
       },
-      "notes": "Same as Modern Excellence — no course-title or date-range fields by design.",
+      "notes": "Same as Modern Excellence — no course-title or date-range fields by design. KNOWN OUTSTANDING (confirmed Sep 2026, not yet fixed): opt-seal-slot's <image> element is correctly blank by default, but the decorative medallion frame around it (rings, laurel, shield ornaments) is a set of bare sibling elements with no wrapping group — it always renders even when no seal is uploaded. Requested fix: wrap that artwork in a new <g id=\"seal-block\"> (matching Exclusive Completion/Modern Excellence/Premium Training) so the whole frame disappears when unused, then add hide_container: 'seal-block' here. Not yet done — SVG edit required first.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -123,6 +123,7 @@
         "width": 3508,
         "height": 2480
       },
+      "notes": "FIX (Sep 2026): both opt-logo-slot and opt-seal-slot had a real, working <image> element and wrapping decorative group already in the SVG — but the field id sat on the wrapping <g>, while the actual <image> carrying the href used a different id (logo-image / seal-image respectively). Uploads were silently being written to the group (no visual effect) instead of the image. Added image_target_id to point at the real image elements, and hide_container so the whole decorative frame (not just the image) disappears when nothing is uploaded, matching every other template's behavior.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -134,14 +135,14 @@
         { "id": "award-month", "type": "text", "required": true },
         { "id": "award-year", "type": "text", "required": true },
         { "id": "certificate-number", "type": "text", "required": true, "auto": true },
-        { "id": "opt-logo-slot", "type": "image", "required": false },
+        { "id": "opt-logo-slot", "type": "image", "required": false, "image_target_id": "logo-image", "hide_container": "opt-logo-slot" },
         { "id": "signature-1", "type": "image", "required": true },
         { "id": "signature-1-caption", "type": "text", "required": true },
         { "id": "signature-1-title", "type": "text", "required": true },
         { "id": "opt-signature-2", "type": "image", "required": false },
         { "id": "opt-signature-2-caption", "type": "text", "required": false },
         { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
+        { "id": "opt-seal-slot", "type": "image", "required": false, "image_target_id": "seal-image", "hide_container": "opt-seal-slot" }
       ]
     },
     {
@@ -152,6 +153,7 @@
         "width": 3508,
         "height": 2481
       },
+      "notes": "KNOWN OUTSTANDING BUG (confirmed Sep 2026, not yet fixed): both logo-slot and opt-seal-slot are <g> groups containing only decorative artwork and placeholder text (e.g. an explicit code comment reading 'Placeholder: replace with an <image>... ') — neither has an actual <image> element at all. No institution has ever been able to get a logo or custom seal onto this template; uploads have no element to write to. Needs an SVG-level fix (add real <image> elements, clipped to the existing circles) before any JSON annotation can help.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -181,6 +183,7 @@
         "width": 3508,
         "height": 2481
       },
+      "notes": "FIX (Sep 2026): text-anchor=\"middle\" paragraphs with inline styled tspans (program-dates line, granted line) were left-anchored in an earlier revision to work around a suspected renderer bug — confirmed against real production output that centered text with inline styled tspans renders correctly, so both lines were restored to centered. Also FIX: award-year previously had a hardcoded '20' prefix (Granted this Day day of Month, 20YY) which combined with a full 4-digit year typed by the user to read '202026' — award-year now expects and holds the complete year. Also FIX: opt-seal-slot now declares hide_container: 'seal-block' (the SVG's wrapping group already existed) so the seal medallion disappears entirely when unused, matching every other template.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -199,7 +202,7 @@
         { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
         { "id": "opt-signature-2-caption", "type": "text", "required": false },
         { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
+        { "id": "opt-seal-slot", "type": "image", "required": false, "hide_container": "seal-block" }
       ]
     },
     {
