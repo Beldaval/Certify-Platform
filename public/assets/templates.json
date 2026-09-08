@@ -22,7 +22,7 @@
         { "id": "award-year", "type": "text", "required": true },
         { "id": "certificate-number", "type": "text", "required": true, "auto": true },
         { "id": "logo-slot", "type": "image", "required": true },
-        { "id": "signature-1", "type": "image", "required": true },
+        { "id": "signature-1", "type": "image", "required": true, "hide_placeholder": "signature-1-placeholder" }
         { "id": "signature-1-caption", "type": "text", "required": true },
         { "id": "signature-1-title", "type": "text", "required": true },
         { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
