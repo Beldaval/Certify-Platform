@@ -24,6 +24,15 @@
 // uploaded logo/signature just never appears. See baby-dedication in
 // templates.json for a template that needs this.
 //
+// An image field can also declare "reposition_sibling_if_empty":
+// { "id": "<some-element-id>", "transform": "<svg transform value>" } in
+// templates.json. When that field is left blank, the named sibling element
+// gets that transform written onto it (replacing any existing transform on
+// that element) — e.g. sliding a lone remaining signature block over to
+// where a centered signature would sit, once its counterpart is confirmed
+// absent via hide_container. Purely additive: templates that don't declare
+// this behave exactly as before.
+//
 // FIX (see incident: baby-dedication batch failures, Aug 2026): every
 // uploaded image is now normalized through sharp -> PNG before it's
 // base64-embedded into the SVG. resvg-js's native image decoder only
@@ -180,6 +189,22 @@ function removeElementById(svg, tagName, elementId) {
   return svg; // unbalanced/malformed — leave untouched rather than guess
 }
 
+// Adds or overwrites a transform="..." attribute on the element with the
+// given id. Used by reposition_sibling_if_empty (see field-loop comment
+// below) — if the element already carries a transform, it's replaced, not
+// stacked, since the intent is always "put this exactly here now."
+// Silently no-ops if the id isn't found in the document, matching
+// removeElementById's same fail-quiet philosophy for a bad/missing id in
+// templates.json.
+function setTransformById(svg, elementId, transform) {
+  const reWithTransform = new RegExp(`(<[^>]+id="${elementId}"[^>]*?)\\stransform="[^"]*"`);
+  if (reWithTransform.test(svg)) {
+    return svg.replace(reWithTransform, `$1 transform="${escapeXml(transform)}"`);
+  }
+  const reOpen = new RegExp(`(<[^>]+id="${elementId}")`);
+  return svg.replace(reOpen, `$1 transform="${escapeXml(transform)}"`);
+}
+
 function buildSvg(templateDef, fieldValues) {
   const svgPath = path.join(TEMPLATES_DIR, templateDef.svg_file || templateDef.file);
   let svg;
@@ -239,6 +264,17 @@ function buildSvg(templateDef, fieldValues) {
         // their own nested <g> children are removed in full, not just up
         // to their first inner close tag — see fix note above.
         svg = removeElementById(svg, 'g', field.hide_container);
+      }
+
+      if (!dataUri && field.reposition_sibling_if_empty) {
+        // Optional slot left blank -> also nudge a named sibling element
+        // into an alternate position (e.g. sliding a lone signature block
+        // to center once its counterpart's hide_container has removed it
+        // above). Applied after hide_container's removal, so the sibling
+        // being repositioned is never accidentally matched by the removal
+        // scan even if their ids happened to collide in some future template.
+        const { id: siblingId, transform } = field.reposition_sibling_if_empty;
+        svg = setTransformById(svg, siblingId, transform);
       }
 
     } else if (field.type === 'block-toggle') {
