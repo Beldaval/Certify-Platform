@@ -201,6 +201,32 @@
         { "id": "opt-signature-2-title", "type": "text", "required": false },
         { "id": "opt-seal-slot", "type": "image", "required": false }
       ]
+    },
+    {
+      "id": "executive-completion",
+      "name": "Executive Completion",
+      "file": "executive_completion_certificate.svg",
+      "canvas": {
+        "width": 3508,
+        "height": 2481
+      },
+      "fields": [
+        { "id": "institution-name", "type": "text", "required": true },
+        { "id": "opt-subtitle", "type": "text", "required": false },
+        { "id": "recipient-name", "type": "text", "required": true },
+        { "id": "course-title", "type": "text", "required": true },
+        { "id": "start-date", "type": "text", "required": true },
+        { "id": "end-date", "type": "text", "required": true },
+        { "id": "award-day", "type": "text", "required": true },
+        { "id": "award-month", "type": "text", "required": true },
+        { "id": "award-year", "type": "text", "required": true },
+        { "id": "certificate-number", "type": "text", "required": true, "auto": true },
+        { "id": "opt-logo-slot", "type": "image", "required": false, "hide_container": "logo-block" },
+        { "id": "signature-1", "type": "image", "required": true },
+        { "id": "signature-1-caption", "type": "text", "required": true },
+        { "id": "signature-1-title", "type": "text", "required": true },
+        { "id": "opt-seal-slot", "type": "image", "required": false, "hide_container": "seal-block" }
+      ]
     }
   ]
 }
