@@ -1,5 +1,5 @@
 {
-  "_readme": "One entry per template. 'fields' lists every id the generation engine should treat as a data-binding target — i.e. text to replace or an image to inject. Purely decorative/structural ids (gradients, clip-paths, corner ornaments, wrapper groups, static design labels) are intentionally excluded; the SVGs contain many more ids than are listed here, and that's expected. type 'text' = replace element's text content. type 'image' = set the element's image href to the uploaded file, scaled to fit its bounding box. 'image_target_id' (new): when an image field's id sits on a wrapping <g> rather than directly on the <image> element that carries the href, this names the actual <image> id to write to — render.js falls back to field.id when this is absent. required=false fields may be left blank/skipped per FR-2.7 (optional fields render blank, template layout never shifts).",
+  "_readme": "One entry per template. 'fields' lists every id the generation engine should treat as a data-binding target — i.e. text to replace or an image to inject. Purely decorative/structural ids (gradients, clip-paths, corner ornaments, wrapper groups, static design labels) are intentionally excluded; the SVGs contain many more ids than are listed here, and that's expected. type 'text' = replace element's text content. type 'image' = set the element's image href to the uploaded file, scaled to fit its bounding box. 'image_target_id' (new): when an image field's id sits on a wrapping <g> rather than directly on the <image> element that carries the href, this names the actual <image> id to write to — render.js falls back to field.id when this is absent. 'reposition_sibling_if_empty' (new): { \"id\": \"<element-id>\", \"transform\": \"<svg transform>\" } — when this field is left blank, applies that transform to the named sibling element (e.g. sliding a lone remaining signature block to center once its counterpart's hide_container has removed it). required=false fields may be left blank/skipped per FR-2.7 (optional fields render blank, template layout never shifts).",
   "templates": [
     {
       "id": "exclusive-completion",
@@ -96,7 +96,7 @@
         "width": 3508,
         "height": 2481
       },
-      "notes": "Same as Modern Excellence — no course-title or date-range fields by design. KNOWN OUTSTANDING (confirmed Sep 2026, not yet fixed): opt-seal-slot's <image> element is correctly blank by default, but the decorative medallion frame around it (rings, laurel, shield ornaments) is a set of bare sibling elements with no wrapping group — it always renders even when no seal is uploaded. Requested fix: wrap that artwork in a new <g id=\"seal-block\"> (matching Exclusive Completion/Modern Excellence/Premium Training) so the whole frame disappears when unused, then add hide_container: 'seal-block' here. Not yet done — SVG edit required first.",
+      "notes": "Same as Modern Excellence — no course-title or date-range fields by design. FIX (Sep 2026): opt-seal-slot now declares hide_container: 'seal-block' — the SVG already had that wrapping group around the decorative medallion (rings, laurel, shield ornaments), it just wasn't referenced here, so the whole frame always rendered even with no seal uploaded. Also FIX: the 'Presented this Day day of Month, Year' line was left-anchored as a workaround for a suspected renderer issue with centered text + inline styled tspans — confirmed against real production output that this renders correctly centered, so it was restored to centered, matching the rest of the certificate. Also NEW: signature-2 now declares reposition_sibling_if_empty, sliding signature-1-block to the canvas's horizontal center (translate(304,0), calculated from this template's specific block positions: signature-1-block center at x=1450, signature-2-block center at x=2058, canvas center at x=1754) when only one signature is provided, instead of the lone signature staying pinned to its original left-side position.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -109,10 +109,10 @@
         { "id": "signature-1", "type": "image", "required": true },
         { "id": "signature-1-caption", "type": "text", "required": true },
         { "id": "signature-1-title", "type": "text", "required": true },
-        { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
+        { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block", "reposition_sibling_if_empty": { "id": "signature-1-block", "transform": "translate(304,0)" } },
         { "id": "opt-signature-2-caption", "type": "text", "required": false },
         { "id": "opt-signature-2-title", "type": "text", "required": false },
-        { "id": "opt-seal-slot", "type": "image", "required": false }
+        { "id": "opt-seal-slot", "type": "image", "required": false, "hide_container": "seal-block" }
       ]
     },
     {
