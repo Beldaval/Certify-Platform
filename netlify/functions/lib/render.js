@@ -33,6 +33,17 @@
 // absent via hide_container. Purely additive: templates that don't declare
 // this behave exactly as before.
 //
+// An image field can also declare "hide_placeholder": "<some-element-id>"
+// in templates.json — the reverse condition of hide_container. When this
+// field DOES have a value, the named element is removed from the document.
+// Used for a template's decorative "drop your signature/logo here" box and
+// label that sit underneath the real <image> element in paint order: since
+// an uploaded signature/logo/seal PNG is almost always transparent outside
+// the actual ink/artwork, sitting "on top" doesn't visually hide anything
+// underneath it — the placeholder box and label show straight through the
+// transparent gaps unless they're actually removed from the document once
+// a real image is present.
+//
 // FIX (see incident: baby-dedication batch failures, Aug 2026): every
 // uploaded image is now normalized through sharp -> PNG before it's
 // base64-embedded into the SVG. resvg-js's native image decoder only
@@ -264,6 +275,19 @@ function buildSvg(templateDef, fieldValues) {
         // their own nested <g> children are removed in full, not just up
         // to their first inner close tag — see fix note above.
         svg = removeElementById(svg, 'g', field.hide_container);
+      }
+
+      if (dataUri && field.hide_placeholder) {
+        // Real image was uploaded -> remove the decorative "drop your
+        // signature/logo here" box + label that would otherwise show
+        // through any transparent areas of the uploaded image. Detects
+        // the placeholder's actual tag (usually <g>, but not assumed)
+        // the same way the block-toggle branch below does, rather than
+        // hardcoding one.
+        const tagMatch = svg.match(new RegExp(`<([a-zA-Z]+)[^>]+id="${field.hide_placeholder}"`));
+        if (tagMatch) {
+          svg = removeElementById(svg, tagMatch[1], field.hide_placeholder);
+        }
       }
 
       if (!dataUri && field.reposition_sibling_if_empty) {
