@@ -1,111 +1,175 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      width="3508" height="2481" viewBox="0 0 3508 2481"
-     font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTpjOTRlZmY4ZS1hNzIyLTQ3ODYtYWM1MS1hMTM4ZmE1ZjZlYzkAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaH2Gsv9GtoMep2T04aQQz6gAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo4YWFkMGRmMi0zMWE2LTQ3ZjQtOTNiNS02ZDRmMWM4ZWQyZTZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNo7SAVMsWyaDV3MSr8gs5krwAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg4Jx8tCaxNwyVvhjM2tx1zcV2Q4vlnZq3PO/u638cCn2kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaFUJdDgA820AV9nn+TM87mkAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYILAWAxiD1vpQbcBjREChNSKVQIJtL+Jme1cLQkuiMF9AZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GQEMZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmM5NGVmZjhlLWE3MjItNDc4Ni1hYzUxLWExMzhmYTVmNmVjOS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmMwZDc1NmIwLWNjZTktNDM2Mi04MWUzLWQ5MDQ3NDYyNWM0YnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDgnHy0JrE3DJW+GMza3HXNxXZDi+Wdmrc87+7rfxwKfaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFgg5daYCEkNCtgDl6HwpwwFGOFkYGvy6pbs30hgNIIHC5WiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggW+dQzjLagvWl2jCKty5AwyRWdhnKjyCaC3Xberdoxad0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQEI9TL5gHoo5W9X5BccCCU3sBsMz7kRVIB7N6X+M9hIsfCFGzWCLdr9Ee0Q+hpIAJXTGWrB+JH/pA/+Xk/6Cb+k=</c2pa:manifest></metadata>
+     font-family="'Poppins','Century Gothic','Helvetica Neue',Helvetica,Arial,sans-serif" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTowMjNiOTU2OS0xZjI4LTQ2ZTctOWQwZC05N2M4MmJkZDRmZmQAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaNyJ9E7zmAYJ9sbD0buljmEAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpiMTI1ZWQwZi0zM2JiLTQwMTAtOTRmMC0yZWM3MDc5ZWQ5NGFscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNo75aJ6WFcc2MN1G6iTajYaAAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggCKFrn0jmCr2PZvm7cKSgOhSY06d9QSTxdPRwOdxv3c2kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaP2gmN/E4yZbYM15Jhe21hUAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYICZZ/RHPcvENxLi3xi40y6ttDu+fnH73lZcP2rvbwp0OZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GQEkZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjAyM2I5NTY5LTFmMjgtNDZlNy05ZDBkLTk3YzgyYmRkNGZmZC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjZlMzZkZWUwLTA0OWUtNDZmNC05N2M4LTA1Njk2NGYxOGIyYnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCAIoWufSOYKvY9m+btwpKA6FJjTp31BJPF09HA53G/dzaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggeGLthAYGuYPdNw9fjpVhrtOKNGLmaAE71Iznr5B5RuOiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggDjt60mcZk6MDr5visNbnjgTpOObF03/vhqAmiPO0xpd0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQETeUcK/m9xA8bbLdL5Y/cySLWyqumXkPM50R67fITZxHDfue8OHch1A8JsJG/hGniOz5NUBo+dqDe6QBHiu10M=</c2pa:manifest></metadata>
 
-  <!-- ============================= DEFS ============================= -->
+<!-- =====================================================================
+  CERTSIFT — Certificate of Completion (v3 — calibrated against the
+  supplied reference artwork's actual pixel measurements: element widths/
+  heights were measured directly from the reference PNG and converted to
+  this 3508-canvas scale, replacing earlier hand-estimated sizes/positions.
+
+  FIELD KEY:
+    BAKED    = fixed artwork/copy, not editable per-cert
+    DYNAMIC  = replaced per certificate (has an id="")
+    OPTIONAL = dynamic, safe to leave blank/default if org has no asset
+
+  DYNAMIC text fields  : institution-name, opt-subtitle, certificate-type,
+                         recipient-name, course-title, award-month/day/year,
+                         signature-1-caption, signature-1-title, certificate-number
+  OPTIONAL image slots : opt-logo-slot (org logo), signature-1 (signature PNG),
+                         opt-seal-slot (org seal/badge — overrides the baked
+                         default "CERTSIFT VERIFIED" seal when supplied)
+  BAKED artwork        : corner ribbons, border, gold rules, footer tagline,
+                         "Verify at" line, and the default "CERTSIFT VERIFIED"
+                         seal design itself (shown unless opt-seal-slot is used)
+===================================================================== -->
+
   <defs>
     <linearGradient id="navyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1B2A4A"/>
       <stop offset="100%" stop-color="#0F1A30"/>
     </linearGradient>
 
-    <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#F1DB96"/>
       <stop offset="45%" stop-color="#C9A227"/>
       <stop offset="100%" stop-color="#8E6E22"/>
     </linearGradient>
 
-    <clipPath id="logoClip2"><circle cx="0" cy="0" r="118"/></clipPath>
-    <clipPath id="sealClip2"><circle cx="1754" cy="1860" r="150"/></clipPath>
-
     <g id="cornerRibbon">
       <path d="M0,0 L300,0 L0,300 Z" fill="url(#navyGrad)"/>
-      <path d="M0,0 L250,0 L0,250 Z" fill="none" stroke="url(#goldGrad2)" stroke-width="10"/>
+      <path d="M0,0 L250,0 L0,250 Z" fill="none" stroke="url(#goldGrad)" stroke-width="10"/>
     </g>
+
+    <g id="wreathLeft" fill="#8E6E22">
+      <path d="M-16.5,93.6 Q-29.0,82.2 -42.1,89.0 Q-32.1,99.9 -16.5,93.6 Z"/>
+      <path d="M-41.5,89.1 Q-51.3,74.3 -66.4,77.5 Q-59.1,91.1 -41.5,89.1 Z"/>
+      <path d="M-65.3,77.8 Q-71.3,60.3 -87.4,59.3 Q-83.6,74.9 -65.3,77.8 Z"/>
+      <path d="M-85.9,60.1 Q-87.4,40.8 -103.3,35.3 Q-103.5,52.2 -85.9,60.1 Z"/>
+      <path d="M-101.6,37.0 Q-98.1,17.1 -112.5,7.2 Q-117.1,24.1 -101.6,37.0 Z"/>
+      <path d="M-111.0,9.7 Q-102.2,-9.4 -113.9,-23.3 Q-123.0,-7.5 -111.0,9.7 Z"/>
+      <path d="M-113.0,-19.9 Q-99.1,-36.8 -107.0,-54.0 Q-120.2,-40.5 -113.0,-19.9 Z"/>
+      <path d="M-106.9,-49.9 Q-88.6,-63.2 -91.7,-82.5 Q-108.5,-72.5 -106.9,-49.9 Z"/>
+    </g>
+    <g id="wreathRight" fill="#8E6E22">
+      <path d="M16.5,93.6 Q32.1,99.9 42.1,89.0 Q29.0,82.2 16.5,93.6 Z"/>
+      <path d="M41.5,89.1 Q59.1,91.1 66.4,77.5 Q51.3,74.3 41.5,89.1 Z"/>
+      <path d="M65.3,77.8 Q83.6,74.9 87.4,59.3 Q71.3,60.3 65.3,77.8 Z"/>
+      <path d="M85.9,60.1 Q103.5,52.2 103.3,35.3 Q87.4,40.8 85.9,60.1 Z"/>
+      <path d="M101.6,37.0 Q117.1,24.1 112.5,7.2 Q98.1,17.1 101.6,37.0 Z"/>
+      <path d="M111.0,9.7 Q123.0,-7.5 113.9,-23.3 Q102.2,-9.4 111.0,9.7 Z"/>
+      <path d="M113.0,-19.9 Q120.2,-40.5 107.0,-54.0 Q99.1,-36.8 113.0,-19.9 Z"/>
+      <path d="M106.9,-49.9 Q108.5,-72.5 91.7,-82.5 Q88.6,-63.2 106.9,-49.9 Z"/>
+    </g>
+
+    <!-- baked open-book mark: two curved "pages" meeting at a center spine -->
+    <g id="bookMark">
+      <path d="M-4,-46 C-4,-46 -60,-30 -60,-30 L-60,28 C-60,28 -4,44 -4,44 Z" fill="#152442"/>
+      <path d="M4,-46 C4,-46 60,-30 60,-30 L60,28 C60,28 4,44 4,44 Z" fill="#152442"/>
+    </g>
+
+    <clipPath id="logoCircleClip"><circle cx="0" cy="0" r="110"/></clipPath>
+    <clipPath id="sealClip"><circle cx="0" cy="0" r="150"/></clipPath>
   </defs>
 
-  <!-- ============================= BACKGROUND ============================= -->
+  <!-- ============================= BACKGROUND (baked) ============================= -->
   <rect x="0" y="0" width="3508" height="2481" fill="#FCFBF6"/>
-
   <use href="#cornerRibbon" xlink:href="#cornerRibbon" x="0" y="0"/>
   <use href="#cornerRibbon" xlink:href="#cornerRibbon" x="3508" y="2481" transform="rotate(180,3508,2481)"/>
+  <rect x="48" y="48" width="3412" height="2385" fill="none" stroke="url(#goldGrad)" stroke-width="4"/>
 
-  <rect x="48" y="48" width="3412" height="2385" fill="none" stroke="url(#goldGrad2)" stroke-width="4"/>
-
-  <!-- ============================= LOGO ============================= -->
-  <g id="logo-block" transform="translate(1754,240)">
-    <circle cx="0" cy="0" r="130" fill="#FBF6E9" stroke="url(#goldGrad2)" stroke-width="6"/>
-    <circle cx="0" cy="0" r="110" fill="none" stroke="#152442" stroke-width="1.5" opacity="0.35"/>
-    <image id="opt-logo-slot" x="-118" y="-118" width="236" height="236" href="" xlink:href="" clip-path="url(#logoClip2)" preserveAspectRatio="xMidYMid slice"/>
+  <!-- ============================= LOGO (optional; hidden entirely via templates.json
+       hide_container:"logo-block" when opt-logo-slot is empty). Org name text below
+       is an INDEPENDENT sibling, not nested here, so it always renders regardless
+       of whether a logo image is supplied — matching every other template. ============================= -->
+  <g id="logo-block" transform="translate(1754,180)">
+    <circle cx="0" cy="0" r="110" fill="#FBF6E9" stroke="url(#goldGrad)" stroke-width="6"/>
+    <circle cx="0" cy="0" r="94" fill="none" stroke="#152442" stroke-width="1.5" opacity="0.3"/>
+    <!-- OPTIONAL: pipeline adds href="data:image/png;base64,..." here. Omit href
+         entirely when unused — an empty href="" crashes some SVG renderers. -->
+    <image id="opt-logo-slot" x="-110" y="-110" width="220" height="220"
+           clip-path="url(#logoCircleClip)" preserveAspectRatio="xMidYMid slice"/>
   </g>
 
-  <!-- ============================= INSTITUTION NAME ============================= -->
-  <text id="institution-name" x="1754" y="460" text-anchor="middle" font-size="70" font-weight="700" letter-spacing="4" fill="#152442">NAME OF ISSUING INSTITUTION</text>
-  <text id="opt-subtitle" x="1754" y="514" text-anchor="middle" font-size="30" letter-spacing="4" fill="#8E6E22">Department, Ministry, or Subsidiary</text>
+  <text id="institution-name" x="1754" y="450" text-anchor="middle" font-size="130"
+        font-weight="800" letter-spacing="3" fill="#152442">Organization&#8217;s Name</text>
+  <text id="opt-subtitle" x="1754" y="500" text-anchor="middle" font-size="36"
+        letter-spacing="5" fill="#152442">CERTIFICATES MADE SIMPLE</text>
 
   <!-- ============================= TITLE ============================= -->
-  <text id="certificate-title" x="1754" y="688" text-anchor="middle" font-size="160" font-weight="800" letter-spacing="6" fill="#152442">CERTIFICATE</text>
-  <text x="1754" y="792" text-anchor="middle" font-size="64" font-weight="700" letter-spacing="10" fill="#C9A227">OF COMPLETION</text>
-  <line x1="1184" y1="834" x2="1554" y2="834" stroke="#C9A227" stroke-width="2.5"/>
-  <line x1="1954" y1="834" x2="2324" y2="834" stroke="#C9A227" stroke-width="2.5"/>
+  <text x="1754" y="793" text-anchor="middle" font-size="309" font-weight="800"
+        letter-spacing="8" fill="#152442">CERTIFICATE</text>
+  <text id="certificate-type" x="1754" y="934" text-anchor="middle" font-size="115"
+        font-weight="700" letter-spacing="17" fill="#C9A227">OF COMPLETION</text>
+  <line x1="692" y1="961" x2="1221" y2="961" stroke="#C9A227" stroke-width="3"/>
+  <line x1="2259" y1="961" x2="2814" y2="961" stroke="#C9A227" stroke-width="3"/>
 
-  <!-- ============================= AWARDED TO ============================= -->
-  <text x="1754" y="928" text-anchor="middle" font-size="46" letter-spacing="3" fill="#333029">THIS IS TO CERTIFY THAT</text>
+  <!-- ============================= AWARD STATEMENT ============================= -->
+  <text x="1754" y="1015" text-anchor="middle" font-size="57" letter-spacing="5" fill="#333029">THIS IS TO CERTIFY THAT</text>
 
-  <text id="recipient-name" x="1754" y="1082" text-anchor="middle" font-size="128" font-weight="400" fill="#152442">Recipient&#8217;s Full Name</text>
-  <line x1="924" y1="1140" x2="2584" y2="1140" stroke="#C9A227" stroke-width="2"/>
+  <text id="recipient-name" x="1754" y="1274" text-anchor="middle" font-size="150"
+        font-weight="500" fill="#152442">Recipient&#8217;s Full Name</text>
+  <line x1="649" y1="1323" x2="2854" y2="1323" stroke="#C9A227" stroke-width="2.5"/>
 
   <!-- ============================= COMPLETION LINE ============================= -->
-  <text x="1754" y="1240" text-anchor="middle" font-size="46" fill="#333029">has successfully completed the</text>
-  <text id="course-title" x="1754" y="1330" text-anchor="middle" font-size="68" font-weight="700" fill="#152442">Title of Course / Program / Theme of Study</text>
+  <text x="1754" y="1452" text-anchor="middle" font-size="74" fill="#333029">has successfully completed the</text>
+  <text id="course-title" x="1754" y="1556" text-anchor="middle" font-size="91"
+        font-weight="700" fill="#152442">Title of Course / Program</text>
 
-  <!-- Centered — production (resvg-js) renders centered text with inline
-       bold tspans correctly; confirmed directly from real generated
-       certificates. -->
-  <text x="1754" y="1434" text-anchor="middle" font-size="40" fill="#6B6250">
-    <tspan x="1754" dy="0">This program was conducted from <tspan id="start-date" font-weight="700" fill="#152442">Start Date</tspan> to <tspan id="end-date" font-weight="700" fill="#152442">End Date</tspan>, covering core modules,</tspan>
-    <tspan x="1754" dy="56">practical applications, and foundational principles outlined by the organizing body.</tspan>
-  </text>
-
-  <text x="1754" y="1596" text-anchor="middle" font-size="40" fill="#6B6250">
+  <text x="1754" y="1647" text-anchor="middle" font-size="61" fill="#6B6250">
     <tspan x="1754" dy="0">In recognition of your dedication, hard work and commitment to</tspan>
-    <tspan x="1754" dy="56">personal and professional growth.</tspan>
+    <tspan x="1754" dy="68">personal and professional growth.</tspan>
   </text>
 
-  <!-- ============================= SEAL ============================= -->
-  <g id="seal-block">
-    <circle cx="1754" cy="1860" r="152" fill="url(#goldGrad2)" stroke="#8E6E22" stroke-width="2"/>
-    <circle cx="1754" cy="1860" r="130" fill="none" stroke="#7A5E1E" stroke-width="1.5" opacity="0.7"/>
-    <circle cx="1754" cy="1860" r="108" fill="none" stroke="#7A5E1E" stroke-width="1" opacity="0.5"/>
-    <image id="opt-seal-slot" x="1604" y="1710" width="300" height="300" href="" xlink:href="" clip-path="url(#sealClip2)" preserveAspectRatio="xMidYMid slice"/>
+  <!-- ============================= SEAL (baked default; org-overridable via opt-seal-slot) ============================= -->
+  <g id="seal-block" transform="translate(1754,2043) scale(1.5)">
+    <path fill="url(#goldGrad)" stroke="#8E6E22" stroke-width="1"
+          d="M160.0,0.0 L147.4,13.7 L157.3,29.4 L142.4,40.5 L149.2,57.8 L132.5,66.0 L136.0,84.2 L118.1,89.2 L118.2,107.8 L99.7,109.4 L96.4,127.7 L77.9,125.8 L71.3,143.2 L53.5,138.0 L43.8,153.9 L27.2,145.5 L14.8,159.3 L0.0,148.0 L-14.8,159.3 L-27.2,145.5 L-43.8,153.9 L-53.5,138.0 L-71.3,143.2 L-77.9,125.8 L-96.4,127.7 L-99.7,109.4 L-118.2,107.8 L-118.1,89.2 L-136.0,84.2 L-132.5,66.0 L-149.2,57.8 L-142.4,40.5 L-157.3,29.4 L-147.4,13.7 L-160.0,0.0 L-147.4,-13.7 L-157.3,-29.4 L-142.4,-40.5 L-149.2,-57.8 L-132.5,-66.0 L-136.0,-84.2 L-118.1,-89.2 L-118.2,-107.8 L-99.7,-109.4 L-96.4,-127.7 L-77.9,-125.8 L-71.3,-143.2 L-53.5,-138.0 L-43.8,-153.9 L-27.2,-145.5 L-14.8,-159.3 L-0.0,-148.0 L14.8,-159.3 L27.2,-145.5 L43.8,-153.9 L53.5,-138.0 L71.3,-143.2 L77.9,-125.8 L96.4,-127.7 L99.7,-109.4 L118.2,-107.8 L118.1,-89.2 L136.0,-84.2 L132.5,-66.0 L149.2,-57.8 L142.4,-40.5 L157.3,-29.4 L147.4,-13.7 Z"/>
+    <circle cx="0" cy="0" r="130" fill="none" stroke="#7A5E1E" stroke-width="1" opacity="0.7"/>
+    <circle cx="0" cy="0" r="110" fill="none" stroke="#7A5E1E" stroke-width="0.7" opacity="0.5"/>
+    <use href="#wreathLeft" xlink:href="#wreathLeft"/>
+    <use href="#wreathRight" xlink:href="#wreathRight"/>
+    <use href="#bookMark" xlink:href="#bookMark" transform="translate(0,-46) scale(0.4)"/>
+    <text x="0" y="12" text-anchor="middle" font-size="26" font-weight="800" letter-spacing="2" fill="#152442">CERTSIFT</text>
+    <text x="0" y="46" text-anchor="middle" font-size="24" font-weight="700" letter-spacing="3" fill="#152442">VERIFIED</text>
+    <path d="M0,74 L4.7,85.5 L17.2,85.7 L7.5,93.1 L11.0,104.8 L0,98 L-11.0,104.8 L-7.5,93.1 L-17.2,85.7 L-4.7,85.5 Z" fill="#152442"/>
+
+    <!-- OPTIONAL: if an org supplies its own seal/badge artwork, the pipeline
+         adds href="data:image/png;base64,..." here. Being last in this group,
+         it renders on top and fully covers the baked seal above. Omit href
+         entirely when unused — an empty href="" crashes some SVG renderers. -->
+    <image id="opt-seal-slot" x="-150" y="-150" width="300" height="300"
+           clip-path="url(#sealClip)" preserveAspectRatio="xMidYMid slice"/>
   </g>
 
   <!-- ============================= DATE (left) ============================= -->
-  <text x="580" y="1772" font-size="58" font-weight="700" fill="#152442">
+  <text x="845" y="2013" text-anchor="middle" font-size="72" font-weight="700" fill="#152442">
     <tspan id="award-month">Month</tspan> <tspan id="award-day">Day</tspan>, <tspan id="award-year">Year</tspan>
   </text>
-  <line x1="570" y1="1818" x2="1050" y2="1818" stroke="#C9A227" stroke-width="2"/>
-  <text x="810" y="1868" text-anchor="middle" font-size="34" letter-spacing="2" fill="#6B6250">DATE</text>
+  <line x1="444" y1="2041" x2="1245" y2="2041" stroke="#C9A227" stroke-width="2.5"/>
+  <text x="845" y="2114" text-anchor="middle" font-size="34" letter-spacing="3" fill="#6B6250">DATE</text>
 
   <!-- ============================= SIGNATURE (right) ============================= -->
   <g id="signature-1-block">
     <g id="signature-1-placeholder">
-      <rect x="2430" y="1688" width="380" height="100" fill="none" stroke="#AEB7C6" stroke-width="2" stroke-dasharray="8 6"/>
-      <text x="2620" y="1744" text-anchor="middle" font-size="24" fill="#B0A88E">Signature (PNG)</text>
+      <rect x="2262" y="1894" width="800" height="170" fill="none" stroke="#AEB7C6" stroke-width="2" stroke-dasharray="8 6"/>
+      <text x="2662" y="1984" text-anchor="middle" font-size="28" fill="#B0A88E">Signature (PNG)</text>
     </g>
-    <image id="signature-1" x="2430" y="1688" width="380" height="100" href="" xlink:href="" preserveAspectRatio="xMidYMid meet"/>
-    <line x1="2430" y1="1818" x2="2930" y2="1818" stroke="#C9A227" stroke-width="2"/>
-    <text id="signature-1-caption" x="2680" y="1868" text-anchor="middle" font-size="36" fill="#152442" font-weight="700"></text>
-    <text id="signature-1-title" x="2680" y="1914" text-anchor="middle" font-size="29" font-style="italic" fill="#6B6250"></text>
+    <image id="signature-1" x="2262" y="1894" width="800" height="170" preserveAspectRatio="xMidYMid meet"/>
+    <line x1="2312" y1="2084" x2="3012" y2="2084" stroke="#C9A227" stroke-width="2.5"/>
+    <text id="signature-1-caption" x="2662" y="2142" text-anchor="middle" font-size="50"
+          font-weight="700" fill="#152442">Authority&#8217;s Full Name</text>
+    <text id="signature-1-title" x="2662" y="2194" text-anchor="middle" font-size="40"
+          letter-spacing="3" fill="#6B6250">PROGRAM DIRECTOR</text>
   </g>
 
   <!-- ============================= FOOTER ============================= -->
-  <text id="certificate-number-label" x="230" y="2360" font-size="34" fill="#6B6250">Certificate ID:</text>
+  <text id="certificate-number-label" x="100" y="2380" font-size="34" fill="#6B6250">Certificate ID:</text>
   <!-- system-generated: populate programmatically, do not expose to end-user editing UI -->
-  <text id="certificate-number" x="470" y="2360" font-size="34" font-weight="700" fill="#152442">CS-2026-0000</text>
+  <text id="certificate-number" x="350" y="2380" font-size="34" font-weight="700" fill="#152442">CS-2026-0000</text>
 
-  <text x="1754" y="2360" text-anchor="middle" font-size="32" letter-spacing="2" fill="#152442"><tspan fill="#C9A227">LEARN</tspan> &#8226; <tspan fill="#C9A227">GROW</tspan> &#8226; <tspan fill="#C9A227">MAKE AN IMPACT</tspan></text>
+  <text x="1754" y="2380" text-anchor="middle" font-size="32" letter-spacing="2" fill="#152442"><tspan fill="#C9A227">LEARN</tspan> &#8226; <tspan fill="#C9A227">GROW</tspan> &#8226; <tspan fill="#C9A227">MAKE AN IMPACT</tspan></text>
 
-  <text x="3278" y="2360" text-anchor="end" font-size="32" fill="#152442">Verify at: certsift.com</text>
+  <text x="3320" y="2380" text-anchor="end" font-size="30" fill="#152442">Verify at: www.certsift.com/verify</text>
 
 </svg>
