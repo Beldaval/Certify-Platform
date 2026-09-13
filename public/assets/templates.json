@@ -213,19 +213,18 @@
         "width": 3508,
         "height": 2481
       },
+      "notes": "REPLACED (this update): swapped in a new SVG design (see the file's own header comment for the full change log). institution-name and opt-subtitle are independent top-level elements, not nested inside logo-block, so hide_container:'logo-block' only ever hides the optional logo circle — required org-name text is unaffected either way. No start-date/end-date fields — course-title stands alone, not tied to a date range, so those two fields were dropped from the previous entry (the new SVG has no matching elements; leaving them in would keep prompting for input that goes nowhere). ADDED hide_placeholder: 'signature-1-placeholder' — missing from the previous entry, so the dashed placeholder box and 'Signature (PNG)' label never hid once a real signature was uploaded; now they do. opt-logo-slot and opt-seal-slot remain pure optional image slots with no baked fallback artwork (hide_container removes the whole frame when empty), matching Modern Excellence / Certificate of Excellence.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
         { "id": "recipient-name", "type": "text", "required": true },
         { "id": "course-title", "type": "text", "required": true },
-        { "id": "start-date", "type": "text", "required": true },
-        { "id": "end-date", "type": "text", "required": true },
         { "id": "award-day", "type": "text", "required": true },
         { "id": "award-month", "type": "text", "required": true },
         { "id": "award-year", "type": "text", "required": true },
         { "id": "certificate-number", "type": "text", "required": true, "auto": true },
         { "id": "opt-logo-slot", "type": "image", "required": false, "hide_container": "logo-block" },
-        { "id": "signature-1", "type": "image", "required": true },
+        { "id": "signature-1", "type": "image", "required": true, "hide_placeholder": "signature-1-placeholder" },
         { "id": "signature-1-caption", "type": "text", "required": true },
         { "id": "signature-1-title", "type": "text", "required": true },
         { "id": "opt-seal-slot", "type": "image", "required": false, "hide_container": "seal-block" }
