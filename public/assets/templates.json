@@ -5,10 +5,7 @@
       "id": "exclusive-completion",
       "name": "Exclusive Completion",
       "file": "Exclusive_Completion_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
+      "canvas": { "width": 3508, "height": 2481 },
       "notes": "FIX (Aug 2026): opt-seal-slot declares hide_container: 'seal-block' — the seal artwork is wrapped in <g id=\"seal-block\">, confirmed present. FIX (Sep 2026): the 'Presented this Day day of Month, Year' line, the course-title line, and the program-dates paragraph were all left-anchored in an earlier revision to work around a suspected renderer bug — confirmed against real production output that centered text with inline styled tspans renders correctly, so all three were restored to centered. Also FIX: award-year previously had a hardcoded '20' prefix (Presented this Day day of Month, 20YY) which combined with a full 4-digit year typed by the user to read '202026' — award-year now expects and holds the complete year.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
@@ -35,10 +32,7 @@
       "id": "modern-excellence",
       "name": "Modern Excellence",
       "file": "Modern_Excellence_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
+      "canvas": { "width": 3508, "height": 2481 },
       "notes": "No course-title or start-date/end-date fields by design — treated as a general achievement award, not tied to a specific course or date range. FIX (Aug 2026): opt-seal-slot declares hide_container: 'seal-block', confirmed present. FIX (Sep 2026): the 'Presented this Day day of Month, Year' line was left-anchored to work around a suspected renderer bug — confirmed against real production output that centered text with inline styled tspans renders correctly, so it was restored to centered. Also FIX: award-year previously had a hardcoded '20' prefix, same issue and same fix as Exclusive Completion.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
@@ -62,10 +56,7 @@
       "id": "premium-training",
       "name": "Premium Training",
       "file": "Premium_Traning_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
+      "canvas": { "width": 3508, "height": 2481 },
       "notes": "FIX (Aug 2026): award-date-line split into separate award-day/award-month/award-year fields; SVG's signature-1/signature-2/opt-seal-slot groups given real <image> elements so uploads and hide_container actually work. FIX (Sep 2026): logo-slot's identical missing-<image> bug fixed the same way — logo uploads now actually render. Granted line restored to centered (confirmed safe against real production output). NEW: signature-2 declares reposition_sibling_if_empty, sliding signature-1-block to the canvas's horizontal center (translate(1754,2245) — the block already carries its own translate transform, so this must be the full target position, not a delta) when only one signature is provided.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
@@ -92,10 +83,7 @@
       "id": "certificate-of-excellence",
       "name": "Certificate of Excellence",
       "file": "certificate_of_excellence.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
+      "canvas": { "width": 3508, "height": 2481 },
       "notes": "Same as Modern Excellence — no course-title or date-range fields by design. FIX (Sep 2026): opt-seal-slot declares hide_container: 'seal-block' — the SVG already had that wrapping group around the decorative medallion, it just wasn't referenced here. Also FIX: the 'Presented this Day day of Month, Year' line was left-anchored to work around a suspected renderer bug — confirmed against real production output that centered text with inline styled tspans renders correctly, so it was restored to centered. NEW: signature-2 declares reposition_sibling_if_empty, sliding signature-1-block to the canvas's horizontal center (translate(304,0) — this block had no prior transform, so this is a pure offset, unlike Premium Training/Dulux Completion which needed the full target position) when only one signature is provided.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
@@ -119,10 +107,7 @@
       "id": "classic-completion",
       "name": "Classic Completion",
       "file": "classic__completion_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2480
-      },
+      "canvas": { "width": 3508, "height": 2480 },
       "notes": "FIX (Sep 2026): both opt-logo-slot and opt-seal-slot had a real, working <image> element and wrapping decorative group already in the SVG — but the field id sat on the wrapping <g>, while the actual <image> carrying the href used a different id (logo-image / seal-image respectively). Uploads were silently being written to the group (no visual effect) instead of the image. Added image_target_id to point at the real image elements, and hide_container so the whole decorative frame (not just the image) disappears when nothing is uploaded, matching every other template's behavior.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
@@ -149,10 +134,7 @@
       "id": "dulux-completion",
       "name": "Dulux Completion",
       "file": "dulux_complition_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
+      "canvas": { "width": 3508, "height": 2481 },
       "notes": "FIX (Sep 2026): logo-slot, signature-1, signature-2 and opt-seal-slot were all <g> groups containing only decorative artwork and placeholder text, with no actual <image> element at all — no institution had ever been able to get a logo or custom seal onto this template, and uploads had no element to write to. Real <image> elements were added, clipped to the existing circles, with wrapper groups renamed to logo-slot-block/signature-1-block/signature-2-block/seal-block. opt-seal-slot now declares hide_container: 'seal-block' to match. Also FIX: the program-dates paragraph's first line and the 'Granted this Day day of Month, Year' line were left-anchored to work around a suspected renderer bug — confirmed against real production output that centered text with inline styled tspans renders correctly, so both were restored to centered. NEW: signature-2 declares reposition_sibling_if_empty, sliding signature-1-block to the canvas's horizontal center (translate(1754,2245) — full target position, same reasoning as Premium Training, since this block also already carries its own translate transform) when only one signature is provided.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
@@ -178,12 +160,9 @@
     {
       "id": "global-spec",
       "name": "Global Spec",
-      "file": "global_spec_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
-      "notes": "FIX (Sep 2026): text-anchor=\"middle\" paragraphs with inline styled tspans (program-dates line, granted line) were left-anchored in an earlier revision to work around a suspected renderer bug — confirmed against real production output that centered text with inline styled tspans renders correctly, so both lines were restored to centered. Also FIX: award-year previously had a hardcoded '20' prefix (Granted this Day day of Month, 20YY) which combined with a full 4-digit year typed by the user to read '202026' — award-year now expects and holds the complete year. Also FIX: opt-seal-slot now declares hide_container: 'seal-block' (the SVG's wrapping group already existed) so the seal medallion disappears entirely when unused, matching every other template.",
+      "file": "global_spec_certificate_v4.svg",
+      "canvas": { "width": 3508, "height": 2481 },
+      "notes": "REPLACED (this update): new SVG rebuilt from a CorelDRAW recreation — see the file's own header comment for the full change log. FIX: opt-logo-slot was previously listed as required logo-slot (mismatched against the actual SVG id, so uploads silently failed) — corrected to opt-logo-slot with hide_container:'logo-block'. FIX: signature-1 and signature-2 were missing hide_placeholder — the dashed placeholder box and 'Signature (PNG)' label never hid once a real signature was uploaded; both now declare hide_placeholder pointing at their respective placeholder groups. institution-name, opt-subtitle, recipient-name, and course-title previously had no text-anchor at all (Corel exports default to left-anchored, positioned to LOOK centered only for the exact placeholder text) — all four now explicitly center-anchor regardless of replacement length. start-date/end-date center-anchored and slightly reduced in size for headroom against the baked 'to'/'covering' words flanking them — short values (e.g. 'May 6th') fit cleanly; very long date strings (12+ characters) may still crowd 'covering', since that word is baked curve art with a fixed, tight gap and can't reflow. Worth a soft length cap on those two fields if not already enforced. opt-seal-slot's clip circle was widened and recentered — the previous radius left a thin sliver of the baked scalloped ring visible around real uploaded seals.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
         { "id": "opt-subtitle", "type": "text", "required": false },
@@ -195,11 +174,11 @@
         { "id": "award-month", "type": "text", "required": true },
         { "id": "award-year", "type": "text", "required": true },
         { "id": "certificate-number", "type": "text", "required": true, "auto": true },
-        { "id": "logo-slot", "type": "image", "required": true },
-        { "id": "signature-1", "type": "image", "required": true },
+        { "id": "opt-logo-slot", "type": "image", "required": false, "hide_container": "logo-block" },
+        { "id": "signature-1", "type": "image", "required": true, "hide_placeholder": "signature-1-placeholder" },
         { "id": "signature-1-caption", "type": "text", "required": true },
         { "id": "signature-1-title", "type": "text", "required": true },
-        { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block" },
+        { "id": "signature-2", "type": "image", "required": false, "hide_container": "signature-2-block", "hide_placeholder": "signature-2-placeholder" },
         { "id": "opt-signature-2-caption", "type": "text", "required": false },
         { "id": "opt-signature-2-title", "type": "text", "required": false },
         { "id": "opt-seal-slot", "type": "image", "required": false, "hide_container": "seal-block" }
@@ -209,10 +188,7 @@
       "id": "executive-completion",
       "name": "Executive Completion",
       "file": "executive_completion_certificate.svg",
-      "canvas": {
-        "width": 3508,
-        "height": 2481
-      },
+      "canvas": { "width": 3508, "height": 2481 },
       "notes": "REPLACED (this update): swapped in a new SVG design (see the file's own header comment for the full change log). institution-name and opt-subtitle are independent top-level elements, not nested inside logo-block, so hide_container:'logo-block' only ever hides the optional logo circle — required org-name text is unaffected either way. No start-date/end-date fields — course-title stands alone, not tied to a date range, so those two fields were dropped from the previous entry (the new SVG has no matching elements; leaving them in would keep prompting for input that goes nowhere). ADDED hide_placeholder: 'signature-1-placeholder' — missing from the previous entry, so the dashed placeholder box and 'Signature (PNG)' label never hid once a real signature was uploaded; now they do. opt-logo-slot and opt-seal-slot remain pure optional image slots with no baked fallback artwork (hide_container removes the whole frame when empty), matching Modern Excellence / Certificate of Excellence.",
       "fields": [
         { "id": "institution-name", "type": "text", "required": true },
