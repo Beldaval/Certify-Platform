@@ -160,7 +160,7 @@
     {
       "id": "global-spec",
       "name": "Global Spec",
-      "file": "global_spec_certificate_v4.svg",
+      "file": "global_spec_certificate.svg",
       "canvas": { "width": 3508, "height": 2481 },
       "notes": "REPLACED (this update): new SVG rebuilt from a CorelDRAW recreation — see the file's own header comment for the full change log. FIX: opt-logo-slot was previously listed as required logo-slot (mismatched against the actual SVG id, so uploads silently failed) — corrected to opt-logo-slot with hide_container:'logo-block'. FIX: signature-1 and signature-2 were missing hide_placeholder — the dashed placeholder box and 'Signature (PNG)' label never hid once a real signature was uploaded; both now declare hide_placeholder pointing at their respective placeholder groups. institution-name, opt-subtitle, recipient-name, and course-title previously had no text-anchor at all (Corel exports default to left-anchored, positioned to LOOK centered only for the exact placeholder text) — all four now explicitly center-anchor regardless of replacement length. start-date/end-date center-anchored and slightly reduced in size for headroom against the baked 'to'/'covering' words flanking them — short values (e.g. 'May 6th') fit cleanly; very long date strings (12+ characters) may still crowd 'covering', since that word is baked curve art with a fixed, tight gap and can't reflow. Worth a soft length cap on those two fields if not already enforced. opt-seal-slot's clip circle was widened and recentered — the previous radius left a thin sliver of the baked scalloped ring visible around real uploaded seals.",
       "fields": [
