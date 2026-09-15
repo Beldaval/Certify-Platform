@@ -119,6 +119,22 @@ let tokensRefundedThisBatch = 0;
 
 const FIXED_FIELD_IDS = ['recipient-name', 'course-title', 'institution-name', 'certificate-number'];
 
+// FIX (Sep 2026 — Global Spec date overflow / cross-template convention):
+// award-month used to be a free-text input, same as any other text field,
+// which let someone type a full month name ("September") that some
+// templates' artwork has no real room for. render.js's fit_width/fit_group
+// can shrink an overlong value enough to survive, but the actual agreed
+// fix is to never let a too-long value be typed in the first place. Every
+// template names this field "award-month" in templates.json (confirmed
+// across all of them), and this is the one shared function that builds the
+// recipient form for every template, so fixing it here covers all of them
+// at once rather than needing a per-template change. Full names are kept
+// for May/June/July/March/April (5 letters or fewer); the other seven
+// months are abbreviated with a trailing period. If a template's artwork
+// is ever redesigned with more room for this field, this is the one place
+// to loosen it back to free text.
+const AWARD_MONTH_OPTIONS = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+
 init();
 
 async function init() {
@@ -239,7 +255,15 @@ function addCertRow(sourceRowEl) {
 
   let dynamicHtml = '';
   for (const f of dynamicFields) {
-    if (f.type === 'text') {
+    if (f.id === 'award-month') {
+      // See AWARD_MONTH_OPTIONS comment above — a constrained dropdown
+      // instead of free text, applied the same way for every template.
+      dynamicHtml += `<div><label>${labelFor(f.id)}${f.required ? '' : ' (optional)'}</label>
+        <select data-field="${f.id}" data-kind="text" ${f.required ? 'required' : ''}>
+          <option value="" disabled selected>Select month</option>
+          ${AWARD_MONTH_OPTIONS.map((m) => `<option value="${m}">${m}</option>`).join('')}
+        </select></div>`;
+    } else if (f.type === 'text') {
       dynamicHtml += `<div><label>${labelFor(f.id)}${f.required ? '' : ' (optional)'}</label>
         <input type="text" data-field="${f.id}" data-kind="text" ${f.required ? 'required' : ''}></div>`;
     } else if (f.type === 'image') {
@@ -282,6 +306,10 @@ function addCertRow(sourceRowEl) {
           newInput.files = dt.files;
         }
       } else {
+        // Also covers the award-month <select> above — assigning .value
+        // on a <select> selects the matching <option>, same as a text
+        // input, so copying a previously-picked month across rows works
+        // with no extra handling needed here.
         newInput.value = oldInput.value;
       }
     }
