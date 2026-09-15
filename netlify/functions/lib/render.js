@@ -150,7 +150,7 @@ function parseDataUri(str) {
 // never has to deal with a format/variant it can't handle. Throws a
 // descriptive error (instead of letting a bad image reach resvg and crash
 // with an opaque GenericFailure) if sharp itself can't decode the input.
-async function normalizeImageDataUri(dataUri, fieldId) {
+async function normalizeImageDataUri(dataUri, fieldId, trimToInk) {
   const parsed = parseDataUri(dataUri);
   if (!parsed) {
     // FIX (incident: "expected 'g' tag, not 'tspan'" parse corruption):
@@ -174,7 +174,28 @@ async function normalizeImageDataUri(dataUri, fieldId) {
     return '';
   }
   try {
-    const pngBuffer = await sharp(parsed.buffer).rotate().png().toBuffer();
+    let pipeline = sharp(parsed.buffer).rotate();
+    if (trimToInk) {
+      // FIX (Sep 2026 — signature sitting high above its line): a
+      // signature upload is very often a phone photo or scan with a lot of
+      // blank (or, for a transparent PNG, fully transparent) margin around
+      // the actual pen strokes — the org photographed a whole signature
+      // box, not just the ink. Positioning tricks in the SVG itself
+      // (preserveAspectRatio="xMidYMax meet", bottom-aligning the image to
+      // its box) can only anchor the IMAGE's own edge to the line; if the
+      // ink sits well inside that edge with padding of its own, the visual
+      // gap remains no matter how the box is aligned. sharp's trim() crops
+      // away uniform-colour/transparent borders before we ever embed the
+      // image, so whatever margin the org's own photo has is gone before
+      // positioning even comes into play — the box (and therefore the
+      // line) hugs the actual ink, regardless of how loosely it was
+      // photographed or scanned. Only opted into for fields that declare
+      // it (see templates.json's "trim_image": true) — logo and seal
+      // artwork often has intentional breathing room as part of the mark
+      // itself, which trimming would wrongly strip.
+      pipeline = pipeline.trim();
+    }
+    const pngBuffer = await pipeline.png().toBuffer();
     return `data:image/png;base64,${pngBuffer.toString('base64')}`;
   } catch (err) {
     throw new Error(
@@ -187,7 +208,7 @@ async function normalizeFieldValues(templateDef, fieldValues) {
   const values = { ...(fieldValues || {}) };
   for (const field of templateDef.fields) {
     if (field.type === 'image' && values[field.id]) {
-      values[field.id] = await normalizeImageDataUri(values[field.id], field.id);
+      values[field.id] = await normalizeImageDataUri(values[field.id], field.id, field.trim_image);
     }
   }
   return values;
