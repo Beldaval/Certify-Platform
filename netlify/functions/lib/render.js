@@ -44,6 +44,36 @@
 // transparent gaps unless they're actually removed from the document once
 // a real image is present.
 //
+// A text field can also declare "fit_width": <number> in templates.json —
+// FIX (Sep 2026, Global Spec date-field overflow): some templates have
+// fields whose blank space is narrow relative to what real data can be
+// (e.g. a full month name vs. the "Month" placeholder the template was
+// visually designed around). The old approach was to hand-pick one static
+// font-size small enough to survive the worst case we'd seen so far — which
+// (a) made every value render at that same small size even when it was
+// short enough to look fine much bigger, and (b) needed re-tuning by hand
+// every time real production data turned out longer than whatever we'd
+// tested with (this happened twice on Global Spec: "September" vs "Sep",
+// then "DECEMBER" still slightly overlapping "2026" even after a first
+// shrink, because the shrink was sized by eye, not measured).
+// fit_width fixes both: it's the true available width for that field, in
+// the same canvas units as the SVG itself, MEASURED from the template's own
+// artwork (e.g. the pixel width of the blank-line polygon a field's value
+// sits on) — not guessed. At render time, buildSvg loads the actual bundled
+// font (matching that element's font-family/weight/style) via fontkit and
+// measures the REAL glyph width of the specific value being written. Only
+// if that's wider than fit_width does it shrink the font-size, by just
+// enough to fit — never more, and never for values that already fit at the
+// template's natural size. Short values (e.g. "Jan") keep the design's
+// original, larger font-size; only long ones (e.g. "September") shrink, and
+// only as much as they individually need. Optional "fit_min_font" (default
+// 40px) is a floor: if even the smallest legible size wouldn't fit, we stop
+// shrinking there and log a warning rather than render illegibly tiny text
+// — generation still succeeds, but it's visible in the logs so a genuinely
+// too-long value (a data-entry mistake, not a template gap) gets noticed.
+// Fields with no fit_width behave exactly as before — this is opt-in per
+// field, zero cost/behavior change for every other field on every template.
+//
 // FIX (see incident: baby-dedication batch failures, Aug 2026): every
 // uploaded image is now normalized through sharp -> PNG before it's
 // base64-embedded into the SVG. resvg-js's native image decoder only
@@ -65,12 +95,16 @@
 // "serif" or "sans-serif" keyword, so we bundle Gelasio (an open,
 // metric-compatible Georgia substitute) and Arimo (same, for
 // Arial/Helvetica) and tell resvg to use them for those generic
-// fallbacks via serifFamily/sansSerifFamily below.
+// fallbacks via serifFamily/sansSerifFamily below. fit_width measurement
+// (below) uses these exact same font files via fontkit, so what gets
+// MEASURED and what actually gets RENDERED are guaranteed to agree —
+// there's no separate "estimate" that can drift out of sync with reality.
 const fs = require('fs');
 const path = require('path');
 const { Resvg } = require('@resvg/resvg-js');
 const { PDFDocument } = require('pdf-lib');
 const sharp = require('sharp');
+const fontkit = require('fontkit');
 
 // FIX (deploy incident, Aug 2026): this used to be computed as
 // path.join(__dirname, '..', '..', '..', 'public', 'assets', 'templates'),
@@ -159,6 +193,139 @@ async function normalizeFieldValues(templateDef, fieldValues) {
   return values;
 }
 
+// --- fit_width support (text auto-shrink) -----------------------------
+
+// Fontkit is a pure measurement tool (no rendering) — we open each bundled
+// font file once and reuse it, since the same handful of font files back
+// every template and every field on every certificate in a batch.
+const _fontKitCache = new Map();
+function loadFontKit(filePath) {
+  if (!_fontKitCache.has(filePath)) {
+    _fontKitCache.set(filePath, fontkit.openSync(filePath));
+  }
+  return _fontKitCache.get(filePath);
+}
+
+// Picks the exact bundled font file matching a text element's own
+// font-family/weight/style, so measurement uses the identical glyphs resvg
+// will actually render — not a generic guess. Mirrors the serif/sans-serif
+// substitution resvg itself does (see FONT NOTE above): anything not
+// explicitly "sans-serif" measures as Gelasio, matching defaultFontFamily/
+// serifFamily in the Resvg font config below. Arimo has no bundled italic
+// variant (see fontFiles list below) — bold-italic sans-serif measures with
+// the closest available file (Arimo-Bold) rather than throwing, since a
+// slightly-off italic measurement is a much smaller problem than failing
+// the whole field.
+function pickFontFile(fontFamily, fontWeight, fontStyle) {
+  const isSans = /sans-serif/i.test(fontFamily || '');
+  const isBold = /bold/i.test(fontWeight || '');
+  const isItalic = /italic|oblique/i.test(fontStyle || '');
+  if (isSans) {
+    return path.join(FONTS_DIR, isBold ? 'Arimo-Bold.ttf' : 'Arimo-Regular.ttf');
+  }
+  if (isBold && isItalic) return path.join(FONTS_DIR, 'Gelasio-BoldItalic.ttf');
+  if (isBold) return path.join(FONTS_DIR, 'Gelasio-Bold.ttf');
+  if (isItalic) return path.join(FONTS_DIR, 'Gelasio-Italic.ttf');
+  return path.join(FONTS_DIR, 'Gelasio-Regular.ttf');
+}
+
+// Real glyph-advance measurement of `text` set in `fontFile` at
+// `fontSizePx`, in the same units as the SVG canvas — not a character-count
+// estimate. advanceWidth is in the font's own unitsPerEm; scaling by
+// fontSizePx / unitsPerEm matches how any renderer converts font units to
+// the requested point size.
+function measureTextWidth(text, fontFile, fontSizePx) {
+  if (!text) return 0;
+  const font = loadFontKit(fontFile);
+  const run = font.layout(text);
+  return (run.advanceWidth / font.unitsPerEm) * fontSizePx;
+}
+
+// Returns the font-size to actually render `text` at: `naturalFontSizePx`
+// unchanged if it already fits within `fitWidth`, otherwise the largest
+// size that does fit, floored at `minFontPx` (default 40px). Only ever
+// shrinks, never grows — a short value never gets rendered larger than the
+// template's own design intended.
+function fitFontSize(text, fontFile, naturalFontSizePx, fitWidth, minFontPx) {
+  const naturalWidth = measureTextWidth(text, fontFile, naturalFontSizePx);
+  if (naturalWidth <= fitWidth) return { size: naturalFontSizePx, fits: true };
+  const floor = minFontPx || 40;
+  const scaled = naturalFontSizePx * (fitWidth / naturalWidth);
+  if (scaled >= floor) {
+    // Scaling down hits fitWidth by construction (width scales linearly with
+    // font-size), so this always fits. Re-measuring here would occasionally
+    // fail on floating-point noise a hair's width off fitWidth (the
+    // scale-then-remeasure round trip doesn't land on exactly the same
+    // float fitWidth started as) and log a false-positive warning for a
+    // value that renders fine -- so we trust the math instead of
+    // re-checking a boundary that's only ever off by rounding error.
+    return { size: scaled, fits: true };
+  }
+  // Scaling down as far as the floor allows still isn't enough -- this is
+  // the one case genuinely worth re-measuring and reporting honestly.
+  const flooredWidth = measureTextWidth(text, fontFile, floor);
+  return { size: floor, fits: flooredWidth <= fitWidth };
+}
+
+// --- fit_group support (matching sizes across related fields) ----------
+//
+// Fields that visually belong to one phrase (e.g. award-day/award-month/
+// award-year forming "Day day of Month, Year") can declare the same
+// "fit_group" string in templates.json. Rather than each field shrinking
+// independently to fit its OWN blank — which can leave a long month
+// rendering visibly smaller than the short day right next to it, in the
+// same sentence — every field in a group renders at ONE shared size: the
+// smallest size any member of the group actually needs. A field that could
+// have stayed larger on its own gives up that extra size so the whole
+// phrase reads as one consistent piece of text, the way a person would
+// write it by hand, rather than three independently-sized fragments. This
+// also tends to close up awkward gaps between a field and the static text
+// right after it, since the harmonized size is never larger than what was
+// independently required — never smaller room, only ever equal or more.
+// Fields with no fit_group behave exactly as before (sized independently).
+// Computed in one pass before the main field loop, since it needs to see
+// every group member's natural size and content before any of them get
+// written into the SVG.
+function computeFitSizes(templateDef, svg, values) {
+  const sizes = {}; // field.id -> { field, size, fits, naturalSize }
+  const groups = {}; // fit_group -> [entry, ...]
+
+  for (const field of templateDef.fields) {
+    if (field.type !== 'text' || !field.fit_width) continue;
+    const safe = escapeXml(values[field.id] ?? '');
+    const openTagRe = new RegExp(`<[^>]+id="${field.id}"[^>]*>`);
+    const openTag = (openTagRe.exec(svg) || [''])[0];
+    const famMatch = /font-family="([^"]*)"/.exec(openTag);
+    const weightMatch = /font-weight="([^"]*)"/.exec(openTag);
+    const styleMatch = /font-style="([^"]*)"/.exec(openTag);
+    const sizeMatch = /font-size="([\d.]+)px"/.exec(openTag);
+    if (!sizeMatch) continue; // no parsable font-size -- leave to the plain-substitution fallback below
+
+    const naturalSize = parseFloat(sizeMatch[1]);
+    const fontFile = pickFontFile(
+      famMatch ? famMatch[1] : '', weightMatch ? weightMatch[1] : '', styleMatch ? styleMatch[1] : ''
+    );
+    const { size, fits } = fitFontSize(safe, fontFile, naturalSize, field.fit_width, field.fit_min_font);
+    const entry = { field, size, fits, naturalSize };
+    sizes[field.id] = entry;
+    if (field.fit_group) {
+      (groups[field.fit_group] = groups[field.fit_group] || []).push(entry);
+    }
+  }
+
+  // Harmonize each group to its smallest member's size. Shrinking a field
+  // further than it strictly needed to fit can only ever fit MORE easily,
+  // never less -- so no re-check of `fits` is needed after this.
+  for (const groupFields of Object.values(groups)) {
+    const minSize = Math.min(...groupFields.map((e) => e.size));
+    for (const entry of groupFields) entry.size = minSize;
+  }
+
+  return sizes;
+}
+
+// -----------------------------------------------------------------------
+
 // FIX (Aug 2026 — Baby Dedication removal follow-up: Signature 2 / Seal
 // placeholders surviving in output): both hide_container removal and
 // block-toggle removal used to match "<tag ... id="X">[\s\S]*?</tag>" —
@@ -216,7 +383,7 @@ function setTransformById(svg, elementId, transform) {
   return svg.replace(reOpen, `$1 transform="${escapeXml(transform)}"`);
 }
 
-function buildSvg(templateDef, fieldValues) {
+function buildSvg(templateDef, fieldValues, recipientLabel) {
   const svgPath = path.join(TEMPLATES_DIR, templateDef.svg_file || templateDef.file);
   let svg;
   try {
@@ -236,6 +403,7 @@ function buildSvg(templateDef, fieldValues) {
     throw err;
   }
   const values = fieldValues || {};
+  const fitSizes = computeFitSizes(templateDef, svg, values);
 
   for (const field of templateDef.fields) {
     const raw = values[field.id];
@@ -243,7 +411,40 @@ function buildSvg(templateDef, fieldValues) {
     if (field.type === 'text') {
       const safe = escapeXml(raw ?? '');
       const re = new RegExp(`(<[^>]+id="${field.id}"[^>]*>)([\\s\\S]*?)(</[a-zA-Z]+>)`);
-      svg = svg.replace(re, (m, open, _old, close) => `${open}${safe}${close}`);
+
+      const fitEntry = fitSizes[field.id];
+      if (fitEntry) {
+        // Size was already resolved by computeFitSizes above -- including
+        // harmonizing it against any fit_group siblings -- so this just
+        // applies it. See the fit_width/fit_group doc comments up top for
+        // why sizing happens in that separate pass instead of inline here.
+        if (!fitEntry.fits) {
+          // Even the smallest legible size doesn't fit — this is very
+          // likely a data-entry issue (an unusually long value), not a
+          // template bug. Generation still proceeds; this just makes the
+          // overflow visible in logs instead of only on the PDF.
+          console.warn(
+            `[render] Field "${field.id}" value ${JSON.stringify(safe)} still exceeds its ` +
+            `fit_width (${field.fit_width}px) even at the font floor (${field.fit_min_font || 40}px). ` +
+            `Recipient/label: ${recipientLabel || 'unknown'}.`
+          );
+        }
+        const match = re.exec(svg);
+        if (match) {
+          const newOpenTag = fitEntry.size !== fitEntry.naturalSize
+            ? match[1].replace(/font-size="[\d.]+px"/, `font-size="${fitEntry.size.toFixed(2)}px"`)
+            : match[1];
+          svg = svg.slice(0, match.index) + newOpenTag + safe + match[3] + svg.slice(match.index + match[0].length);
+        } else {
+          // Field declared fit_width but its element wasn't found by the
+          // time we get here (shouldn't happen — computeFitSizes only adds
+          // an entry when it found the same element) — fail safe rather
+          // than throw.
+          svg = svg.replace(re, (m, open, _old, close) => `${open}${safe}${close}`);
+        }
+      } else {
+        svg = svg.replace(re, (m, open, _old, close) => `${open}${safe}${close}`);
+      }
 
     } else if (field.type === 'image') {
       // FIX: write to field.image_target_id when the template declares one
@@ -327,7 +528,7 @@ async function renderCertificate({ templateDef, fieldValues, recipientLabel }) {
   // handle. Errors here are descriptive (which field, what was wrong)
   // instead of an opaque native crash later.
   const normalizedValues = await normalizeFieldValues(templateDef, fieldValues);
-  const svg = buildSvg(templateDef, normalizedValues);
+  const svg = buildSvg(templateDef, normalizedValues, recipientLabel);
   const pxW = templateDef.canvas_width || templateDef.canvas.width;
   const pxH = templateDef.canvas_height || templateDef.canvas.height;
 
