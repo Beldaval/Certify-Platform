@@ -150,7 +150,7 @@ function parseDataUri(str) {
 // never has to deal with a format/variant it can't handle. Throws a
 // descriptive error (instead of letting a bad image reach resvg and crash
 // with an opaque GenericFailure) if sharp itself can't decode the input.
-async function normalizeImageDataUri(dataUri, fieldId, trimToInk) {
+async function normalizeImageDataUri(dataUri, fieldId, trimToInk, trimThreshold) {
   const parsed = parseDataUri(dataUri);
   if (!parsed) {
     // FIX (incident: "expected 'g' tag, not 'tspan'" parse corruption):
@@ -193,7 +193,19 @@ async function normalizeImageDataUri(dataUri, fieldId, trimToInk) {
       // it (see templates.json's "trim_image": true) — logo and seal
       // artwork often has intentional breathing room as part of the mark
       // itself, which trimming would wrongly strip.
-      pipeline = pipeline.trim();
+      // Threshold is read from templates.json's "trim_threshold" (default
+      // 30 if not set) rather than hardcoded here — sharp's own default
+      // (10) only trims near-exact uniform-colour borders, and a real
+      // phone photo of a signed paper usually has faint shadow/texture
+      // right up to the edge that stops a low threshold almost
+      // immediately, leaving most of the blank margin untouched. 30 is a
+      // reasonable starting point, tuned against a synthetic test image —
+      // not yet verified against a real signature upload. Keeping this in
+      // templates.json means the number can be tuned per field, for a
+      // template whose organizations' photos behave differently, without
+      // touching this file or redeploying the function — a data change
+      // instead of a code change.
+      pipeline = pipeline.trim({ threshold: trimThreshold || 30 });
     }
     const pngBuffer = await pipeline.png().toBuffer();
     return `data:image/png;base64,${pngBuffer.toString('base64')}`;
@@ -208,7 +220,7 @@ async function normalizeFieldValues(templateDef, fieldValues) {
   const values = { ...(fieldValues || {}) };
   for (const field of templateDef.fields) {
     if (field.type === 'image' && values[field.id]) {
-      values[field.id] = await normalizeImageDataUri(values[field.id], field.id, field.trim_image);
+      values[field.id] = await normalizeImageDataUri(values[field.id], field.id, field.trim_image, field.trim_threshold);
     }
   }
   return values;
@@ -271,15 +283,20 @@ function fitFontSize(text, fontFile, naturalFontSizePx, fitWidth, minFontPx) {
   const naturalWidth = measureTextWidth(text, fontFile, naturalFontSizePx);
   if (naturalWidth <= fitWidth) return { size: naturalFontSizePx, fits: true };
   const floor = minFontPx || 40;
-  const scaled = naturalFontSizePx * (fitWidth / naturalWidth);
+  // FIX (Sep 2026 — confirmed in production: "6THday", "NOVto", "NOVcovering"):
+  // aiming the shrink at fitWidth exactly is mathematically correct but
+  // visually wrong -- it fills the ENTIRE available blank with glyphs,
+  // leaving zero gap before whatever static text sits right after it.
+  // Legible, but touching. Aiming at 94% of fitWidth instead reserves a
+  // small breathing margin, proportional to each field's own space, so
+  // there's always a visible (if small) gap. The `fits` check below still
+  // compares against the TRUE fitWidth, not this reduced target -- a value
+  // that only needed the full boundary and not the margin is still
+  // correctly reported as fitting, so the floor-overflow warning stays
+  // meaningful rather than firing 6% earlier than it needs to.
+  const targetWidth = fitWidth * 0.94;
+  const scaled = naturalFontSizePx * (targetWidth / naturalWidth);
   if (scaled >= floor) {
-    // Scaling down hits fitWidth by construction (width scales linearly with
-    // font-size), so this always fits. Re-measuring here would occasionally
-    // fail on floating-point noise a hair's width off fitWidth (the
-    // scale-then-remeasure round trip doesn't land on exactly the same
-    // float fitWidth started as) and log a false-positive warning for a
-    // value that renders fine -- so we trust the math instead of
-    // re-checking a boundary that's only ever off by rounding error.
     return { size: scaled, fits: true };
   }
   // Scaling down as far as the floor allows still isn't enough -- this is
